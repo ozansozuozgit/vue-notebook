@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="text" v-model="categoryTitle" />
-    <button @click="addCategory">Add Category</button>
+    <input type="text" v-model="noteTitle" />
+    <button @click="addNote">Add Note</button>
   </div>
 </template>
 
@@ -9,18 +9,20 @@
 import { v4 as uuidv4 } from "uuid";
 import db from "../firebase/init";
 export default {
-  name: "CategoryNav",
+  name: "NoteNav",
+  props: { currentCategory: String },
   data: () => {
-    return { categoryTitle: "" };
+    return { noteTitle: "" };
   },
   methods: {
-    addCategory() {
-      const title = this.categoryTitle;
+    addNote() {
+      const title = this.noteTitle;
       console.log(title);
       if (title === "") return;
-      db.collection("categories")
+      db.collection("notes")
         .add({
           title: title,
+          category: this.currentCategory,
           uuid: uuidv4(),
         })
         .then(function () {
@@ -35,7 +37,4 @@ export default {
 </script>
 
 <style scoped>
-input {
-  border: 1px solid black;
-}
 </style>

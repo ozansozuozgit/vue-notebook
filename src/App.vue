@@ -7,15 +7,19 @@
         v-for="(category, index) in categories"
         :key="index"
       >
-        <Category :category="category" />
+        <Category
+          :category="category"
+          @click.native="setCurrentCategory(category.uuid)"
+        />
       </div>
     </div>
-    <div class="note_container">
+    <div class="note_container" v-if="currentCategory">
+      <NoteNav :currentCategory="currentCategory" />
       <div class="notes_container" v-for="(note, index) in notes" :key="index">
         <Note :note="note" />
       </div>
     </div>
-    <TextField />
+    <TextField v-if="currentCategory" />
   </div>
 </template>
 
@@ -24,7 +28,9 @@ import TextField from "./components/TextField";
 import CategoryNav from "./components/CategoryNav";
 import Category from "./components/Category";
 import Note from "./components/Note";
-// import db from "./firebase/init";
+import NoteNav from "./components/NoteNav";
+
+import db from "./firebase/init";
 
 export default {
   name: "App",
@@ -32,15 +38,40 @@ export default {
   components: {
     CategoryNav,
     Category,
+    NoteNav,
     Note,
     TextField,
   },
 
   data: () => ({
-    categories: ["Spirituality,Wisdom,Programming"],
-    notes: ["note1", "note2", "note3"],
+    categories: null,
+    notes: null,
+    currentCategory: null,
   }),
-  methods: {},
+  async mounted() {
+    const snapshot = await db.collection("categories").get();
+    this.categories = snapshot.docs.map((doc) => doc.data());
+  },
+  methods: {
+    setCurrentCategory(uuid) {
+      console.log(uuid);
+      this.currentCategory = uuid;
+
+      // db.collection("categories")
+      //   .where("uuid", "==", uuid)
+      //   .get()
+      //   .then(function (querySnapshot) {
+      //     querySnapshot.forEach(function (doc) {
+      //       console.log(doc.id);
+      //       this.currentCategory = doc.id;
+
+      //     });
+      //   })
+      //   .catch(function (error) {
+      //     console.log("Error getting documents: ", error);
+      //   });
+    },
+  },
 };
 </script>
 

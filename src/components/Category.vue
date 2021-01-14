@@ -1,16 +1,24 @@
 <template>
-  <div>
-    {{ category }}
-  </div>
+  <h4>
+    {{ category.title }}
+  </h4>
 </template>
 
 <script>
 export default {
   props: {
-    category: String,
+    category: Object,
+  },
+
+  mounted() {
+    // console.log(this.category.uuid);
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+h4:hover {
+  color: red;
+  cursor: pointer;
+}
 </style>
