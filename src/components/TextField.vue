@@ -9,3 +9,8 @@ export default {
 };
 </script>
 
+<style scoped>
+textarea {
+  border: 1px solid black;
+}
+</style>

@@ -24,6 +24,7 @@ import TextField from "./components/TextField";
 import CategoryNav from "./components/CategoryNav";
 import Category from "./components/Category";
 import Note from "./components/Note";
+// import db from "./firebase/init";
 
 export default {
   name: "App",
@@ -39,6 +40,7 @@ export default {
     categories: ["Spirituality,Wisdom,Programming"],
     notes: ["note1", "note2", "note3"],
   }),
+  methods: {},
 };
 </script>
 
