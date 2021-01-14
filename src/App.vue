@@ -4,7 +4,7 @@
       <CategoryNav />
       <div
         class="categories_container"
-        v-for="(category, index) in categories"
+        v-for="(category, index) in getCategories"
         :key="index"
       >
         <Category
@@ -31,6 +31,7 @@ import Note from "./components/Note";
 import NoteNav from "./components/NoteNav";
 
 import db from "./firebase/init";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -50,9 +51,14 @@ export default {
   }),
   async mounted() {
     const snapshot = await db.collection("categories").get();
-    this.categories = snapshot.docs.map((doc) => doc.data());
+    let dbCategories = snapshot.docs.map((doc) => doc.data());
+    this.addDbCategories(dbCategories);
+  },
+  computed: {
+    ...mapGetters(["getCategories"]),
   },
   methods: {
+    ...mapActions(["addCategory", "addDbCategories"]),
     setCurrentCategory(uuid) {
       console.log(uuid);
       this.currentCategory = uuid;
