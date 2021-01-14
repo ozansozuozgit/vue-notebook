@@ -1,15 +1,16 @@
 <template>
-    <div>
-
-    </div>
+  <div>
+    {{ category }}
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {
+  props: {
+    category: String,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>
