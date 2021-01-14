@@ -1,17 +1,22 @@
 <template>
-  <h4>
+  <h4 @click="setCurrentCategory(category.uuid)">
     {{ category.title }}
   </h4>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     category: Object,
   },
+  methods: {
+    ...mapActions(["updateCurrentCategory"]),
 
-  mounted() {
-    // console.log(this.category.uuid);
+    setCurrentCategory(uuid) {
+      this.updateCurrentCategory(uuid);
+    },
   },
 };
 </script>

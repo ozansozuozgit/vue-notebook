@@ -2,33 +2,24 @@
   <div class="app_container">
     <div class="category_container">
       <CategoryNav />
-      <div
-        class="categories_container"
-        v-for="(category, index) in getCategories"
-        :key="index"
-      >
-        <Category
-          :category="category"
-          @click.native="setCurrentCategory(category.uuid)"
-        />
-      </div>
+      <Categories />
     </div>
-    <div class="note_container" v-if="currentCategory">
+    <div class="note_container" v-if="getCurrentCategory">
       <NoteNav :currentCategory="currentCategory" />
       <div class="notes_container" v-for="(note, index) in notes" :key="index">
         <Note :note="note" />
       </div>
     </div>
-    <TextField v-if="currentCategory" />
+    <TextField v-if="getCurrentCategory" />
   </div>
 </template>
 
 <script>
 import TextField from "./components/TextField";
 import CategoryNav from "./components/CategoryNav";
-import Category from "./components/Category";
 import Note from "./components/Note";
 import NoteNav from "./components/NoteNav";
+import Categories from "./components/Categories";
 
 import db from "./firebase/init";
 import { mapActions, mapGetters } from "vuex";
@@ -38,7 +29,7 @@ export default {
 
   components: {
     CategoryNav,
-    Category,
+    Categories,
     NoteNav,
     Note,
     TextField,
@@ -55,28 +46,10 @@ export default {
     this.addDbCategories(dbCategories);
   },
   computed: {
-    ...mapGetters(["getCategories"]),
+    ...mapGetters(["getCategories", "getCurrentCategory"]),
   },
   methods: {
-    ...mapActions(["addCategory", "addDbCategories"]),
-    setCurrentCategory(uuid) {
-      console.log(uuid);
-      this.currentCategory = uuid;
-
-      // db.collection("categories")
-      //   .where("uuid", "==", uuid)
-      //   .get()
-      //   .then(function (querySnapshot) {
-      //     querySnapshot.forEach(function (doc) {
-      //       console.log(doc.id);
-      //       this.currentCategory = doc.id;
-
-      //     });
-      //   })
-      //   .catch(function (error) {
-      //     console.log("Error getting documents: ", error);
-      //   });
-    },
+    ...mapActions(["addDbCategories"]),
   },
 };
 </script>

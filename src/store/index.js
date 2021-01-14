@@ -7,8 +7,8 @@ export default new Vuex.Store({
   state:{  
     categories:[],
     notes:[],
-    currentCategory:'',
-    currentNote:'',
+    currentCategory:null,
+    currentNote:null,
   },
     mutations:{
       appendCategory: (state,payload) => {
