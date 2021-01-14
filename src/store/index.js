@@ -20,6 +20,9 @@ export default new Vuex.Store({
       appendDbCategories:(state,payload)=>{
         state.categories = payload
       },
+      appendDbNotes:(state,payload)=>{
+        state.notes = payload
+      },
       setCurrentCategory:(state,payload)=>{
         state.currentCategory = payload;
       },
@@ -31,8 +34,14 @@ export default new Vuex.Store({
       addCategory: ({ commit }, payload) => {
         commit('appendCategory', payload)
       },
+      addNotes:({commit},payload)=>{
+          commit('appendNotes',payload)
+      },
       addDbCategories:({commit},payload)=>{
         commit('appendDbCategories',payload)
+      },
+      addDbNotes:({commit},payload)=>{
+        commit('appendDbNotes',payload)
       },
       updateCurrentCategory:({commit},payload)=>{
         commit('setCurrentCategory',payload)

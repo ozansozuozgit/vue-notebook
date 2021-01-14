@@ -1,13 +1,13 @@
 <template>
   <div>
-    {{ note }}
+    {{ note.title }}
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    note: String,
+    note: Object,
   },
 };
 </script>

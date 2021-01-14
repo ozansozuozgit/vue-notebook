@@ -1,6 +1,8 @@
-<template        
->
-  <div><button>Save</button><textarea></textarea></div>
+<template>
+  <div>
+    <button>Save</button>
+    <textarea />
+  </div>
 </template>
 
 <script>

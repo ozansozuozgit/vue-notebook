@@ -20,13 +20,13 @@ export default {
 
     handleClick() {
       const title = this.categoryTitle;
-      console.log(title);
+      const uuid = uuidv4();
       if (title === "") return;
 
-      const categoryInfo = { title: title, uuid: uuidv4() };
       db.collection("categories")
         .add({
-          categoryInfo,
+          title,
+          uuid,
         })
         .then(function () {
           console.log("Document successfully written!");
@@ -35,7 +35,7 @@ export default {
           console.error("Error writing document: ", error);
         });
 
-      this.addCategory(categoryInfo);
+      this.addCategory({ title, uuid });
 
       this.categoryTitle = "";
     },

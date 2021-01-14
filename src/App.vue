@@ -5,10 +5,8 @@
       <Categories />
     </div>
     <div class="note_container" v-if="getCurrentCategory">
-      <NoteNav :currentCategory="currentCategory" />
-      <div class="notes_container" v-for="(note, index) in notes" :key="index">
-        <Note :note="note" />
-      </div>
+      <NoteNav />
+      <Notes />
     </div>
     <TextField v-if="getCurrentCategory" />
   </div>
@@ -17,9 +15,9 @@
 <script>
 import TextField from "./components/TextField";
 import CategoryNav from "./components/CategoryNav";
-import Note from "./components/Note";
 import NoteNav from "./components/NoteNav";
 import Categories from "./components/Categories";
+import Notes from "./components/Notes";
 
 import db from "./firebase/init";
 import { mapActions, mapGetters } from "vuex";
@@ -31,7 +29,7 @@ export default {
     CategoryNav,
     Categories,
     NoteNav,
-    Note,
+    Notes,
     TextField,
   },
 
