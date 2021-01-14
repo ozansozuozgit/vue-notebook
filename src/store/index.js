@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state:{  
     categories:[],
-    notes:[]
+    notes:[],
+    currentCategory:'',
+    currentNote:'',
   },
     mutations:{
       appendCategory: (state,payload) => {
@@ -17,6 +19,12 @@ export default new Vuex.Store({
       },
       appendDbCategories:(state,payload)=>{
         state.categories = payload
+      },
+      setCurrentCategory:(state,payload)=>{
+        state.currentCategory = payload;
+      },
+      setCurrentNote:(state,payload)=>{
+        state.currentNote = payload;
       }
     },
     actions:{
@@ -25,6 +33,12 @@ export default new Vuex.Store({
       },
       addDbCategories:({commit},payload)=>{
         commit('appendDbCategories',payload)
+      },
+      updateCurrentCategory:({commit},payload)=>{
+        commit('setCurrentCategory',payload)
+      },
+      updateCurrentNote:({commit},payload)=>{
+        commit('setCurrentNote',payload)
       }
     },
     getters:{
@@ -34,34 +48,11 @@ export default new Vuex.Store({
       getNotes: (state) => {
         return state.notes;
       },
+      getCurrentNote:(state)=>{
+          return state.currentNote;
+      },
+      getCurrentCategory:(state)=>{
+          return state.currentCategory;
+      }
     }
 })
-
-
-
-// export default new Vuex.Store({
-//   state: {
-//     currentJoke: "This is a joke",
-//     allJokes: []
-//   },
-//   mutations: {
-//     //syncrous
-//     setCurrentJoke(state, payload) {
-//       state.currentJoke = payload;
-//       state.allJokes.push(payload);
-//     }
-//   },
-//   actions: {
-//     //asyncronous
-//     async setCurrentJoke(state) {
-//       const joke = await fetch(url, { headers });
-//       const j = await joke.json();
-//       state.commit("setCurrentJoke", j.joke);
-//     }
-//   },
-//   modules: {},
-//   getters: {
-//     getCurrentJoke: state => state.currentJoke,
-//     getAllJokes: state => state.allJokes
-//   }
-// });
