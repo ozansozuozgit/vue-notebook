@@ -24,7 +24,7 @@ export default {
       console.log(this.note.uuid);
       this.deleteNote(this.note.uuid);
 
-      // Remove Note from Firestore
+      // Remove Note from Firestore Database
       db.collection("notes")
         .where("uuid", "==", this.note.uuid)
         .get()
@@ -34,7 +34,7 @@ export default {
           });
         });
 
-      // Remove Notes Text from Firestore
+      // Remove Notes Text from Firestore Database
       db.collection("texts")
         .where("noteID", "==", this.note.uuid)
         .get()

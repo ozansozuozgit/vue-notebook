@@ -24,6 +24,36 @@ export default {
     },
     handleDelete() {
       this.deleteCategory(this.category.uuid);
+
+      // Remove Category from Firestore Database
+      db.collection("categories")
+        .where("uuid", "==", this.category.uuid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        });
+
+      // Remove Note from Firestore Database
+      db.collection("notes")
+        .where("category", "==", this.category.uuid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        });
+
+      // Remove Notes Text from Firestore Database
+      db.collection("texts")
+        .where("categoryID", "==", this.category.uuid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        });
     },
     setCurrentCategory(uuid) {
       this.updateCurrentCategory(uuid);

@@ -20,12 +20,16 @@ export default {
       if (this.text === "") return;
       db.collection("texts")
         .doc(this.getCurrentNote)
-        .set({ text: this.text, noteID: this.getCurrentNote });
+        .set({
+          text: this.text,
+          noteID: this.getCurrentNote,
+          categoryID: this.getCurrentCategory,
+        });
     },
   },
   mounted() {},
   computed: {
-    ...mapGetters(["getCurrentNote", "getText"]),
+    ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
   },
   watch: {
     "$store.state.text": function () {
