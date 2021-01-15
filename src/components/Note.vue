@@ -33,6 +33,7 @@ export default {
             doc.ref.delete();
           });
         });
+
       // Remove Notes Text from Firestore
       db.collection("texts")
         .where("noteID", "==", this.note.uuid)
@@ -44,6 +45,7 @@ export default {
         });
     },
     getText() {
+      this.addDbText("");
       db.collection("texts")
         .where("noteID", "==", this.note.uuid)
         .get()

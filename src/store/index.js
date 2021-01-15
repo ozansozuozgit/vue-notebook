@@ -35,7 +35,10 @@ export default new Vuex.Store({
       },
       removeNote:(state,payload)=>{
          state.notes = state.notes.filter(note=>{return note.uuid !== payload })
-      }
+      },
+      removeCategory:(state,payload)=>{
+        state.categories = state.categories.filter(category=>{return category.uuid !== payload })
+     },
     },
     actions:{
       addCategory: ({ commit }, payload) => {
@@ -61,6 +64,9 @@ export default new Vuex.Store({
       },
       deleteNote:({commit},payload)=>{
         commit('removeNote',payload)
+      },
+      deleteCategory:({commit},payload)=>{
+        commit('removeCategory',payload)
       }
     },
     getters:{
