@@ -23,6 +23,7 @@ export default {
         .get()
         .then((snapshot) => {
           let dbText = snapshot.docs.map((doc) => doc.data());
+          if (!dbText.length) return;
           this.addDbText(dbText[0].text);
         })
         .catch((e) => {
