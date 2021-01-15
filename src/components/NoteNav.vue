@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="text" v-model="noteTitle" />
     <button @click="handleClick">Add Note</button>
+    <input type="text" v-model="noteTitle" />
   </div>
 </template>
 

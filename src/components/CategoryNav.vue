@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="text" v-model="categoryTitle" />
     <button @click="handleClick">Add Category</button>
+    <input type="text" v-model="categoryTitle" />
   </div>
 </template>
 

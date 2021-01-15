@@ -32,6 +32,9 @@ export default new Vuex.Store({
       },
       setCurrentNote:(state,payload)=>{
         state.currentNote = payload;
+      },
+      removeNote:(state,payload)=>{
+         state.notes = state.notes.filter(note=>{return note.uuid !== payload })
       }
     },
     actions:{
@@ -55,6 +58,9 @@ export default new Vuex.Store({
       },
       updateCurrentNote:({commit},payload)=>{
         commit('setCurrentNote',payload)
+      },
+      deleteNote:({commit},payload)=>{
+        commit('removeNote',payload)
       }
     },
     getters:{
