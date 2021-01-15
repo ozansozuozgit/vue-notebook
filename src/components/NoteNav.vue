@@ -21,7 +21,6 @@ export default {
     handleClick() {
       const title = this.noteTitle;
       const uuid = uuidv4();
-      console.log(title);
       if (title === "") return;
 
       db.collection("notes")

@@ -9,7 +9,6 @@
       <Notes />
     </div>
     <div class="textfield_container" v-if="getCurrentNote">
-      <!-- <TextFieldNav /> -->
       <TextField />
     </div>
   </div>
@@ -21,8 +20,6 @@ import CategoryNav from "./components/CategoryNav";
 import NoteNav from "./components/NoteNav";
 import Categories from "./components/Categories";
 import Notes from "./components/Notes";
-// import TextFieldNav from "./components/TextFieldNav";
-
 import db from "./firebase/init";
 import { mapActions, mapGetters } from "vuex";
 
@@ -35,13 +32,18 @@ export default {
     NoteNav,
     Notes,
     TextField,
-    // TextFieldNav,
   },
 
-  async mounted() {
-    const snapshot = await db.collection("categories").get();
-    let dbCategories = snapshot.docs.map((doc) => doc.data());
-    this.addDbCategories(dbCategories);
+  mounted() {
+    db.collection("categories")
+      .get()
+      .then((snapshot) => {
+        let dbCategories = snapshot.docs.map((doc) => doc.data());
+        this.addDbCategories(dbCategories);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
   computed: {
     ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),

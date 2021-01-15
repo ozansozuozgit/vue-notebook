@@ -1,7 +1,7 @@
 <template>
   <div>
     <button @click="handleClick">Save</button>
-    <textarea :value="text" />
+    <textarea v-model="text" />
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
       if (this.text === "") return;
       db.collection("texts")
         .doc(this.getCurrentNote)
-        .set({ text: "test", noteID: this.getCurrentNote });
+        .set({ text: this.text, noteID: this.getCurrentNote });
     },
   },
   mounted() {},
@@ -28,11 +28,10 @@ export default {
     ...mapGetters(["getCurrentNote", "getText"]),
   },
   watch: {
-    text: function () {
-      console.log(this.text);
-    },
     "$store.state.text": function () {
       console.log(this.$store.state.text);
+      this.text = "";
+      this.text = this.getText;
     },
   },
 };

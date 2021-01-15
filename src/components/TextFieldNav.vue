@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import db from "../firebase/init";
 import { mapActions } from "vuex";
 export default {
   name: "TextFieldNav",

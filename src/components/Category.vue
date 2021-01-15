@@ -22,14 +22,15 @@ export default {
     setCurrentCategory(uuid) {
       this.updateCurrentCategory(uuid);
     },
-    async getNotes(uuid) {
-      const snapshot = await db
-        .collection("notes")
+    getNotes(uuid) {
+      db.collection("notes")
         .where("category", "==", uuid)
-        .get();
-
-      let dbNotes = snapshot.docs.map((doc) => doc.data());
-      this.addDbNotes(dbNotes);
+        .get()
+        .then((snapshot) => {
+          let dbNotes = snapshot.docs.map((doc) => doc.data());
+          this.addDbNotes(dbNotes);
+        })
+        .catch((e) => console.log(e));
     },
   },
 };

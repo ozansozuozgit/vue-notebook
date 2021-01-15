@@ -26,6 +26,7 @@ export default {
           this.addDbText(dbText[0].text);
         })
         .catch((e) => {
+          this.addDbText("");
           console.log(e);
         });
     },
