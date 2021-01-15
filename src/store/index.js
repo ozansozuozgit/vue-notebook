@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state:{  
     categories:[],
     notes:[],
+    text:'',
     currentCategory:null,
     currentNote:null,
   },
@@ -22,6 +23,9 @@ export default new Vuex.Store({
       },
       appendDbNotes:(state,payload)=>{
         state.notes = payload
+      },
+      appendDbText:(state,payload)=>{
+        state.text = payload
       },
       setCurrentCategory:(state,payload)=>{
         state.currentCategory = payload;
@@ -43,6 +47,9 @@ export default new Vuex.Store({
       addDbNotes:({commit},payload)=>{
         commit('appendDbNotes',payload)
       },
+      addDbText:({commit},payload)=>{
+        commit('appendDbText',payload)
+      },
       updateCurrentCategory:({commit},payload)=>{
         commit('setCurrentCategory',payload)
       },
@@ -56,6 +63,9 @@ export default new Vuex.Store({
       },
       getNotes: (state) => {
         return state.notes;
+      },
+      getText:(state)=>{
+        return state.text;
       },
       getCurrentNote:(state)=>{
           return state.currentNote;
