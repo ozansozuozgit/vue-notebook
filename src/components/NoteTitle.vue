@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="note_title">
     <button @click="handleClick">Add Note</button>
-    <input type="text" v-model="noteTitle" />
+    <input type="text" v-model="noteTitle" placeholder="Note Title" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import db from "../firebase/init";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "NoteNav",
+  name: "NoteTitle",
   props: { currentCategory: String },
   data: () => {
     return { noteTitle: "" };
@@ -46,6 +46,10 @@ export default {
 </script>
 
 <style scoped>
+.note_title {
+  display: flex;
+  flex-direction: column;
+}
 input {
   border: 1px black solid;
 }

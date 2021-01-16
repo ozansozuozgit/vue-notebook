@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NoteTitle />
     <button @click="handleClick">Save</button>
     <textarea v-model="text" />
   </div>
@@ -8,8 +9,12 @@
 <script>
 import db from "../firebase/init";
 import { mapGetters } from "vuex";
+import NoteTitle from "./NoteTitle";
 export default {
   name: "TextField",
+  components: {
+    NoteTitle,
+  },
   data: () => {
     return {
       text: "",

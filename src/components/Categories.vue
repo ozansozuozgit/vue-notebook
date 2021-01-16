@@ -1,5 +1,7 @@
 <template>
   <div class="categories_container">
+    <CategoryNav />
+    <h2>Categories</h2>
     <div v-for="category in getCategories" :key="category.uuid">
       <Category :category="category" />
     </div>
@@ -8,12 +10,14 @@
 
 <script>
 import Category from "./Category";
+import CategoryNav from "./CategoryNav";
 import { mapGetters } from "vuex";
 
 export default {
   name: "Categories",
   components: {
     Category,
+    CategoryNav,
   },
   computed: {
     ...mapGetters(["getCategories"]),

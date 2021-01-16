@@ -1,23 +1,13 @@
 <template>
   <div class="app_container">
-    <div class="category_container">
-      <CategoryNav />
-      <Categories />
-    </div>
-    <div class="note_container" v-if="getCurrentCategory">
-      <NoteNav />
-      <Notes />
-    </div>
-    <div class="textfield_container" v-if="getCurrentNote">
-      <TextField />
-    </div>
+    <Categories />
+    <Notes />
+    <TextField />
   </div>
 </template>
 
 <script>
 import TextField from "./components/TextField";
-import CategoryNav from "./components/CategoryNav";
-import NoteNav from "./components/NoteNav";
 import Categories from "./components/Categories";
 import Notes from "./components/Notes";
 import db from "./firebase/init";
@@ -27,9 +17,7 @@ export default {
   name: "App",
 
   components: {
-    CategoryNav,
     Categories,
-    NoteNav,
     Notes,
     TextField,
   },

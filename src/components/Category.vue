@@ -9,7 +9,6 @@
 
 
 <script>
-// TODO: Remove(filter)category and notes from store
 
 import { mapActions } from "vuex";
 import db from "../firebase/init";

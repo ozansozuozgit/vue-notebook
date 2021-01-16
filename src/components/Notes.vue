@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Notes</h2>
     <div class="notes_container" v-for="note in getNotes" :key="note.uuid">
       <Note :note="note" />
     </div>
