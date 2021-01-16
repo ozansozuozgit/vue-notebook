@@ -7,7 +7,10 @@
   </div>
 </template>
 
+
 <script>
+// TODO: Remove(filter)category and notes from store
+
 import { mapActions } from "vuex";
 import db from "../firebase/init";
 
@@ -16,51 +19,68 @@ export default {
     category: Object,
   },
   methods: {
-    ...mapActions(["updateCurrentCategory", "addDbNotes", "deleteCategory"]),
+    ...mapActions([
+      "updateCurrentCategory",
+      "updateCurrentNote",
+      "addDbNotes",
+      "deleteCategory",
+      "addDbText",
+      "addDbNotes",
+    ]),
 
     handleClick(uuid) {
       this.setCurrentCategory(uuid);
       this.getNotes(uuid);
     },
-    handleDelete() {
+    async handleDelete() {
+      // Reset State
       this.deleteCategory(this.category.uuid);
-
-      // Remove Category from Firestore Database
-      db.collection("categories")
-        .where("uuid", "==", this.category.uuid)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-          });
-        });
-
-      // Remove Note from Firestore Database
-      db.collection("notes")
-        .where("category", "==", this.category.uuid)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-          });
-        });
+      this.updateCurrentNote(null);
+      this.updateCurrentCategory(null);
+      this.addDbNotes([]);
 
       // Remove Notes Text from Firestore Database
-      db.collection("texts")
+      await db
+        .collection("texts")
         .where("categoryID", "==", this.category.uuid)
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             doc.ref.delete();
           });
-        });
+        })
+        .catch((e) => console.log(e));
+
+      // Remove Note from Firestore Database
+      await db
+        .collection("notes")
+        .where("categoryID", "==", this.category.uuid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        })
+        .catch((e) => console.log(e));
+
+      // Remove Category from Firestore Database
+      await db
+        .collection("categories")
+        .where("uuid", "==", this.category.uuid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        })
+        .catch((e) => console.log(e));
     },
     setCurrentCategory(uuid) {
       this.updateCurrentCategory(uuid);
     },
     getNotes(uuid) {
       db.collection("notes")
-        .where("category", "==", uuid)
+        .where("categoryID", "==", uuid)
         .get()
         .then((snapshot) => {
           let dbNotes = snapshot.docs.map((doc) => doc.data());

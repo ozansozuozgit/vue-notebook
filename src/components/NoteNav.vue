@@ -27,7 +27,7 @@ export default {
         .add({
           title,
           uuid,
-          category: this.getCurrentCategory,
+          categoryID: this.getCurrentCategory,
         })
         .then(function () {
           console.log("Document successfully written!");

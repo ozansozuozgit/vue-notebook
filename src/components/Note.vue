@@ -23,15 +23,20 @@ export default {
     handleDelete() {
       console.log(this.note.uuid);
       this.deleteNote(this.note.uuid);
+      this.updateCurrentNote(null);
 
       // Remove Note from Firestore Database
       db.collection("notes")
         .where("uuid", "==", this.note.uuid)
         .get()
         .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-          });
+          querySnapshot
+            .forEach(function (doc) {
+              doc.ref.delete();
+            })
+            .catch((e) => {
+              console.log(e);
+            });
         });
 
       // Remove Notes Text from Firestore Database
@@ -41,7 +46,11 @@ export default {
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             doc.ref.delete();
+            this.addDbText("");
           });
+        })
+        .catch((e) => {
+          console.log(e);
         });
     },
     getText() {

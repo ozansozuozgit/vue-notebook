@@ -18,13 +18,11 @@ export default {
   methods: {
     handleClick() {
       if (this.text === "") return;
-      db.collection("texts")
-        .doc(this.getCurrentNote)
-        .set({
-          text: this.text,
-          noteID: this.getCurrentNote,
-          categoryID: this.getCurrentCategory,
-        });
+      db.collection("texts").doc(this.getCurrentNote).set({
+        text: this.text,
+        noteID: this.getCurrentNote,
+        categoryID: this.getCurrentCategory,
+      });
     },
   },
   mounted() {},
@@ -32,8 +30,13 @@ export default {
     ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
   },
   watch: {
+    "$store.state.currentCategory": function () {
+      this.text = "";
+    },
+    "$store.state.currentNote": function () {
+      this.text = "";
+    },
     "$store.state.text": function () {
-      console.log(this.$store.state.text);
       this.text = "";
       this.text = this.getText;
     },
