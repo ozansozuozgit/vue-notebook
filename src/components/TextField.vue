@@ -47,7 +47,7 @@ export default {
           });
 
         this.addNotes({
-          title: this.title,
+          title: this.noteTitle,
           uuid,
           category: this.getCurrentCategory,
         });
@@ -85,10 +85,13 @@ export default {
       } else {
         this.isDisabled = false;
       }
+      this.noteTitle = "";
     },
     "$store.state.currentNote": function () {
       this.text = "";
-      this.noteTitle = this.getCurrentNote.title;
+      if (this.getCurrentNote) {
+        this.noteTitle = this.getCurrentNote.title;
+      }
     },
     "$store.state.text": function () {
       this.text = "";
@@ -100,16 +103,16 @@ export default {
 
 <style scoped>
 .textfield_container {
-  width: 450px;
+  flex: 0.5;
 }
 input {
   border: 1px solid black;
-  width: 450px;
+  width: 80%;
 }
 textarea {
   border: 1px solid black;
-  height: 450px;
-  width: 450px;
+  height: 80%;
+  width: 80%;
 }
 button {
   border: 1px solid black;
