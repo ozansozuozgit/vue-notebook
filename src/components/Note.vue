@@ -17,7 +17,7 @@ export default {
   methods: {
     ...mapActions(["updateCurrentNote", "addDbText", "deleteNote"]),
     handleClick() {
-      this.updateCurrentNote(this.note.uuid);
+      this.updateCurrentNote(this.note);
       this.getText();
     },
     handleDelete() {
