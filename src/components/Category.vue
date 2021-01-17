@@ -9,7 +9,6 @@
 
 
 <script>
-
 import { mapActions } from "vuex";
 import db from "../firebase/init";
 
@@ -30,6 +29,7 @@ export default {
     handleClick(uuid) {
       this.setCurrentCategory(uuid);
       this.getNotes(uuid);
+      this.updateCurrentNote(null);
     },
     async handleDelete() {
       // Reset State

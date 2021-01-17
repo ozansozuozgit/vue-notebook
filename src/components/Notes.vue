@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="notes_container">
     <h2>Notes</h2>
-    <div class="notes_container" v-for="note in getNotes" :key="note.uuid">
+    <div v-for="note in getNotes" :key="note.uuid">
       <Note :note="note" />
     </div>
   </div>
@@ -23,4 +23,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.notes_container {
+  flex: 0.25;
+
+  h2 {
+    margin-bottom: 10px;
+  }
+}
 </style>

@@ -46,5 +46,9 @@ export default {
 .app_container {
   display: flex;
   justify-content: space-evenly;
+  height: 100vh;
+  width: 88%;
+  margin: auto;
+  padding-top: 10px;
 }
 </style>
