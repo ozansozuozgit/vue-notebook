@@ -26,37 +26,55 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNotes"]),
+    ...mapActions(["addNotes", "updateCurrentNote"]),
 
     handleClick() {
-      const title = this.noteTitle;
       const uuid = uuidv4();
+
       // Save Note
-      db.collection("notes")
-        .add({
-          title,
+      if (!this.getCurrentNote) {
+        db.collection("notes")
+          .add({
+            title: this.noteTitle,
+            uuid,
+            categoryID: this.getCurrentCategory,
+          })
+          .then(function () {
+            console.log("Note successfully written!");
+          })
+          .catch(function (error) {
+            console.error("Error writing Note: ", error);
+          });
+
+        this.addNotes({
+          title: this.title,
           uuid,
+          category: this.getCurrentCategory,
+        });
+
+        this.updateCurrentNote({
+          title: this.noteTitle,
+          uuid,
+          categoryID: this.getCurrentCategory,
+        });
+      }
+      // Save text
+      if (this.text === "") return;
+      db.collection("texts")
+        .doc(this.getCurrentNote.uuid)
+        .set({
+          text: this.text,
+          noteID: this.getCurrentNote.uuid,
           categoryID: this.getCurrentCategory,
         })
         .then(function () {
-          console.log("Document successfully written!");
+          console.log("Text successfully written!");
         })
         .catch(function (error) {
-          console.error("Error writing document: ", error);
+          console.error("Error writing Text: ", error);
         });
-      this.addNotes({ title, uuid, category: this.getCurrentCategory });
-      this.noteTitle = "";
-
-      // Save text
-      if (this.text === "") return;
-      db.collection("texts").doc(this.getCurrentNote.uuid).set({
-        text: this.text,
-        noteID: this.getCurrentNote.uuid,
-        categoryID: this.getCurrentCategory,
-      });
     },
   },
-  mounted() {},
   computed: {
     ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
   },
