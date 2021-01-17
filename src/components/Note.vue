@@ -55,8 +55,8 @@ export default {
     },
     getText() {
       this.addDbText("");
-      db.collection("texts")
-        .where("noteID", "==", this.note.uuid)
+      db.collection("notes")
+        .where("uuid", "==", this.note.uuid)
         .get()
         .then((snapshot) => {
           let dbText = snapshot.docs.map((doc) => doc.data());
