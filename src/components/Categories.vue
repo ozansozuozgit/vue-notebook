@@ -74,4 +74,10 @@ img {
   width: 70%;
   justify-content: space-between;
 }
+h2 {
+  border-bottom: 1px solid black;
+  margin: 10px 0;
+  display: inline-block;
+  color: #3a62be;
+}
 </style>
