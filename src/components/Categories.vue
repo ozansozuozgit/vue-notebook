@@ -2,7 +2,7 @@
   <div class="categories_container">
     <div class="category_nav">
       <input type="text" v-model="categoryTitle" placeholder="Category Title" />
-      <img src="../assets/add.svg" @click="handleClick" />
+      <img src="../assets/add.svg" @click="handleCLick" />
     </div>
 
     <h2>Categories</h2>
@@ -16,8 +16,10 @@
 import Category from "./Category";
 import { mapGetters } from "vuex";
 import { v4 as uuidv4 } from "uuid";
-import db from "../firebase/init";
+// import db from "../firebase/init";
 import { mapActions } from "vuex";
+import dbService from "../services/db_service";
+
 export default {
   name: "Categories",
   data: () => {
@@ -25,22 +27,23 @@ export default {
   },
   methods: {
     ...mapActions(["addCategory"]),
-    handleClick() {
+    handleCLick() {
       const title = this.categoryTitle;
-      const uuid = uuidv4();
       if (title === "") return;
+      const uuid = uuidv4();
+      dbService.add_category(uuid,title);
 
-      db.collection("categories")
-        .add({
-          title,
-          uuid,
-        })
-        .then(function () {
-          console.log("Document successfully written!");
-        })
-        .catch(function (error) {
-          console.error("Error writing document: ", error);
-        });
+      // db.collection("categories")
+      //   .add({
+      //     title,
+      //     uuid,
+      //   })
+      //   .then(function () {
+      //     console.log("Document successfully written!");
+      //   })
+      //   .catch(function (error) {
+      //     console.error("Error writing document: ", error);
+      //   });
 
       this.addCategory({ title, uuid });
 
@@ -52,6 +55,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getCategories"]),
+  },
+  mounted() {
+    // dbService.update_category("123", { name: "Ahmet", age: 35 });
   },
 };
 </script>

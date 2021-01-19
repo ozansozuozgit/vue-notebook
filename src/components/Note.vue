@@ -55,6 +55,8 @@ export default {
     },
     getText() {
       this.addDbText("");
+      
+      
       db.collection("notes")
         .where("uuid", "==", this.note.uuid)
         .get()

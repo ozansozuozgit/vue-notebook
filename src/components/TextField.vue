@@ -62,24 +62,31 @@ export default {
       });
     },
 
-    updateNote() {
-      db.collection("notes")
-        .doc(this.getCurrentNote.uuid)
-        .update({ title: this.noteTitle, text: this.text })
-        .then(function () {
-          console.log("NoteTitle successfully written!");
-        })
-        .catch(function (error) {
-          console.error("Error writing NoteTitle: ", error);
-        });
+    async updateNote() {
+      try {
+        await db
+          .collection("notes")
+          .doc(this.getCurrentNote.uuid)
+          .update({ title: this.noteTitle, text: this.text });
+        console.log("NoteTitle successfully written!");
+      } catch (e) {
+        console.error("Error writing NoteTitle: ", e);
+      }
+
+      // .then(function () {
+      //   console.log("NoteTitle successfully written!");
+      // })
+      // .catch(function (error) {
+      //   console.error("Error writing NoteTitle: ", error);
+      // });
     },
   },
   computed: {
     ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
   },
   watch: {
-    "$store.state.currentCategory": function () {
-      if (this.getCurrentCategory === null) {
+    getCurrentCategory: function (newValue) {
+      if (newValue === null) {
         this.text = "";
       } else {
         this.isDisabled = false;
@@ -93,8 +100,8 @@ export default {
       }
     },
     "$store.state.text": function () {
-      this.text = "";
-      this.text = this.getText;
+      this.$set(this, "text", this.getText);
+      // this.text = this.getText;
     },
   },
 };
