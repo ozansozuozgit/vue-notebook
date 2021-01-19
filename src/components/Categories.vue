@@ -43,10 +43,9 @@ export default {
       //   .catch(function (error) {
       //     console.error("Error writing document: ", error);
       //   });
-
       this.addCategory({ title, uuid });
       dbService.add_category(this.getCategories);
-
+      console.log(this.getCategories);
       this.categoryTitle = "";
     },
   },

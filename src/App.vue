@@ -37,9 +37,14 @@ export default {
     //   return entry[0] === "category";
     // });
 
-    let categoriesString = localStorage.getItem("categories");
-    let categories = JSON.parse(categoriesString);
-    console.log(categories);
+    // let categoriesString = localStorage.getItem("categories");
+    let jsonCategories = JSON.parse(localStorage.getItem("categories"));
+    const entries = Object.entries(jsonCategories);
+    const categories = [];
+    for (const entry of entries) {
+      categories.push(entry[1]);
+    }
+
     this.addDbCategories(categories);
   },
   computed: {

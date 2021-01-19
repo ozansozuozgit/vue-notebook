@@ -12,8 +12,8 @@ export default new Vuex.Store({
     currentNote: null
   },
   mutations: {
-    appendCategory: (state, payload) => {
-      state.categories.push(payload)
+    ADD_CATEGORY: (state, payload) => {
+      return state.categories.push(payload)
     },
     appendNotes: (state, payload) => {
       state.notes.push(payload)
@@ -46,7 +46,7 @@ export default new Vuex.Store({
   },
   actions: {
     addCategory: ({ commit }, payload) => {
-      commit('appendCategory', payload)
+      commit('ADD_CATEGORY', payload)
     },
     addNotes: ({ commit }, payload) => {
       commit('appendNotes', payload)
