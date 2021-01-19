@@ -31,7 +31,6 @@ export default {
       const title = this.categoryTitle;
       if (title === "") return;
       const uuid = uuidv4();
-      dbService.add_category(uuid,title);
 
       // db.collection("categories")
       //   .add({
@@ -46,6 +45,7 @@ export default {
       //   });
 
       this.addCategory({ title, uuid });
+      dbService.add_category(this.getCategories);
 
       this.categoryTitle = "";
     },

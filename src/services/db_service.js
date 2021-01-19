@@ -6,8 +6,16 @@ export default {
     localStorage.setItem(uuid, JSON.stringify(newData));
     return newData;
   },
-  add_category(uuid, data) {
-    localStorage.setItem(uuid, JSON.stringify(data));
+  add_category(data) {
+    let categoryString = localStorage.getItem('categories');
+    let category = JSON.parse(categoryString);
+    console.log(category);
+    // let newData = Object.assign({}, category, data);
+    let newData = {...category, ...data};
+
+    console.log(newData);
+    localStorage.setItem('categories', JSON.stringify(newData));
+    return newData;
   },
   remove_category(uuid) {
     localStorage.removeItem(uuid);

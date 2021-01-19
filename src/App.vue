@@ -10,7 +10,7 @@
 import TextField from "./components/TextField";
 import Categories from "./components/Categories";
 import Notes from "./components/Notes";
-import db from "./firebase/init";
+// import db from "./firebase/init";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -23,15 +23,24 @@ export default {
   },
 
   mounted() {
-    db.collection("categories")
-      .get()
-      .then((snapshot) => {
-        let dbCategories = snapshot.docs.map((doc) => doc.data());
-        this.addDbCategories(dbCategories);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    // db.collection("categories")
+    //   .get()
+    //   .then((snapshot) => {
+    //     let dbCategories = snapshot.docs.map((doc) => doc.data());
+    //     this.addDbCategories(dbCategories);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
+    // let test = Object.entries(localStorage).filter((entry) => {
+    //   console.log(entry);
+    //   return entry[0] === "category";
+    // });
+
+    let categoriesString = localStorage.getItem("categories");
+    let categories = JSON.parse(categoriesString);
+    console.log(categories);
+    this.addDbCategories(categories);
   },
   computed: {
     ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),
