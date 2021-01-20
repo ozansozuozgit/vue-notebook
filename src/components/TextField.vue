@@ -7,9 +7,7 @@
       :disabled="isDisabled"
     />
     <textarea v-model="text" :disabled="isDisabled" @change="handleUpdate" />
-    <div class="button_container">
-      <button @click="addNewNote">New Note</button>
-    </div>
+    <button @click="addNewNote">New Note</button>
   </div>
 </template>
 
@@ -97,12 +95,17 @@ input {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  outline: none;
 }
 textarea {
   border: 1px solid black;
   height: 80%;
   width: 80%;
   padding: 10px;
+  outline: none;
+  font-size: 18px;
 }
 button {
   border: 1px solid black;
@@ -111,15 +114,10 @@ button {
   background-color: black;
   color: white;
   font-weight: bold;
-
+  display: block;
   &:hover {
     background-color: rgb(84, 81, 81);
     cursor: pointer;
   }
-}
-.button_container {
-  display: flex;
-  width: 40%;
-  justify-content: space-around;
 }
 </style>
