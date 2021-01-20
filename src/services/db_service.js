@@ -40,12 +40,10 @@ export default {
     localStorage.setItem(`${category}_notes`, JSON.stringify(newData));
     return newData;
   },
-  updateNote(category,uuid,text){
+  updateNote(category,uuid,textContent){
     let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
-    console.log(jsonNotes);
-
-    let note = jsonNotes.find(note=>note.id === uuid);
-    console.log(note)
-    console.log(text);
+    jsonNotes.find(note=>note.uuid === uuid).text = textContent;
+    localStorage.setItem(`${category}_notes`, JSON.stringify(jsonNotes));
+    return jsonNotes;
   }
 };

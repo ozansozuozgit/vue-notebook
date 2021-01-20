@@ -21,7 +21,7 @@ export default new Vuex.Store({
     appendDbCategories: (state, payload) => {
       state.categories = payload
     },
-    appendDbNotes: (state, payload) => {
+    ADD_DB_NOTES: (state, payload) => {
       state.notes = payload
     },
     ADD_DB_TEXT: (state, payload) => {
@@ -55,7 +55,7 @@ export default new Vuex.Store({
       commit('appendDbCategories', payload)
     },
     addDbNotes: ({ commit }, payload) => {
-      commit('appendDbNotes', payload)
+      commit('ADD_DB_NOTES', payload)
     },
     addDbText: ({ commit }, payload) => {
       commit('ADD_DB_TEXT', payload)

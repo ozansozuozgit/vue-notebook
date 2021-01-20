@@ -6,18 +6,15 @@
       placeholder="Note Title"
       :disabled="isDisabled"
     />
-    <textarea v-model="text" :disabled="isDisabled" />
+    <textarea v-model="text" :disabled="isDisabled" @change="handleUpdate" />
     <div class="button_container">
       <button @click="addNewNote">New Note</button>
-      <button :disabled="isDisabled" @click="updateNote">Update</button>
     </div>
   </div>
 </template>
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-
-// import db from "../firebase/init";
 import { mapActions, mapGetters } from "vuex";
 import dbService from "../services/db_service";
 export default {
@@ -30,25 +27,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNotes", "updateCurrentNote"]),
-
+    ...mapActions(["addNotes", "updateCurrentNote", "addDbNotes"]),
+    handleUpdate() {
+      let updatedNotes = dbService.updateNote(
+        this.getCurrentCategory,
+        this.getCurrentNote.uuid,
+        this.text
+      );
+      this.addDbNotes(updatedNotes);
+    },
     addNewNote() {
       const uuid = uuidv4();
-
-      // db.collection("notes")
-      //   .doc(uuid)
-      //   .set({
-      //     title: this.noteTitle,
-      //     uuid,
-      //     categoryID: this.getCurrentCategory,
-      //     text: this.text,
-      //   })
-      //   .then(function () {
-      //     console.log("Note successfully written!");
-      //   })
-      //   .catch(function (error) {
-      //     console.error("Error writing Note: ", error);
-      //   });
       dbService.addNote(
         this.getCurrentCategory,
         this.noteTitle,
@@ -64,24 +53,6 @@ export default {
 
       this.updateCurrentNote(uuid);
     },
-
-    async updateNote() {
-      // try {
-      //   await db
-      //     .collection("notes")
-      //     .doc(this.getCurrentNote.uuid)
-      //     .update({ title: this.noteTitle, text: this.text });
-      //   console.log("NoteTitle successfully written!");
-      // } catch (e) {
-      //   console.error("Error writing NoteTitle: ", e);
-      // }
-      // .then(function () {
-      //   console.log("NoteTitle successfully written!");
-      // })
-      // .catch(function (error) {
-      //   console.error("Error writing NoteTitle: ", error);
-      // });
-    },
   },
   computed: {
     ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
@@ -96,7 +67,9 @@ export default {
       this.noteTitle = "";
     },
     "$store.state.currentNote": function () {
-      // this.text = "";
+      this.noteTitle = "";
+      this.$set(this, "text", "");
+
       if (this.getCurrentNote) {
         this.noteTitle = this.getCurrentNote.title;
       }
@@ -105,9 +78,7 @@ export default {
       this.$set(this, "text", this.getText);
       // this.text = this.getText;
     },
-    // text: function (val) {
-    //   dbService.updateNote(this.getCurrentNote.title,this.getCurrentNote.uuid, val);
-    // },
+
   },
 };
 </script>

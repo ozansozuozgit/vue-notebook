@@ -27,7 +27,6 @@ export default {
     ...mapActions(["addCategory"]),
     handleCLick() {
       if (this.categoryTitle === "") return;
-      console.log(this.categoryTitle);
       this.addCategory(this.categoryTitle);
       dbService.addCategory(this.categoryTitle);
       this.categoryTitle = "";

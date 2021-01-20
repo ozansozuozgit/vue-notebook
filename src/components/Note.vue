@@ -9,7 +9,6 @@
 
 <script>
 import { mapActions } from "vuex";
-// import db from "../firebase/init";
 import dbService from "../services/db_service";
 export default {
   props: {
