@@ -9,7 +9,8 @@
 
 <script>
 import { mapActions } from "vuex";
-import db from "../firebase/init";
+// import db from "../firebase/init";
+import dbService from "../services/db_service";
 export default {
   props: {
     note: Object,
@@ -21,54 +22,54 @@ export default {
       this.getText();
     },
     handleDelete() {
-      console.log(this.note.uuid);
+      // console.log(this.note.uuid);
       this.deleteNote(this.note.uuid);
-      this.updateCurrentNote(null);
+      // this.updateCurrentNote(null);
+      dbService.removeNote(this.note);
 
       // Remove Note from Firestore Database
-      db.collection("notes")
-        .where("uuid", "==", this.note.uuid)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot
-            .forEach(function (doc) {
-              doc.ref.delete();
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        });
+      // db.collection("notes")
+      //   .where("uuid", "==", this.note.uuid)
+      //   .get()
+      //   .then(function (querySnapshot) {
+      //     querySnapshot
+      //       .forEach(function (doc) {
+      //         doc.ref.delete();
+      //       })
+      //       .catch((e) => {
+      //         console.log(e);
+      //       });
+      //   });
 
-      // Remove Notes Text from Firestore Database
-      db.collection("texts")
-        .where("noteID", "==", this.note.uuid)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-            this.addDbText("");
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      // // Remove Notes Text from Firestore Database
+      // db.collection("texts")
+      //   .where("noteID", "==", this.note.uuid)
+      //   .get()
+      //   .then(function (querySnapshot) {
+      //     querySnapshot.forEach(function (doc) {
+      //       doc.ref.delete();
+      //       this.addDbText("");
+      //     });
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   });
     },
     getText() {
       this.addDbText("");
-      
-      
-      db.collection("notes")
-        .where("uuid", "==", this.note.uuid)
-        .get()
-        .then((snapshot) => {
-          let dbText = snapshot.docs.map((doc) => doc.data());
-          if (!dbText.length) return;
-          this.addDbText(dbText[0].text);
-        })
-        .catch((e) => {
-          this.addDbText("");
-          console.log(e);
-        });
+
+      // db.collection("notes")
+      //   .where("uuid", "==", this.note.uuid)
+      //   .get()
+      //   .then((snapshot) => {
+      //     let dbText = snapshot.docs.map((doc) => doc.data());
+      //     if (!dbText.length) return;
+      //     this.addDbText(dbText[0].text);
+      //   })
+      //   .catch((e) => {
+      //     this.addDbText("");
+      //     console.log(e);
+      //   });
     },
   },
 };

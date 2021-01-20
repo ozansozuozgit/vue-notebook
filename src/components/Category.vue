@@ -10,7 +10,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import db from "../firebase/init";
+// import db from "../firebase/init";
 import dbService from "../services/db_service";
 
 export default {
@@ -29,8 +29,9 @@ export default {
 
     handleClick(uuid) {
       this.setCurrentCategory(uuid);
-      this.getNotes(uuid);
+      // this.getNotes(uuid);
       this.updateCurrentNote(null);
+      this.addDbNotes(dbService.getNotes(this.category));
     },
     async handleDelete() {
       // Reset State
@@ -38,7 +39,7 @@ export default {
       this.updateCurrentNote(null);
       this.updateCurrentCategory(null);
       this.addDbNotes([]);
-      dbService.remove_category(this.category);
+      dbService.removeCategory(this.category);
 
       // Remove Notes Text from Firestore Database
       // await db
@@ -80,15 +81,15 @@ export default {
       this.updateCurrentCategory(this.category);
     },
 
-    getNotes(uuid) {
-      db.collection("notes")
-        .where("categoryID", "==", uuid)
-        .get()
-        .then((snapshot) => {
-          let dbNotes = snapshot.docs.map((doc) => doc.data());
-          this.addDbNotes(dbNotes);
-        })
-        .catch((e) => console.log(e));
+    getNotes() {
+      // db.collection("notes")
+      //   .where("categoryID", "==", uuid)
+      //   .get()
+      //   .then((snapshot) => {
+      //     let dbNotes = snapshot.docs.map((doc) => doc.data());
+      //     this.addDbNotes(dbNotes);
+      //   })
+      //   .catch((e) => console.log(e));
     },
   },
 };

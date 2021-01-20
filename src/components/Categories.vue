@@ -54,9 +54,7 @@ export default {
   computed: {
     ...mapGetters(["getCategories"]),
   },
-  mounted() {
-    // dbService.update_category("123", { name: "Ahmet", age: 35 });
-  },
+
 };
 </script>
 

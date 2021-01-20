@@ -16,25 +16,28 @@ export default {
   },
   getCategories(){
     return JSON.parse(localStorage.getItem("categories"));
-
   },
-  remove_category(categoryName) {
-    // localStorage.removeItem();
+  removeCategory(categoryName) {
     let jsonCategories = JSON.parse(localStorage.getItem("categories"));
-    console.log(jsonCategories);
-    // const entries = Object.entries(jsonCategories);
-    // const keys = Object.keys(jsonCategories);
-
     const newData = jsonCategories.filter(category => category !== categoryName);
-    // console.log(keys);
-    // console.log(entries);
-    // console.log(newData);
-    // console.log(JSON.stringify(newData));
-    
     localStorage.setItem('categories', JSON.stringify(newData));
     return newData;
   },
-  add_note(uuid,title,text){
-    console.log(title,uuid,text);
+  addNote(category,title,text,uuid){
+    let notesString = localStorage.getItem(`${category}_notes`);
+    let notes = JSON.parse(notesString);
+    if(notes === null){ notes = [];}
+    notes.push({title,text,uuid,category});
+    localStorage.setItem(`${category}_notes`, JSON.stringify(notes));
+    return notes;
+  },
+  getNotes(category){
+    return JSON.parse(localStorage.getItem(`${category}_notes`));
+  },
+  removeNote({uuid,category}){
+    let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
+    const newData = jsonNotes.filter(note => note.uuid !== uuid);
+    localStorage.setItem(`${category}_notes`, JSON.stringify(newData));
+    return newData;
   }
 };

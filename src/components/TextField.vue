@@ -19,7 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import db from "../firebase/init";
 import { mapActions, mapGetters } from "vuex";
-import dbService from '../services/db_service';
+import dbService from "../services/db_service";
 export default {
   name: "TextField",
   data: () => {
@@ -49,18 +49,20 @@ export default {
       //   .catch(function (error) {
       //     console.error("Error writing Note: ", error);
       //   });
-      dbService.add_note(this.getCurrentCategory,this.noteTitle,this.text);
+      dbService.addNote(
+        this.getCurrentCategory,
+        this.noteTitle,
+        this.text,
+        uuid
+      );
       this.addNotes({
-        title: this.noteTitle,
-        uuid,
         category: this.getCurrentCategory,
+        title: this.noteTitle,
+        text: this.text,
+        uuid,
       });
 
-      this.updateCurrentNote({
-        title: this.noteTitle,
-        uuid,
-        categoryID: this.getCurrentCategory,
-      });
+      this.updateCurrentNote(uuid);
     },
 
     async updateNote() {
