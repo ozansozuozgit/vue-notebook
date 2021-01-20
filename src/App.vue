@@ -11,6 +11,7 @@ import TextField from "./components/TextField";
 import Categories from "./components/Categories";
 import Notes from "./components/Notes";
 // import db from "./firebase/init";
+import dbService from "./services/db_service";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -37,15 +38,15 @@ export default {
     //   return entry[0] === "category";
     // });
 
-    // let categoriesString = localStorage.getItem("categories");
-    let jsonCategories = JSON.parse(localStorage.getItem("categories"));
-    const entries = Object.entries(jsonCategories);
-    const categories = [];
-    for (const entry of entries) {
-      categories.push(entry[1]);
-    }
+    // let jsonCategories = JSON.parse(localStorage.getItem("categories"));
+    // dbService.getCategories();
+    // const entries = Object.entries(jsonCategories);
+    // const categories = [];
+    // for (const entry of entries) {
+    //   categories.push(entry[1]);
+    // }
 
-    this.addDbCategories(categories);
+    this.addDbCategories(dbService.getCategories());
   },
   computed: {
     ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),

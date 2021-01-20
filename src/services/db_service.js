@@ -6,15 +6,33 @@ export default {
     localStorage.setItem(uuid, JSON.stringify(newData));
     return newData;
   },
-  add_category(data) {
+  addCategory(title) {
     let categoryString = localStorage.getItem('categories');
     let category = JSON.parse(categoryString);
-    let newData = {...category, ...data};
+    if(category === null){ category = [];}
+    category.push(title);
+    localStorage.setItem('categories', JSON.stringify(category));
+    return category;
+  },
+  getCategories(){
+    return JSON.parse(localStorage.getItem("categories"));
+
+  },
+  remove_category(categoryName) {
+    // localStorage.removeItem();
+    let jsonCategories = JSON.parse(localStorage.getItem("categories"));
+    console.log(jsonCategories);
+    // const entries = Object.entries(jsonCategories);
+    // const keys = Object.keys(jsonCategories);
+
+    const newData = jsonCategories.filter(category => category !== categoryName);
+    // console.log(keys);
+    // console.log(entries);
+    // console.log(newData);
+    // console.log(JSON.stringify(newData));
+    
     localStorage.setItem('categories', JSON.stringify(newData));
     return newData;
-  },
-  remove_category(uuid) {
-    localStorage.removeItem(uuid);
   },
   add_note(uuid,title,text){
     console.log(title,uuid,text);

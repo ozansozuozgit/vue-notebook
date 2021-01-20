@@ -6,7 +6,7 @@
     </div>
 
     <h2>Categories</h2>
-    <div v-for="category in getCategories" :key="category.uuid">
+    <div v-for="(category, index) in getCategories" :key="index">
       <Category :category="category" />
     </div>
   </div>
@@ -15,7 +15,7 @@
 <script>
 import Category from "./Category";
 import { mapGetters } from "vuex";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 // import db from "../firebase/init";
 import { mapActions } from "vuex";
 import dbService from "../services/db_service";
@@ -28,9 +28,9 @@ export default {
   methods: {
     ...mapActions(["addCategory"]),
     handleCLick() {
-      const title = this.categoryTitle;
-      if (title === "") return;
-      const uuid = uuidv4();
+      // const title = this.categoryTitle;
+      if (this.categoryTitle === "") return;
+      // const uuid = uuidv4();
 
       // db.collection("categories")
       //   .add({
@@ -43,9 +43,8 @@ export default {
       //   .catch(function (error) {
       //     console.error("Error writing document: ", error);
       //   });
-      this.addCategory({ title, uuid });
-      dbService.add_category(this.getCategories);
-      console.log(this.getCategories);
+      this.addCategory(this.categoryTitle);
+      dbService.addCategory(this.categoryTitle);
       this.categoryTitle = "";
     },
   },

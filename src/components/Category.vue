@@ -1,7 +1,7 @@
 <template>
   <div class="category">
-    <h4 @click="handleClick(category.uuid)">
-      {{ category.title }}
+    <h4 @click="handleClick">
+      {{ category }}
     </h4>
     <a href="#" class="close" @click="handleDelete" />
   </div>
@@ -11,11 +11,11 @@
 <script>
 import { mapActions } from "vuex";
 import db from "../firebase/init";
-import dbService from '../services/db_service';
+import dbService from "../services/db_service";
 
 export default {
   props: {
-    category: Object,
+    category: String,
   },
   methods: {
     ...mapActions([
@@ -34,11 +34,11 @@ export default {
     },
     async handleDelete() {
       // Reset State
-      this.deleteCategory(this.category.uuid);
+      this.deleteCategory(this.category);
       this.updateCurrentNote(null);
       this.updateCurrentCategory(null);
       this.addDbNotes([]);
-      dbService.remove_category(this.category.uuid);
+      dbService.remove_category(this.category);
 
       // Remove Notes Text from Firestore Database
       // await db
@@ -76,8 +76,8 @@ export default {
       //   })
       //   .catch((e) => console.log(e));
     },
-    setCurrentCategory(uuid) {
-      this.updateCurrentCategory(uuid);
+    setCurrentCategory() {
+      this.updateCurrentCategory(this.category);
     },
 
     getNotes(uuid) {
