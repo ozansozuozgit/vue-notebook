@@ -10,7 +10,6 @@
 
 <script>
 import { mapActions } from "vuex";
-// import db from "../firebase/init";
 import dbService from "../services/db_service";
 
 export default {
@@ -29,9 +28,14 @@ export default {
 
     handleClick(uuid) {
       this.setCurrentCategory(uuid);
-      // this.getNotes(uuid);
       this.updateCurrentNote(null);
-      this.addDbNotes(dbService.getNotes(this.category));
+      let allNotes = dbService.getNotes(this.category);
+      console.log(allNotes);
+      if (allNotes === null) {
+        this.addDbNotes([]);
+        return;
+      }
+      this.addDbNotes(allNotes);
     },
     async handleDelete() {
       // Reset State
@@ -40,57 +44,11 @@ export default {
       this.updateCurrentCategory(null);
       this.addDbNotes([]);
       dbService.removeCategory(this.category);
-
-      // Remove Notes Text from Firestore Database
-      // await db
-      //   .collection("texts")
-      //   .where("categoryID", "==", this.category.uuid)
-      //   .get()
-      //   .then(function (querySnapshot) {
-      //     querySnapshot.forEach(function (doc) {
-      //       doc.ref.delete();
-      //     });
-      //   })
-      //   .catch((e) => console.log(e));
-
-      // // Remove Note from Firestore Database
-      // await db
-      //   .collection("notes")
-      //   .where("categoryID", "==", this.category.uuid)
-      //   .get()
-      //   .then(function (querySnapshot) {
-      //     querySnapshot.forEach(function (doc) {
-      //       doc.ref.delete();
-      //     });
-      //   })
-      //   .catch((e) => console.log(e));
-
-      // // Remove Category from Firestore Database
-      // await db
-      //   .collection("categories")
-      //   .where("uuid", "==", this.category.uuid)
-      //   .get()
-      //   .then(function (querySnapshot) {
-      //     querySnapshot.forEach(function (doc) {
-      //       doc.ref.delete();
-      //     });
-      //   })
-      //   .catch((e) => console.log(e));
     },
     setCurrentCategory() {
       this.updateCurrentCategory(this.category);
     },
-
-    getNotes() {
-      // db.collection("notes")
-      //   .where("categoryID", "==", uuid)
-      //   .get()
-      //   .then((snapshot) => {
-      //     let dbNotes = snapshot.docs.map((doc) => doc.data());
-      //     this.addDbNotes(dbNotes);
-      //   })
-      //   .catch((e) => console.log(e));
-    },
+    getNotes() {},
   },
 };
 </script>

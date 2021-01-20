@@ -17,7 +17,7 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 
-import db from "../firebase/init";
+// import db from "../firebase/init";
 import { mapActions, mapGetters } from "vuex";
 import dbService from "../services/db_service";
 export default {
@@ -66,16 +66,15 @@ export default {
     },
 
     async updateNote() {
-      try {
-        await db
-          .collection("notes")
-          .doc(this.getCurrentNote.uuid)
-          .update({ title: this.noteTitle, text: this.text });
-        console.log("NoteTitle successfully written!");
-      } catch (e) {
-        console.error("Error writing NoteTitle: ", e);
-      }
-
+      // try {
+      //   await db
+      //     .collection("notes")
+      //     .doc(this.getCurrentNote.uuid)
+      //     .update({ title: this.noteTitle, text: this.text });
+      //   console.log("NoteTitle successfully written!");
+      // } catch (e) {
+      //   console.error("Error writing NoteTitle: ", e);
+      // }
       // .then(function () {
       //   console.log("NoteTitle successfully written!");
       // })
@@ -97,7 +96,7 @@ export default {
       this.noteTitle = "";
     },
     "$store.state.currentNote": function () {
-      this.text = "";
+      // this.text = "";
       if (this.getCurrentNote) {
         this.noteTitle = this.getCurrentNote.title;
       }
@@ -106,6 +105,9 @@ export default {
       this.$set(this, "text", this.getText);
       // this.text = this.getText;
     },
+    // text: function (val) {
+    //   dbService.updateNote(this.getCurrentNote.title,this.getCurrentNote.uuid, val);
+    // },
   },
 };
 </script>

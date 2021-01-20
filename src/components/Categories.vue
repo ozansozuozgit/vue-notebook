@@ -15,8 +15,6 @@
 <script>
 import Category from "./Category";
 import { mapGetters } from "vuex";
-// import { v4 as uuidv4 } from "uuid";
-// import db from "../firebase/init";
 import { mapActions } from "vuex";
 import dbService from "../services/db_service";
 
@@ -28,21 +26,8 @@ export default {
   methods: {
     ...mapActions(["addCategory"]),
     handleCLick() {
-      // const title = this.categoryTitle;
       if (this.categoryTitle === "") return;
-      // const uuid = uuidv4();
-
-      // db.collection("categories")
-      //   .add({
-      //     title,
-      //     uuid,
-      //   })
-      //   .then(function () {
-      //     console.log("Document successfully written!");
-      //   })
-      //   .catch(function (error) {
-      //     console.error("Error writing document: ", error);
-      //   });
+      console.log(this.categoryTitle);
       this.addCategory(this.categoryTitle);
       dbService.addCategory(this.categoryTitle);
       this.categoryTitle = "";
@@ -54,7 +39,6 @@ export default {
   computed: {
     ...mapGetters(["getCategories"]),
   },
-
 };
 </script>
 

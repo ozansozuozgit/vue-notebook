@@ -39,5 +39,13 @@ export default {
     const newData = jsonNotes.filter(note => note.uuid !== uuid);
     localStorage.setItem(`${category}_notes`, JSON.stringify(newData));
     return newData;
+  },
+  updateNote(category,uuid,text){
+    let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
+    console.log(jsonNotes);
+
+    let note = jsonNotes.find(note=>note.id === uuid);
+    console.log(note)
+    console.log(text);
   }
 };
