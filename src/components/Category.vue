@@ -37,7 +37,7 @@ export default {
       }
       this.addDbNotes(allNotes);
     },
-    async handleDelete() {
+     handleDelete() {
       // Reset State
       this.deleteCategory(this.category);
       this.updateCurrentNote(null);

@@ -42,13 +42,15 @@ export default {
         this.getCurrentCategory,
         this.noteTitle,
         this.text,
-        uuid
+        uuid,
+        new Date().toLocaleString()
       );
       this.addNotes({
         category: this.getCurrentCategory,
         title: this.noteTitle,
         text: this.text,
         uuid,
+        date: new Date().toLocaleString(),
       });
 
       this.updateCurrentNote(uuid);
@@ -78,7 +80,6 @@ export default {
       this.$set(this, "text", this.getText);
       // this.text = this.getText;
     },
-
   },
 };
 </script>

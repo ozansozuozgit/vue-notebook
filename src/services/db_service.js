@@ -1,11 +1,5 @@
 export default {
-  update_category(uuid, data) {
-    let categoryString = localStorage.getItem(uuid);
-    let category = JSON.parse(categoryString);
-    let newData = Object.assign({}, category, data);
-    localStorage.setItem(uuid, JSON.stringify(newData));
-    return newData;
-  },
+ 
   addCategory(title) {
     let categoryString = localStorage.getItem('categories');
     let category = JSON.parse(categoryString);
@@ -23,11 +17,11 @@ export default {
     localStorage.setItem('categories', JSON.stringify(newData));
     return newData;
   },
-  addNote(category,title,text,uuid){
+  addNote(category,title,text,uuid,date){
     let notesString = localStorage.getItem(`${category}_notes`);
     let notes = JSON.parse(notesString);
     if(notes === null){ notes = [];}
-    notes.push({title,text,uuid,category});
+    notes.push({title,text,uuid,category,date});
     localStorage.setItem(`${category}_notes`, JSON.stringify(notes));
     return notes;
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="notes_container">
-    <select v-model="selected">
+    <select v-model="selected" @change="sortBy()">
       <option disabled value="">Filter By</option>
       <option>Newest</option>
       <option>Oldest</option>
@@ -20,6 +20,28 @@ export default {
   name: "Notes",
   data: () => {
     return { selected: "" };
+  },
+  methods: {
+    sortBy() {
+      console.log(this.selected);
+      if (this.selected === "Newest") {
+        this.orderByNewest();
+      } else if (this.selected === "Oldest") {
+        this.orderByOldest();
+      } else {
+        return;
+      }
+    },
+    orderByNewest() {
+      return this.getNotes.sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date);
+      });
+    },
+    orderByOldest() {
+      return this.getNotes.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+    },
   },
   components: {
     Note,
