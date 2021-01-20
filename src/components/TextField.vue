@@ -29,6 +29,7 @@ export default {
   methods: {
     ...mapActions(["addNotes", "updateCurrentNote", "addDbNotes"]),
     handleUpdate() {
+      if (!this.getCurrentNote) return;
       let updatedNotes = dbService.updateNote(
         this.getCurrentCategory,
         this.getCurrentNote.uuid,
