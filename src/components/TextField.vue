@@ -1,5 +1,8 @@
 <template>
   <div class="textfield_container">
+    <div class="textfield_nav">
+      <img src="../assets/add_note.svg" alt="add_note" @click="addNewNote" />
+    </div>
     <input
       type="text"
       v-model="noteTitle"
@@ -8,7 +11,6 @@
       @change="handleUpdate"
     />
     <textarea v-model="text" :disabled="isDisabled" @change="handleUpdate" />
-    <button @click="addNewNote">New Note</button>
   </div>
 </template>
 
@@ -28,28 +30,36 @@ export default {
   methods: {
     ...mapActions(["addNotes", "updateCurrentNote", "addDbNotes"]),
     handleUpdate() {
-      if (!this.getCurrentNote) return;
-      let updatedNotes = dbService.updateNote(
-        this.getCurrentCategory,
-        this.getCurrentNote.uuid,
-        this.text,
-        this.noteTitle
-      );
-      this.addDbNotes(updatedNotes);
+      if (this.noteTitle === "") {
+        alert("Please enter not title!");
+        return;
+      }
+      if (this.getCurrentNote !== null) {
+        let updatedNotes = dbService.updateNote(
+          this.getCurrentCategory,
+          this.getCurrentNote.uuid,
+          this.text,
+          this.noteTitle
+        );
+        this.addDbNotes(updatedNotes);
+      } else {
+        const uuid = uuidv4();
+        const newNote = {
+          category: this.getCurrentCategory,
+          title: this.noteTitle,
+          text: this.text,
+          uuid,
+          date: new Date().toLocaleString(),
+        };
+        dbService.addNote(newNote);
+        this.addNotes(newNote);
+        this.updateCurrentNote(newNote);
+      }
     },
     addNewNote() {
-      const uuid = uuidv4();
-      const newNote = {
-        category: this.getCurrentCategory,
-        title: this.noteTitle,
-        text: this.text,
-        uuid,
-        date: new Date().toLocaleString(),
-      };
-      dbService.addNote(newNote);
-      this.addNotes(newNote);
-
-      this.updateCurrentNote(newNote);
+      this.noteTitle = "";
+      this.text = "";
+      this.updateCurrentNote(null);
     },
   },
   computed: {
@@ -64,7 +74,11 @@ export default {
       }
     },
     "$store.state.currentNote": function () {
-      if (this.getCurrentNote === null) return;
+      if (this.getCurrentNote === null) {
+        this.noteTitle = "";
+        this.text = "";
+        return;
+      }
 
       this.$set(this, "text", this.getCurrentNote.text);
       this.$set(this, "noteTitle", this.getCurrentNote.title);
@@ -107,6 +121,16 @@ button {
   display: block;
   &:hover {
     background-color: rgb(84, 81, 81);
+    cursor: pointer;
+  }
+}
+.textfield_nav {
+  border: 1px dotted black;
+  width: 80%;
+  img {
+    height: 22px;
+    width: 22px;
+    background: rgb(132, 223, 13);
     cursor: pointer;
   }
 }

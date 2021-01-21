@@ -2,7 +2,7 @@
   <div class="categories_container">
     <div class="category_nav">
       <input type="text" v-model="categoryTitle" placeholder="Category Title" />
-      <img src="../assets/add.svg" @click="handleCLick" />
+      <img src="../assets/add_category.svg" @click="handleCLick" />
     </div>
 
     <h2>Categories</h2>

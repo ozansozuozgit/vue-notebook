@@ -36,7 +36,6 @@ export default {
   },
   updateNote(category,uuid,textContent,noteTitle){
     let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
-    console.log(noteTitle);
     jsonNotes.find(note=>note.uuid === uuid).text = textContent;
     jsonNotes.find(note=>note.uuid === uuid).title = noteTitle;
     localStorage.setItem(`${category}_notes`, JSON.stringify(jsonNotes));
