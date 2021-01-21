@@ -14,6 +14,7 @@ export default {
   removeCategory(categoryName) {
     let jsonCategories = JSON.parse(localStorage.getItem("categories"));
     const newData = jsonCategories.filter(category => category !== categoryName);
+    localStorage.removeItem(`${categoryName}_notes`);
     localStorage.setItem('categories', JSON.stringify(newData));
     return newData;
   },
