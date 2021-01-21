@@ -30,14 +30,20 @@ export default {
       this.setCurrentCategory(uuid);
       this.updateCurrentNote(null);
       let allNotes = dbService.getNotes(this.category);
-      console.log(allNotes);
       if (allNotes === null) {
         this.addDbNotes([]);
         return;
       }
       this.addDbNotes(allNotes);
     },
-     handleDelete() {
+    handleDelete() {
+      if (
+        !confirm(
+          `Are you sure you want to delete the category ${this.category} and its notes?`
+        )
+      )
+        return;
+
       // Reset State
       this.deleteCategory(this.category);
       this.updateCurrentNote(null);
