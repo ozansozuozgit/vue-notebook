@@ -5,6 +5,7 @@
       v-model="noteTitle"
       placeholder="Note Title"
       :disabled="isDisabled"
+      @change="handleUpdate"
     />
     <textarea v-model="text" :disabled="isDisabled" @change="handleUpdate" />
     <button @click="addNewNote">New Note</button>
@@ -31,28 +32,24 @@ export default {
       let updatedNotes = dbService.updateNote(
         this.getCurrentCategory,
         this.getCurrentNote.uuid,
-        this.text
+        this.text,
+        this.noteTitle
       );
       this.addDbNotes(updatedNotes);
     },
     addNewNote() {
       const uuid = uuidv4();
-      dbService.addNote(
-        this.getCurrentCategory,
-        this.noteTitle,
-        this.text,
-        uuid,
-        new Date().toLocaleString()
-      );
-      this.addNotes({
+      const newNote = {
         category: this.getCurrentCategory,
         title: this.noteTitle,
         text: this.text,
         uuid,
         date: new Date().toLocaleString(),
-      });
+      };
+      dbService.addNote(newNote);
+      this.addNotes(newNote);
 
-      this.updateCurrentNote(uuid);
+      this.updateCurrentNote(newNote);
     },
   },
   computed: {
@@ -60,24 +57,17 @@ export default {
   },
   watch: {
     getCurrentCategory: function (newValue) {
-      if (newValue === null) {
+      if (newValue !== null) {
         this.text = "";
-      } else {
+        this.noteTitle = "";
         this.isDisabled = false;
       }
-      this.noteTitle = "";
     },
     "$store.state.currentNote": function () {
-      this.noteTitle = "";
-      this.$set(this, "text", "");
+      if (this.getCurrentNote === null) return;
 
-      if (this.getCurrentNote) {
-        this.noteTitle = this.getCurrentNote.title;
-      }
-    },
-    "$store.state.text": function () {
-      this.$set(this, "text", this.getText);
-      // this.text = this.getText;
+      this.$set(this, "text", this.getCurrentNote.text);
+      this.$set(this, "noteTitle", this.getCurrentNote.title);
     },
   },
 };

@@ -17,6 +17,7 @@ export default {
   methods: {
     ...mapActions(["updateCurrentNote", "addDbText", "deleteNote"]),
     handleClick() {
+      console.log(this.note);
       this.updateCurrentNote(this.note);
       this.getText();
     },
@@ -25,6 +26,7 @@ export default {
       dbService.removeNote(this.note);
     },
     getText() {
+      console.log(this.note.text);
       this.addDbText(this.note.text);
     },
   },
