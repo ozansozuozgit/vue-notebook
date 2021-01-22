@@ -15,9 +15,9 @@ export default {
     note: Object,
   },
   methods: {
-    ...mapActions(["updateCurrentNote", "addDbText", "deleteNote"]),
+    ...mapActions(["setCurrentNote", "addDbText", "deleteNote"]),
     handleClick() {
-      this.updateCurrentNote(this.note);
+      this.setCurrentNote(this.note);
       this.addDbText(this.note.text);
     },
     handleDelete() {

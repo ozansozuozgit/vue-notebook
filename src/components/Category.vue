@@ -18,17 +18,17 @@ export default {
   },
   methods: {
     ...mapActions([
-      "updateCurrentCategory",
-      "updateCurrentNote",
+      "setCurrentCategory",
+      "setCurrentNote",
       "addDbNotes",
       "deleteCategory",
       "addDbText",
       "addDbNotes",
     ]),
 
-    handleClick(uuid) {
-      this.setCurrentCategory(uuid);
-      this.updateCurrentNote(null);
+    handleClick() {
+      this.setCurrentCategory(this.category);
+      this.setCurrentNote(null);
       let allNotes = dbService.getNotes(this.category);
       if (allNotes === null) {
         this.addDbNotes([]);
@@ -46,13 +46,10 @@ export default {
 
       // Reset State
       this.deleteCategory(this.category);
-      this.updateCurrentNote(null);
-      this.updateCurrentCategory(null);
+      this.setCurrentNote(null);
+      this.setCurrentCategory(null);
       this.addDbNotes([]);
       dbService.removeCategory(this.category);
-    },
-    setCurrentCategory() {
-      this.updateCurrentCategory(this.category);
     },
   },
 };

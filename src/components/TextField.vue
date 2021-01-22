@@ -28,7 +28,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNotes", "updateCurrentNote", "addDbNotes"]),
+    ...mapActions(["addNotes", "setCurrentNote", "addDbNotes"]),
     handleUpdate() {
       if (this.noteTitle === "") {
         alert("Please enter not title!");
@@ -53,13 +53,13 @@ export default {
         };
         dbService.addNote(newNote);
         this.addNotes(newNote);
-        this.updateCurrentNote(newNote);
+        this.setCurrentNote(newNote);
       }
     },
     addNewNote() {
       this.noteTitle = "";
       this.text = "";
-      this.updateCurrentNote(null);
+      this.setCurrentNote(null);
     },
   },
   computed: {
