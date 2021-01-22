@@ -54,7 +54,6 @@ export default {
     setCurrentCategory() {
       this.updateCurrentCategory(this.category);
     },
-    getNotes() {},
   },
 };
 </script>

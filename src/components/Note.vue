@@ -17,24 +17,20 @@ export default {
   methods: {
     ...mapActions(["updateCurrentNote", "addDbText", "deleteNote"]),
     handleClick() {
-      console.log(this.note);
       this.updateCurrentNote(this.note);
-      this.getText();
+      this.addDbText(this.note.text);
     },
     handleDelete() {
       if (
         !confirm(
           `Are you sure you want to delete the note '${this.note.title}' and its notes?`
         )
-      )
+      ) {
         return;
+      }
 
       this.deleteNote(this.note.uuid);
       dbService.removeNote(this.note);
-    },
-    getText() {
-      console.log(this.note.text);
-      this.addDbText(this.note.text);
     },
   },
 };

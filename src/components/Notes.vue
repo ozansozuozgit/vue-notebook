@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     sortBy() {
-      console.log(this.selected);
       if (this.selected === "Newest") {
         this.orderByNewest();
       } else if (this.selected === "Oldest") {

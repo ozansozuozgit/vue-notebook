@@ -73,15 +73,15 @@ export default {
         this.isDisabled = false;
       }
     },
-    "$store.state.currentNote": function () {
-      if (this.getCurrentNote === null) {
+    "$store.state.currentNote": function (newValue) {
+      if (newValue === null) {
         this.noteTitle = "";
         this.text = "";
         return;
       }
 
-      this.$set(this, "text", this.getCurrentNote.text);
-      this.$set(this, "noteTitle", this.getCurrentNote.title);
+      this.$set(this, "text", newValue.text);
+      this.$set(this, "noteTitle", newValue.title);
     },
   },
 };
