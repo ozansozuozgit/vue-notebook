@@ -30,8 +30,8 @@ export default {
   methods: {
     ...mapActions(["addNotes", "setCurrentNote", "addDbNotes"]),
     handleUpdate() {
-      if (this.noteTitle === "") {
-        alert("Please enter not title!");
+      if (this.noteTitle.trim() === "") {
+        alert("Please enter note title!");
         return;
       }
       if (this.getCurrentNote !== null) {

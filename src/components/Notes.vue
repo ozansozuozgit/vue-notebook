@@ -21,6 +21,9 @@ export default {
   data: () => {
     return { selected: "" };
   },
+  components: {
+    Note,
+  },
   methods: {
     sortBy() {
       if (this.selected === "Newest") {
@@ -41,9 +44,6 @@ export default {
         return new Date(a.date) - new Date(b.date);
       });
     },
-  },
-  components: {
-    Note,
   },
   computed: {
     ...mapGetters(["getNotes"]),

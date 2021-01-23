@@ -1,8 +1,13 @@
 <template>
   <div class="categories_container">
     <div class="category_nav">
-      <input type="text" v-model="categoryTitle" placeholder="Category Title" />
-      <img src="../assets/add_category.svg" @click="handleCLick" />
+      <input
+        type="text"
+        v-model="categoryTitle"
+        placeholder="Category Title"
+        @keyup.enter="handleAddCategory"
+      />
+      <img src="../assets/add_category.svg" @click="handleAddCategory" />
     </div>
 
     <h2>Categories</h2>
@@ -25,8 +30,21 @@ export default {
   },
   methods: {
     ...mapActions(["addCategory"]),
-    handleCLick() {
-      if (this.categoryTitle === "") return;
+    handleAddCategory() {
+      if (this.categoryTitle.trim() === "") {
+        alert("Please enter a valid category name.");
+        return;
+      }
+
+      const allCategories = dbService.getCategories();
+      if (allCategories !== null) {
+        for (let category of allCategories) {
+          if (this.categoryTitle === category) {
+            alert(`${category} already exists!`);
+            return;
+          }
+        }
+      }
       this.addCategory(this.categoryTitle);
       dbService.addCategory(this.categoryTitle);
       this.categoryTitle = "";
