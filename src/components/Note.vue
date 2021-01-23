@@ -23,12 +23,12 @@ export default {
     handleDelete() {
       if (
         !confirm(
-          `Are you sure you want to delete the note '${this.note.title}' and its notes?`
+          `Are you sure you want to delete the note '${this.note.title}'?`
         )
       ) {
         return;
       }
-
+      this.setCurrentNote(null);
       this.deleteNote(this.note.uuid);
       dbService.removeNote(this.note);
     },

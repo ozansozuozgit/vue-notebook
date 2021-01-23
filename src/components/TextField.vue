@@ -1,5 +1,5 @@
 <template>
-  <div class="textfield_container">
+  <div class="textfield_container" :class="{ not_active: isDisabled }">
     <div class="textfield_nav">
       <img src="../assets/add_note.svg" alt="add_note" @click="addNewNote" />
     </div>
@@ -71,6 +71,8 @@ export default {
         this.text = "";
         this.noteTitle = "";
         this.isDisabled = false;
+      } else {
+        this.isDisabled = true;
       }
     },
     "$store.state.currentNote": function (newValue) {
@@ -90,10 +92,16 @@ export default {
 <style lang='scss' scoped>
 .textfield_container {
   flex: 0.5;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.not_active {
+  background: #ccc;
 }
 input {
   border: 1px solid black;
-  width: 80%;
+  width: 100%;
   height: 45px;
   border-bottom: none;
   border-top-left-radius: 10px;
@@ -102,14 +110,16 @@ input {
   font-size: 22px;
   font-weight: bold;
   outline: none;
+  flex: 0.1;
 }
 textarea {
   border: 1px solid black;
-  height: 80%;
-  width: 80%;
+  width: 100%;
   padding: 10px;
   outline: none;
   font-size: 18px;
+  flex: 1;
+  resize: none;
 }
 button {
   border: 1px solid black;
@@ -126,7 +136,9 @@ button {
 }
 .textfield_nav {
   border: 1px dotted black;
-  width: 80%;
+  width: 100%;
+  flex: 0.02;
+
   img {
     height: 22px;
     width: 22px;
