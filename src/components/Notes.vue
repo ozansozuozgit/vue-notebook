@@ -1,6 +1,6 @@
 <template>
   <div class="notes_container">
-    <input type="text" v-model="searchText" />
+    <input type="text" v-model="searchText" placeholder="Search Notes" />
     <select v-model="selected" @change="sortBy()">
       <option disabled value="">Filter By</option>
       <option>Newest</option>
@@ -61,7 +61,7 @@ export default {
       let results = dbService
         .getNotes(this.getCurrentCategory)
         .filter((note) => {
-          return note.text.includes(newVal);
+          return note.text.includes(newVal) || note.title.includes(newVal);
         });
       this.addDbNotes(results);
     },
