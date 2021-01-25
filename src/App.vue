@@ -24,7 +24,11 @@ export default {
 
   mounted() {
     const allCategories = dbService.getCategories();
-    if (allCategories === null) return;
+    if (allCategories === null) {
+      dbService.addCategory("notes");
+      this.addDbCategories(["notes"]);
+      return;
+    }
     this.addDbCategories(allCategories);
   },
   computed: {

@@ -9,7 +9,6 @@
       />
       <img src="../assets/add_category.svg" @click="handleAddCategory" />
     </div>
-
     <h2>Categories</h2>
     <div v-for="(category, index) in getCategories" :key="index">
       <Category :category="category" />
@@ -31,7 +30,7 @@ export default {
   methods: {
     ...mapActions(["addCategory"]),
     handleAddCategory() {
-      const trimmedTitle = this.categoryTitle.trim();
+      const trimmedTitle = this.categoryTitle.trim().toLowerCase();
       if (trimmedTitle === "") {
         alert("Please enter a valid category name.");
         return;

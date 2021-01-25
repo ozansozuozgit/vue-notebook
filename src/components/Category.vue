@@ -1,9 +1,14 @@
 <template>
   <div class="category">
     <h4 @click="handleClick">
-      {{ category }}
+      {{ category.charAt(0).toUpperCase() + category.slice(1) }}
     </h4>
-    <a href="#" class="close" @click="handleDelete" />
+    <a
+      href="#"
+      class="close"
+      @click="handleDelete"
+      v-if="category !== 'notes'"
+    />
   </div>
 </template>
 
