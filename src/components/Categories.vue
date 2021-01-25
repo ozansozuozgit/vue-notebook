@@ -31,7 +31,8 @@ export default {
   methods: {
     ...mapActions(["addCategory"]),
     handleAddCategory() {
-      if (this.categoryTitle.trim() === "") {
+      const trimmedTitle = this.categoryTitle.trim();
+      if (trimmedTitle === "") {
         alert("Please enter a valid category name.");
         return;
       }
@@ -39,14 +40,14 @@ export default {
       const allCategories = dbService.getCategories();
       if (allCategories !== null) {
         for (let category of allCategories) {
-          if (this.categoryTitle === category) {
+          if (trimmedTitle === category) {
             alert(`${category} already exists!`);
             return;
           }
         }
       }
-      this.addCategory(this.categoryTitle);
-      dbService.addCategory(this.categoryTitle);
+      this.addCategory(trimmedTitle);
+      dbService.addCategory(this.categoryTitle.replace(/ /g, ""));
       this.categoryTitle = "";
     },
   },
