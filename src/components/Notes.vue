@@ -1,5 +1,6 @@
 <template>
   <div class="notes_container">
+    <input type="text" v-model="searchText" />
     <select v-model="selected" @change="sortBy()">
       <option disabled value="">Filter By</option>
       <option>Newest</option>
@@ -13,18 +14,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import dbService from "../services/db_service";
+
 import Note from "./Note";
 
 export default {
   name: "Notes",
   data: () => {
-    return { selected: "" };
+    return { selected: "", searchText: "", found: false };
   },
   components: {
     Note,
   },
   methods: {
+    ...mapActions(["addDbNotes"]),
     sortBy() {
       if (this.selected === "Newest") {
         this.orderByNewest();
@@ -46,7 +50,21 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getNotes"]),
+    ...mapGetters(["getNotes", "getCurrentCategory"]),
+  },
+  watch: {
+    searchText: function (newVal) {
+      if (newVal === "") {
+        this.addDbNotes(dbService.getNotes(this.getCurrentCategory));
+        return;
+      }
+      let results = dbService
+        .getNotes(this.getCurrentCategory)
+        .filter((note) => {
+          return note.text.includes(newVal);
+        });
+      this.addDbNotes(results);
+    },
   },
 };
 </script>
@@ -75,5 +93,8 @@ select {
     background-color: grey;
     cursor: pointer;
   }
+}
+input {
+  border: 1px solid black;
 }
 </style>

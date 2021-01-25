@@ -9,9 +9,11 @@ export default {
     localStorage.setItem('categories', JSON.stringify(category));
     return category;
   },
+  
   getCategories() {
     return JSON.parse(localStorage.getItem('categories'));
   },
+
   removeCategory(categoryName) {
     let jsonCategories = JSON.parse(localStorage.getItem('categories'));
     const newData = jsonCategories.filter(
@@ -21,6 +23,7 @@ export default {
     localStorage.setItem('categories', JSON.stringify(newData));
     return newData;
   },
+
   addNote({ category, title, text, uuid, date }) {
     let notesString = localStorage.getItem(`${category}_notes`);
     let notes = JSON.parse(notesString);
@@ -31,15 +34,18 @@ export default {
     localStorage.setItem(`${category}_notes`, JSON.stringify(notes));
     return notes;
   },
+
   getNotes(category) {
     return JSON.parse(localStorage.getItem(`${category}_notes`));
   },
+
   removeNote({ uuid, category }) {
     let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
     const newData = jsonNotes.filter((note) => note.uuid !== uuid);
     localStorage.setItem(`${category}_notes`, JSON.stringify(newData));
     return newData;
   },
+
   updateNote(category, uuid, textContent, noteTitle) {
     let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
     jsonNotes.find((note) => note.uuid === uuid).text = textContent;

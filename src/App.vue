@@ -27,15 +27,24 @@ export default {
     if (allCategories === null) {
       dbService.addCategory("notes");
       this.addDbCategories(["notes"]);
+      this.setCurrentCategory("notes");
+
       return;
     }
     this.addDbCategories(allCategories);
+    this.setCurrentCategory("notes");
+    let allNotes = dbService.getNotes("notes");
+    if (allNotes === null) {
+      this.addDbNotes([]);
+      return;
+    }
+    this.addDbNotes(allNotes);
   },
   computed: {
     ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),
   },
   methods: {
-    ...mapActions(["addDbCategories"]),
+    ...mapActions(["addDbCategories", "setCurrentCategory", "addDbNotes"]),
   },
 };
 </script>
