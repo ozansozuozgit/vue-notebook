@@ -1,14 +1,12 @@
 <template>
   <div class="app_container">
-    <Categories />
-    <Notes />
+    <Notes :notes='notes'/>
     <TextField />
   </div>
 </template>
 
 <script>
 import TextField from "./components/TextField";
-import Categories from "./components/Categories";
 import Notes from "./components/Notes";
 import dbService from "./services/db_service";
 import { mapActions, mapGetters } from "vuex";
@@ -17,28 +15,18 @@ export default {
   name: "App",
 
   components: {
-    Categories,
     Notes,
     TextField,
   },
-
+  data: () => {
+    return { notes: [] };
+  },
   mounted() {
-    const allCategories = dbService.getCategories();
-    if (allCategories === null) {
-      dbService.addCategory("notes");
-      this.addDbCategories(["notes"]);
-      this.setCurrentCategory("notes");
-
-      return;
-    }
-    this.addDbCategories(allCategories);
-    this.setCurrentCategory("notes");
-    let allNotes = dbService.getNotes("notes");
+    const allNotes = dbService.getNotes();
     if (allNotes === null) {
-      this.addDbNotes([]);
       return;
     }
-    this.addDbNotes(allNotes);
+    this.notes.push(allNotes);
   },
   computed: {
     ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),
