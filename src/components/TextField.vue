@@ -10,12 +10,10 @@
       class="title"
       @change="handleUpdate"
     />
-    <input
-      type="text"
-      v-model="tags"
-      class="tags"
-      placeholder="Enter Tags"
-      @change="handleUpdate"
+    <vue-tags-input
+      v-model="tag"
+      :tags="tags"
+      @tags-changed="(newTags) => (tags = newTags)"
     />
     <textarea v-model="text" @change="handleUpdate" />
   </div>
@@ -24,14 +22,18 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import { mapActions, mapGetters } from "vuex";
+import VueTagsInput from "@johmun/vue-tags-input";
+
 import dbService from "../services/db_service";
 export default {
   name: "TextField",
+  components: { VueTagsInput },
   data: () => {
     return {
       text: "",
       noteTitle: "",
-      tags: "",
+      tag: "",
+      tags: [],
     };
   },
   methods: {
@@ -41,13 +43,13 @@ export default {
         alert("Please enter note title!");
         return;
       }
-
+      console.log(this.tags);
       if (this.getCurrentNote !== null) {
         let updatedNotes = dbService.updateNote(
           this.tags,
           this.getCurrentNote.uuid,
           this.text,
-          this.noteTitle,
+          this.noteTitle
         );
 
         this.addDbNotes(updatedNotes);
@@ -67,7 +69,8 @@ export default {
     },
     addNewNote() {
       this.noteTitle = "";
-      this.tags = "";
+      this.tags = [];
+      this.tag = "";
       this.text = "";
       this.setCurrentNote(null);
     },
@@ -80,13 +83,17 @@ export default {
       if (newValue === null) {
         this.noteTitle = "";
         this.text = "";
-        this.tags = "";
+        this.tags = [];
+        this.tag = "";
         return;
       }
-
       this.$set(this, "text", newValue.text);
       this.$set(this, "noteTitle", newValue.title);
       this.$set(this, "tags", newValue.tags);
+    },
+    tags: function (newValue) {
+      if (!newValue.length) return;
+      this.handleUpdate();
     },
   },
 };

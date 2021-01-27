@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@firebase/firestore": "^2.1.2",
+    "@johmun/vue-tags-input": "^2.1.0",
     "core-js": "^3.6.5",
     "firebase": "^8.2.2",
     "uuid": "^8.3.2",
