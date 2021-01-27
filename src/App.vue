@@ -1,6 +1,6 @@
 <template>
   <div class="app_container">
-    <Notes :notes='notes'/>
+    <Notes />
     <TextField />
   </div>
 </template>
@@ -18,15 +18,12 @@ export default {
     Notes,
     TextField,
   },
-  data: () => {
-    return { notes: [] };
-  },
   mounted() {
     const allNotes = dbService.getNotes();
     if (allNotes === null) {
       return;
     }
-    this.notes.push(allNotes);
+    this.addDbNotes(allNotes);
   },
   computed: {
     ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),

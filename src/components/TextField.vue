@@ -1,5 +1,5 @@
 <template>
-  <div class="textfield_container" :class="{ not_active: isDisabled }">
+  <div class="textfield_container">
     <div class="textfield_nav">
       <img src="../assets/add_note.svg" alt="add_note" @click="addNewNote" />
     </div>
@@ -7,10 +7,17 @@
       type="text"
       v-model="noteTitle"
       placeholder="Note Title"
-      :disabled="isDisabled"
+      class="title"
       @change="handleUpdate"
     />
-    <textarea v-model="text" :disabled="isDisabled" @change="handleUpdate" />
+    <input
+      type="text"
+      v-model="tags"
+      class="tags"
+      placeholder="Enter Tags"
+      @change="handleUpdate"
+    />
+    <textarea v-model="text" @change="handleUpdate" />
   </div>
 </template>
 
@@ -23,8 +30,8 @@ export default {
   data: () => {
     return {
       text: "",
-      isDisabled: true,
       noteTitle: "",
+      tags: "",
     };
   },
   methods: {
@@ -34,19 +41,21 @@ export default {
         alert("Please enter note title!");
         return;
       }
+
       if (this.getCurrentNote !== null) {
         let updatedNotes = dbService.updateNote(
-          this.getCurrentCategory,
+          this.tags,
           this.getCurrentNote.uuid,
           this.text,
-          this.noteTitle
+          this.noteTitle,
         );
+
         this.addDbNotes(updatedNotes);
       } else {
         const uuid = uuidv4();
         const newNote = {
-          category: this.getCurrentCategory,
           title: this.noteTitle,
+          tags: this.tags,
           text: this.text,
           uuid,
           date: new Date().toLocaleString(),
@@ -58,6 +67,7 @@ export default {
     },
     addNewNote() {
       this.noteTitle = "";
+      this.tags = "";
       this.text = "";
       this.setCurrentNote(null);
     },
@@ -66,24 +76,17 @@ export default {
     ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
   },
   watch: {
-    getCurrentCategory: function (newValue) {
-      if (newValue !== null) {
-        this.text = "";
-        this.noteTitle = "";
-        this.isDisabled = false;
-      } else {
-        this.isDisabled = true;
-      }
-    },
     "$store.state.currentNote": function (newValue) {
       if (newValue === null) {
         this.noteTitle = "";
         this.text = "";
+        this.tags = "";
         return;
       }
 
       this.$set(this, "text", newValue.text);
       this.$set(this, "noteTitle", newValue.title);
+      this.$set(this, "tags", newValue.tags);
     },
   },
 };
@@ -96,10 +99,8 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.not_active {
-  background: #ccc;
-}
-input {
+
+.title {
   border: 1px solid black;
   width: 100%;
   height: 45px;
@@ -111,6 +112,9 @@ input {
   font-weight: bold;
   outline: none;
   flex: 0.1;
+}
+.tags {
+  border: 1px solid black;
 }
 textarea {
   border: 1px solid black;

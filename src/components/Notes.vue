@@ -21,6 +21,7 @@ import Note from "./Note";
 
 export default {
   name: "Notes",
+
   data: () => {
     return { selected: "", searchText: "", found: false };
   },
@@ -49,20 +50,19 @@ export default {
       });
     },
   },
+
   computed: {
     ...mapGetters(["getNotes", "getCurrentCategory"]),
   },
   watch: {
     searchText: function (newVal) {
       if (newVal === "") {
-        this.addDbNotes(dbService.getNotes(this.getCurrentCategory));
+        this.addDbNotes(dbService.getNotes());
         return;
       }
-      let results = dbService
-        .getNotes(this.getCurrentCategory)
-        .filter((note) => {
-          return note.text.includes(newVal) || note.title.includes(newVal);
-        });
+      let results = dbService.getNotes().filter((note) => {
+        return note.text.includes(newVal) || note.title.includes(newVal);
+      });
       this.addDbNotes(results);
     },
   },

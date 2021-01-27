@@ -30,7 +30,7 @@ export default {
       }
       this.setCurrentNote(null);
       this.deleteNote(this.note.uuid);
-      dbService.removeNote(this.note);
+      dbService.removeNote(this.note.uuid);
     },
   },
 };

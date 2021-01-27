@@ -39,18 +39,20 @@ export default {
     return JSON.parse(localStorage.getItem(`notes`));
   },
 
-  removeNote({ uuid, category }) {
-    let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
+  removeNote(uuid) {
+    let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
     const newData = jsonNotes.filter((note) => note.uuid !== uuid);
-    localStorage.setItem(`${category}_notes`, JSON.stringify(newData));
+    localStorage.setItem(`notes`, JSON.stringify(newData));
     return newData;
   },
 
-  updateNote(category, uuid, textContent, noteTitle) {
-    let jsonNotes = JSON.parse(localStorage.getItem(`${category}_notes`));
+  updateNote(noteTags, uuid, textContent, noteTitle) {
+    let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
     jsonNotes.find((note) => note.uuid === uuid).text = textContent;
     jsonNotes.find((note) => note.uuid === uuid).title = noteTitle;
-    localStorage.setItem(`${category}_notes`, JSON.stringify(jsonNotes));
+    jsonNotes.find((note) => note.uuid === uuid).tags = noteTags;
+
+    localStorage.setItem(`notes`, JSON.stringify(jsonNotes));
     return jsonNotes;
   },
 };
