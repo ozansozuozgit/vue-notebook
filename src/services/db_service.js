@@ -48,11 +48,10 @@ export default {
 
   updateNote(noteTags, uuid, textContent, noteTitle,tagList) {
     let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
-    jsonNotes.find((note) => note.uuid === uuid).text = textContent;
-    jsonNotes.find((note) => note.uuid === uuid).title = noteTitle;
-    jsonNotes.find((note) => note.uuid === uuid).tags = noteTags;
-    jsonNotes.find((note) => note.uuid === uuid).tagList = tagList;
-    localStorage.setItem(`notes`, JSON.stringify(jsonNotes));
+    const newState = jsonNotes.map(note =>
+      note.id === uuid ? { ...note, text: textContent,title:noteTitle,tags:noteTags,tagList } : note
+  );
+    localStorage.setItem(`notes`, JSON.stringify(newState));
     return jsonNotes;
   },
 };
