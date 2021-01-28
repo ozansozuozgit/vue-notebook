@@ -43,7 +43,6 @@ export default {
         alert("Please enter note title!");
         return;
       }
-      console.log(this.tags);
       if (this.getCurrentNote !== null) {
         let updatedNotes = dbService.updateNote(
           this.tags,
@@ -92,7 +91,7 @@ export default {
       this.$set(this, "tags", newValue.tags);
     },
     tags: function (newValue) {
-      if (!newValue.length) return;
+      if (newValue.length < 0 || this.noteTitle === "") return;
       this.handleUpdate();
     },
   },
