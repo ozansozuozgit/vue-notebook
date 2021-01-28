@@ -24,13 +24,13 @@ export default {
   //   return newData;
   // },
 
-  addNote({ tags, title, text, uuid, date }) {
+  addNote({ tags, title, text, uuid, date,tagList }) {
     let notesString = localStorage.getItem(`notes`);
     let notes = JSON.parse(notesString);
     if (notes === null) {
       notes = [];
     }
-    notes.push({ title, text, uuid, tags, date });
+    notes.push({ title, text, uuid, tags, date,tagList });
     localStorage.setItem(`notes`, JSON.stringify(notes));
     return notes;
   },
@@ -46,12 +46,12 @@ export default {
     return newData;
   },
 
-  updateNote(noteTags, uuid, textContent, noteTitle) {
+  updateNote(noteTags, uuid, textContent, noteTitle,tagList) {
     let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
     jsonNotes.find((note) => note.uuid === uuid).text = textContent;
     jsonNotes.find((note) => note.uuid === uuid).title = noteTitle;
     jsonNotes.find((note) => note.uuid === uuid).tags = noteTags;
-
+    jsonNotes.find((note) => note.uuid === uuid).tagList = tagList;
     localStorage.setItem(`notes`, JSON.stringify(jsonNotes));
     return jsonNotes;
   },

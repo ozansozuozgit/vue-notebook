@@ -61,7 +61,17 @@ export default {
         return;
       }
       let results = dbService.getNotes().filter((note) => {
-        return note.text.includes(newVal) || note.title.includes(newVal);
+        console.log(
+          note.tags.filter((tag) => {
+            console.log(tag.text);
+            return tag.text.includes(newVal);
+          })
+        );
+        return (
+          note.text.includes(newVal) ||
+          note.title.includes(newVal) ||
+          note.tagList.includes(newVal)
+        );
       });
       this.addDbNotes(results);
     },

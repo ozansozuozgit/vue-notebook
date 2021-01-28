@@ -43,12 +43,16 @@ export default {
         alert("Please enter note title!");
         return;
       }
+       const tagList = this.tags.map((tag) => {
+          return tag.text;
+        });
       if (this.getCurrentNote !== null) {
         let updatedNotes = dbService.updateNote(
           this.tags,
           this.getCurrentNote.uuid,
           this.text,
-          this.noteTitle
+          this.noteTitle,
+          tagList,
         );
 
         this.addDbNotes(updatedNotes);
@@ -60,6 +64,7 @@ export default {
           text: this.text,
           uuid,
           date: new Date().toLocaleString(),
+          tagList
         };
         dbService.addNote(newNote);
         this.addNotes(newNote);
