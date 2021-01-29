@@ -52,7 +52,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getNotes", "getCurrentCategory"]),
+    ...mapGetters(["getNotes"]),
   },
   watch: {
     searchText: function (newVal) {
@@ -61,12 +61,6 @@ export default {
         return;
       }
       let results = dbService.getNotes().filter((note) => {
-        console.log(
-          note.tags.filter((tag) => {
-            console.log(tag.text);
-            return tag.text.includes(newVal);
-          })
-        );
         return (
           note.text.includes(newVal) ||
           note.title.includes(newVal) ||

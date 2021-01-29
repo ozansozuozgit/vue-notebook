@@ -43,16 +43,16 @@ export default {
         alert("Please enter note title!");
         return;
       }
-       const tagList = this.tags.map((tag) => {
-          return tag.text;
-        });
+      const tagList = this.tags.map((tag) => {
+        return tag.text;
+      });
       if (this.getCurrentNote !== null) {
         let updatedNotes = dbService.updateNote(
           this.tags,
           this.getCurrentNote.uuid,
           this.text,
           this.noteTitle,
-          tagList,
+          tagList
         );
 
         this.addDbNotes(updatedNotes);
@@ -64,7 +64,7 @@ export default {
           text: this.text,
           uuid,
           date: new Date().toLocaleString(),
-          tagList
+          tagList,
         };
         dbService.addNote(newNote);
         this.addNotes(newNote);
@@ -80,7 +80,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getCurrentNote", "getText", "getCurrentCategory"]),
+    ...mapGetters(["getCurrentNote", "getText"]),
   },
   watch: {
     "$store.state.currentNote": function (newValue) {

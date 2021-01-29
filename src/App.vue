@@ -26,10 +26,10 @@ export default {
     this.addDbNotes(allNotes);
   },
   computed: {
-    ...mapGetters(["getCategories", "getCurrentCategory", "getCurrentNote"]),
+    ...mapGetters(["getCurrentNote"]),
   },
   methods: {
-    ...mapActions(["addDbCategories", "setCurrentCategory", "addDbNotes"]),
+    ...mapActions(["addDbNotes"]),
   },
 };
 </script>
