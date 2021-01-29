@@ -1,29 +1,4 @@
 export default {
-  // addCategory(title) {
-  //   let categoryString = localStorage.getItem('categories');
-  //   let category = JSON.parse(categoryString);
-  //   if (category === null) {
-  //     category = [];
-  //   }
-  //   category.push(title);
-  //   localStorage.setItem('categories', JSON.stringify(category));
-  //   return category;
-  // },
-  
-  // getCategories() {
-  //   return JSON.parse(localStorage.getItem('categories'));
-  // },
-
-  // removeCategory(categoryName) {
-  //   let jsonCategories = JSON.parse(localStorage.getItem('categories'));
-  //   const newData = jsonCategories.filter(
-  //     (category) => category !== categoryName
-  //   );
-  //   localStorage.removeItem(`${categoryName}_notes`);
-  //   localStorage.setItem('categories', JSON.stringify(newData));
-  //   return newData;
-  // },
-
   addNote({ tags, title, text, uuid, date,tagList }) {
     let notesString = localStorage.getItem(`notes`);
     let notes = JSON.parse(notesString);
@@ -48,10 +23,13 @@ export default {
 
   updateNote(noteTags, uuid, textContent, noteTitle,tagList) {
     let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
-    const newState = jsonNotes.map(note =>
-      note.id === uuid ? { ...note, text: textContent,title:noteTitle,tags:noteTags,tagList } : note
-  );
-    localStorage.setItem(`notes`, JSON.stringify(newState));
+    let newState =jsonNotes.find((note) => note.uuid === uuid);
+    newState.text = textContent;
+    newState.title = noteTitle;
+    newState.tagList = tagList;
+    newState.tags = noteTags;
+    
+    localStorage.setItem(`notes`, JSON.stringify(jsonNotes));
     return jsonNotes;
   },
 };
