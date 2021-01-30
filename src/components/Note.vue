@@ -1,9 +1,23 @@
-<template>
-  <div class="note">
-    <h4 @click="handleClick">
-      {{ note.title }}
-    </h4>
-    <a href="#" class="close" @click="handleDelete" />
+ <template>
+  <div>
+    <v-list-item @click="handleClick">
+      <template v-slot:default="{ active }">
+        <v-list-item-content>
+          <v-list-item-title v-text="note.title"></v-list-item-title>
+
+          <v-list-item-subtitle v-text="note.text"></v-list-item-subtitle>
+        </v-list-item-content>
+
+        <v-list-item-action @click="handleDelete">
+          <v-icon v-if="!active" color="grey lighten-1">
+            mdi-delete-outline
+          </v-icon>
+
+          <v-icon v-else color="yellow darken-3"> mdi-delete </v-icon>
+        </v-list-item-action>
+      </template>
+    </v-list-item>
+    <v-divider :key="note.uuid"></v-divider>
   </div>
 </template>
 

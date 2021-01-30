@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <Notes />
-    <TextField />
+    <v-main>
+      <v-container>
+        <v-row><Notes /> <TextField /></v-row></v-container
+    ></v-main>
   </v-app>
 </template>
 

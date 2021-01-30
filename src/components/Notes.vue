@@ -1,49 +1,30 @@
 <template>
-  <v-card class="mx-auto" max-width="500">
-    <v-toolbar color="pink" dark>
-      <v-toolbar-title>Notes</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-    </v-toolbar>
+  <v-col cols="4">
+    <v-card class="mx-auto" max-width="500">
+      <v-toolbar color="pink" dark>
+        <v-toolbar-title>Notes</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </v-toolbar>
 
-    <v-list two-line>
-      <v-list-item-group v-model="selected" active-class="pink--text">
-        <template v-for="note in getNotes">
-          <v-list-item :key="note.uuid">
-            <template v-slot:default="{ active }">
-              <v-list-item-content>
-                <v-list-item-title v-text="note.title"></v-list-item-title>
-
-                <v-list-item-subtitle v-text="note.text"></v-list-item-subtitle>
-              </v-list-item-content>
-
-              <v-list-item-action>
-                <v-icon v-if="!active" color="grey lighten-1">
-                  mdi-delete-outline
-                </v-icon>
-
-                <v-icon v-else color="yellow darken-3"> mdi-delete </v-icon>
-              </v-list-item-action>
-            </template>
-          </v-list-item>
-
-          <v-divider
-            v-if="getNotes.length < getNotes.length - 1"
-            :key="note.uuid"
-          ></v-divider>
-        </template>
-      </v-list-item-group>
-    </v-list>
-  </v-card>
+      <v-list two-line>
+        <v-list-item-group v-model="selected" active-class="pink--text">
+          <template v-for="note in getNotes">
+            <Note :note="note" :key="note.uuid" />
+          </template>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+  </v-col>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import dbService from "../services/db_service";
 
-// import Note from "./Note";
+import Note from "./Note";
 
 export default {
   name: "Notes",
@@ -52,7 +33,7 @@ export default {
     return { selected: 0, searchText: "" };
   },
   components: {
-    // Note,
+    Note,
   },
   methods: {
     ...mapActions(["addDbNotes"]),
