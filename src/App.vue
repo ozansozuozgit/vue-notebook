@@ -1,8 +1,8 @@
 <template>
-  <div class="app_container">
+  <v-app>
     <Notes />
     <TextField />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -35,12 +35,12 @@ export default {
 </script>
 
 <style scoped>
-.app_container {
+/* .app_container {
   display: flex;
   justify-content: space-evenly;
   height: 100vh;
   width: 88%;
   margin: auto;
   padding-top: 10px;
-}
+} */
 </style>
