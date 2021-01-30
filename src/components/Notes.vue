@@ -3,12 +3,24 @@
     <v-card class="mx-auto" max-width="500">
       <v-toolbar color="pink" dark>
         <v-toolbar-title>Notes</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
       </v-toolbar>
-
+      <v-toolbar color="purple" dark>
+        <v-select
+          :items="items"
+          label="Filter By"
+          @change="sortBy()"
+          v-model="selectedFilter"
+          single-line
+          hide-details
+          outlined
+        ></v-select>
+        <v-text-field
+          hide-details
+          append-icon="mdi-magnify"
+          single-line
+          v-model="searchText"
+        ></v-text-field>
+      </v-toolbar>
       <v-list two-line>
         <v-list-item-group v-model="selected" active-class="pink--text">
           <template v-for="note in getNotes">
@@ -30,7 +42,12 @@ export default {
   name: "Notes",
 
   data: () => {
-    return { selected: 0, searchText: "" };
+    return {
+      selected: 0,
+      searchText: "",
+      items: ["Newest", "Oldest"],
+      selectedFilter: "",
+    };
   },
   components: {
     Note,
@@ -38,9 +55,9 @@ export default {
   methods: {
     ...mapActions(["addDbNotes"]),
     sortBy() {
-      if (this.selected === "Newest") {
+      if (this.selectedFilter === "Newest") {
         this.orderByNewest();
-      } else if (this.selected === "Oldest") {
+      } else if (this.selectedFilter === "Oldest") {
         this.orderByOldest();
       } else {
         return;
