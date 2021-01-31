@@ -1,9 +1,10 @@
 <template>
-  <div class="textfield_container">
+  <v-col cols="6">
     <v-text-field
       v-model="noteTitle"
       placeholder="Note Title"
       @change="handleUpdate"
+      label="Note Title"
     >
     </v-text-field>
 
@@ -12,8 +13,17 @@
       :tags="tags"
       @tags-changed="(newTags) => (tags = newTags)"
     />
-    <textarea v-model="text" @change="handleUpdate" />
-  </div>
+    <v-textarea
+      v-model="text"
+      @change="handleUpdate"
+      clearable
+      clear-icon="mdi-close-circle"
+      no-resize
+      outlined
+      hide-details
+      height="500px"
+    />
+  </v-col>
 </template>
 
 <script>
@@ -34,7 +44,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNotes", "setCurrentNote", "addDbNotes",'setNewNote']),
+    ...mapActions(["addNotes", "setCurrentNote", "addDbNotes", "setNewNote"]),
     handleUpdate() {
       if (this.noteTitle.trim() === "") {
         alert("Please enter note title!");
@@ -74,7 +84,7 @@ export default {
       this.tag = "";
       this.text = "";
       this.setCurrentNote(null);
-      this.setNewNote(false)
+      this.setNewNote(false);
     },
   },
   computed: {
@@ -106,62 +116,37 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-// .textfield_container {
-//   flex: 0.5;
-//   height: 80%;
-//   display: flex;
-//   flex-direction: column;
-// }
+<style lang="css">
+/* we cange the border color if the user focuses the input */
+.vue-tags-input.ti-focus .ti-input {
+  border: 1px solid #ebde6e;
+}
 
-// .title {
-//   border: 1px solid black;
-//   width: 100%;
-//   height: 45px;
-//   border-bottom: none;
-//   border-top-left-radius: 10px;
-//   border-top-right-radius: 10px;
-//   padding: 10px;
-//   font-size: 22px;
-//   font-weight: bold;
-//   outline: none;
-//   flex: 0.1;
-// }
-// .tags {
-//   border: 1px solid black;
-// }
-// textarea {
-//   border: 1px solid black;
-//   width: 100%;
-//   padding: 10px;
-//   outline: none;
-//   font-size: 18px;
-//   flex: 1;
-//   resize: none;
-// }
-// button {
-//   border: 1px solid black;
-//   padding: 10px 15px;
-//   border-radius: 8px;
-//   background-color: black;
-//   color: white;
-//   font-weight: bold;
-//   display: block;
-//   &:hover {
-//     background-color: rgb(84, 81, 81);
-//     cursor: pointer;
-//   }
-// }
-// .textfield_nav {
-//   border: 1px dotted black;
-//   width: 100%;
-//   flex: 0.02;
+/* style the placeholders color across all browser */
+.vue-tags-input ::-webkit-input-placeholder {
+  color: #a4b1b6;
+}
 
-//   img {
-//     height: 22px;
-//     width: 22px;
-//     background: rgb(132, 223, 13);
-//     cursor: pointer;
-//   }
-// }
+.vue-tags-input ::-moz-placeholder {
+  color: #a4b1b6;
+}
+
+.vue-tags-input :-ms-input-placeholder {
+  color: #a4b1b6;
+}
+
+.vue-tags-input :-moz-placeholder {
+  color: #a4b1b6;
+}
+
+/* default styles for all the tags */
+.vue-tags-input .ti-tag {
+  position: relative;
+  background: #e91e63;
+  color: #fff;
+}
+.vue-tags-input .ti-tags {
+  max-height: 100px;
+  overflow: auto;
+}
 </style>

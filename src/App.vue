@@ -2,7 +2,8 @@
   <v-app>
     <v-main>
       <v-container>
-        <v-row><Notes /> <TextField /></v-row></v-container
+        <v-row justify="space-around"
+          ><Notes /> <TextField /></v-row></v-container
     ></v-main>
   </v-app>
 </template>

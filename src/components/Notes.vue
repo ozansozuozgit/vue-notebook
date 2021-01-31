@@ -26,7 +26,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-list two-line class="py-0">
+      <v-list two-line class="py-0 overflow-y-auto" style="max-height: 70vh">
         <v-list-item-group v-model="selected" active-class="pink--text">
           <template v-for="note in getNotes">
             <Note :note="note" :key="note.uuid" />
