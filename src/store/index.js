@@ -8,6 +8,7 @@ export default new Vuex.Store({
     notes: [],
     text: '',
     currentNote: null,
+    newNote:false
   },
   mutations: {
     ADD_NOTES: (state, payload) => {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
         return note.uuid !== payload;
       });
     },
+    SET_NEW_NOTE:(state,payload)=>{
+      state.newNote = payload;
+    }
   },
   actions: {
     addNotes: ({ commit }, payload) => {
@@ -44,6 +48,9 @@ export default new Vuex.Store({
     deleteNote: ({ commit }, payload) => {
       commit('DELETE_NOTE', payload);
     },
+    setNewNote:({commit},payload)=>{
+      commit('SET_NEW_NOTE',payload);
+    }
 
   },
   getters: {
@@ -56,5 +63,6 @@ export default new Vuex.Store({
     getCurrentNote: (state) => {
       return state.currentNote;
     },
+
   },
 });

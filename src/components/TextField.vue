@@ -1,15 +1,12 @@
 <template>
   <div class="textfield_container">
-    <div class="textfield_nav">
-      <img src="../assets/add_note.svg" alt="add_note" @click="addNewNote" />
-    </div>
-    <input
-      type="text"
+    <v-text-field
       v-model="noteTitle"
       placeholder="Note Title"
-      class="title"
       @change="handleUpdate"
-    />
+    >
+    </v-text-field>
+
     <vue-tags-input
       v-model="tag"
       :tags="tags"
@@ -37,7 +34,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNotes", "setCurrentNote", "addDbNotes"]),
+    ...mapActions(["addNotes", "setCurrentNote", "addDbNotes",'setNewNote']),
     handleUpdate() {
       if (this.noteTitle.trim() === "") {
         alert("Please enter note title!");
@@ -77,6 +74,7 @@ export default {
       this.tag = "";
       this.text = "";
       this.setCurrentNote(null);
+      this.setNewNote(false)
     },
   },
   computed: {
@@ -99,66 +97,71 @@ export default {
       if (newValue.length < 0 || this.noteTitle === "") return;
       this.handleUpdate();
     },
+    "$store.state.newNote": function (newValue) {
+      if (newValue === true) {
+        this.addNewNote();
+      }
+    },
   },
 };
 </script>
 
 <style lang='scss' scoped>
-.textfield_container {
-  flex: 0.5;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-}
+// .textfield_container {
+//   flex: 0.5;
+//   height: 80%;
+//   display: flex;
+//   flex-direction: column;
+// }
 
-.title {
-  border: 1px solid black;
-  width: 100%;
-  height: 45px;
-  border-bottom: none;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  padding: 10px;
-  font-size: 22px;
-  font-weight: bold;
-  outline: none;
-  flex: 0.1;
-}
-.tags {
-  border: 1px solid black;
-}
-textarea {
-  border: 1px solid black;
-  width: 100%;
-  padding: 10px;
-  outline: none;
-  font-size: 18px;
-  flex: 1;
-  resize: none;
-}
-button {
-  border: 1px solid black;
-  padding: 10px 15px;
-  border-radius: 8px;
-  background-color: black;
-  color: white;
-  font-weight: bold;
-  display: block;
-  &:hover {
-    background-color: rgb(84, 81, 81);
-    cursor: pointer;
-  }
-}
-.textfield_nav {
-  border: 1px dotted black;
-  width: 100%;
-  flex: 0.02;
+// .title {
+//   border: 1px solid black;
+//   width: 100%;
+//   height: 45px;
+//   border-bottom: none;
+//   border-top-left-radius: 10px;
+//   border-top-right-radius: 10px;
+//   padding: 10px;
+//   font-size: 22px;
+//   font-weight: bold;
+//   outline: none;
+//   flex: 0.1;
+// }
+// .tags {
+//   border: 1px solid black;
+// }
+// textarea {
+//   border: 1px solid black;
+//   width: 100%;
+//   padding: 10px;
+//   outline: none;
+//   font-size: 18px;
+//   flex: 1;
+//   resize: none;
+// }
+// button {
+//   border: 1px solid black;
+//   padding: 10px 15px;
+//   border-radius: 8px;
+//   background-color: black;
+//   color: white;
+//   font-weight: bold;
+//   display: block;
+//   &:hover {
+//     background-color: rgb(84, 81, 81);
+//     cursor: pointer;
+//   }
+// }
+// .textfield_nav {
+//   border: 1px dotted black;
+//   width: 100%;
+//   flex: 0.02;
 
-  img {
-    height: 22px;
-    width: 22px;
-    background: rgb(132, 223, 13);
-    cursor: pointer;
-  }
-}
+//   img {
+//     height: 22px;
+//     width: 22px;
+//     background: rgb(132, 223, 13);
+//     cursor: pointer;
+//   }
+// }
 </style>

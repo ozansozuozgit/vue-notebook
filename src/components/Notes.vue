@@ -1,27 +1,32 @@
 <template>
   <v-col cols="4">
+    <v-toolbar color="purple" dark class="mt-2 mb-4">
+      <v-select
+        :items="items"
+        label="Filter By"
+        @change="sortBy()"
+        v-model="selectedFilter"
+        single-line
+        hide-details
+        outlined
+        rounded
+      ></v-select>
+      <v-text-field
+        hide-details
+        append-icon="mdi-magnify"
+        single-line
+        v-model="searchText"
+      ></v-text-field>
+    </v-toolbar>
     <v-card class="mx-auto" max-width="500">
       <v-toolbar color="pink" dark>
         <v-toolbar-title>Notes</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn color="pink" dark fab @click="newNote">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-toolbar>
-      <v-toolbar color="purple" dark>
-        <v-select
-          :items="items"
-          label="Filter By"
-          @change="sortBy()"
-          v-model="selectedFilter"
-          single-line
-          hide-details
-          outlined
-        ></v-select>
-        <v-text-field
-          hide-details
-          append-icon="mdi-magnify"
-          single-line
-          v-model="searchText"
-        ></v-text-field>
-      </v-toolbar>
-      <v-list two-line>
+      <v-list two-line class="py-0">
         <v-list-item-group v-model="selected" active-class="pink--text">
           <template v-for="note in getNotes">
             <Note :note="note" :key="note.uuid" />
@@ -72,6 +77,9 @@ export default {
       return this.getNotes.sort(function (a, b) {
         return new Date(a.date) - new Date(b.date);
       });
+    },
+    newNote() {
+      this.$store.dispatch("setNewNote", true);
     },
   },
 
