@@ -5,6 +5,9 @@
       placeholder="Note Title"
       @change="handleUpdate"
       label="Note Title"
+      hide-details
+      outlined
+      class="mt-2"
     >
     </v-text-field>
 
@@ -121,7 +124,9 @@ export default {
 .vue-tags-input.ti-focus .ti-input {
   border: 1px solid #ebde6e;
 }
-
+.vue-tags-input {
+  max-width: 100% !important;
+}
 /* style the placeholders color across all browser */
 .vue-tags-input ::-webkit-input-placeholder {
   color: #a4b1b6;

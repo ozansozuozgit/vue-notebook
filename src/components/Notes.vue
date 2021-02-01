@@ -1,6 +1,6 @@
 <template>
   <v-col cols="4">
-    <v-toolbar color="purple" dark class="mt-2 mb-4">
+    <v-toolbar color="primary" class="mb-2 pa-2 filter__toolbar">
       <v-select
         :items="items"
         label="Filter By"
@@ -18,11 +18,11 @@
         v-model="searchText"
       ></v-text-field>
     </v-toolbar>
-    <v-card class="mx-auto" max-width="500">
+    <v-card class="mx-auto">
       <v-toolbar color="pink" dark>
         <v-toolbar-title>Notes</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn color="pink" dark fab @click="newNote">
+        <v-btn color="#faa307" fab @click="newNote" shaped small ripple>
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-toolbar>
@@ -80,6 +80,7 @@ export default {
     },
     newNote() {
       this.$store.dispatch("setNewNote", true);
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
 
@@ -105,32 +106,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.notes_container {
-  flex: 0.25;
+<style lang="scss" >
+.filter__toolbar {
+  height: 100px !important;
 
-  h2 {
-    border-bottom: 1px solid black;
-    margin: 10px 0;
-    display: inline-block;
-    color: #3a62be;
+  .theme--dark {
+    color: black;
+  }
+  .theme--light {
+    color: white;
   }
 }
-
-select {
-  display: block;
-  background-color: black;
-  padding: 2px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  color: white;
-
-  &:hover {
-    background-color: grey;
-    cursor: pointer;
-  }
-}
-input {
-  border: 1px solid black;
+.filter__toolbar > .v-toolbar__content {
+  height: 100% !important;
 }
 </style>
