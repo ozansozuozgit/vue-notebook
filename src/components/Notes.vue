@@ -67,11 +67,16 @@ export default {
     });
     EventBus.$on("updateNote", (note) => {
       const { tags, uuid, text, title, tagList } = note;
-      let updatedNote = this.notes.find((note) => note.uuid === uuid);
-      updatedNote.text = text;
-      updatedNote.title = title;
-      updatedNote.tagList = tagList;
-      updatedNote.tags = tags;
+
+      Object.assign(
+        this.notes.find((note) => note.uuid === uuid),
+        {
+          text,
+          title,
+          tagList,
+          tags,
+        }
+      );
     });
 
     const allNotes = dbService.getNotes();
