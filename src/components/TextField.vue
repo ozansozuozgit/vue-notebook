@@ -31,7 +31,6 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { mapActions, mapGetters } from "vuex";
 import VueTagsInput from "@johmun/vue-tags-input";
 import { EventBus } from "../event-bus";
 
@@ -45,10 +44,10 @@ export default {
       noteTitle: "",
       tag: "",
       tags: [],
+      currentNoteID: null,
     };
   },
   methods: {
-    ...mapActions(["addNotes", "setCurrentNote", "addDbNotes", "setNewNote"]),
     handleUpdate() {
       if (this.noteTitle.trim() === "") {
         alert("Please enter note title!");
@@ -57,16 +56,16 @@ export default {
       const tagList = this.tags.map((tag) => {
         return tag.text;
       });
-      if (this.getCurrentNote !== null) {
-        let updatedNotes = dbService.updateNote(
-          this.tags,
-          this.getCurrentNote.uuid,
-          this.text,
-          this.noteTitle,
-          tagList
-        );
-
-        this.addDbNotes(updatedNotes);
+      if (this.currentNoteID !== null) {
+        let updatedNote = {
+          tags: this.tags,
+          uuid: this.currentNoteID,
+          text: this.text,
+          title: this.noteTitle,
+          tagList: tagList,
+        };
+        dbService.updateNote(updatedNote);
+        EventBus.$emit("updateNote", updatedNote);
       } else {
         const uuid = uuidv4();
         const newNote = {
@@ -78,62 +77,49 @@ export default {
           tagList,
         };
         dbService.addNote(newNote);
-        this.addNotes(newNote);
-        this.setCurrentNote(newNote);
+        EventBus.$emit("addNewNote", newNote);
+        this.currentNoteID = uuid;
       }
     },
-    addNewNote() {
-      this.noteTitle = "";
-      this.tags = [];
-      this.tag = "";
-      this.text = "";
-      this.setCurrentNote(null);
-      this.setNewNote(false);
-    },
   },
-  computed: {
-    ...mapGetters(["getCurrentNote", "getText"]),
-  },
+
   mounted() {
-    EventBus.$on("EVENT_NAME", (payload) => {
-      console.log(payload);
+    EventBus.$on("addNoteToTextField", (note) => {
+      console.log("note added to textfield");
+      const { tags, text, title, uuid } = note;
+      this.tags = tags;
+      this.text = text;
+      this.noteTitle = title;
+      this.currentNoteID = uuid;
+    });
+    EventBus.$on("resetTextField", () => {
+      this.tags = [];
+      this.text = "";
+      this.noteTitle = "";
+      this.currentNoteID = null;
     });
   },
   watch: {
-    "$store.state.currentNote": function (newValue) {
-      if (newValue === null) {
-        this.noteTitle = "";
-        this.text = "";
-        this.tags = [];
-        this.tag = "";
-        return;
-      }
-      this.$set(this, "text", newValue.text);
-      this.$set(this, "noteTitle", newValue.title);
-      this.$set(this, "tags", newValue.tags);
-    },
     tags: function (newValue) {
-      if (newValue.length < 0 || this.noteTitle === "") return;
+      if (
+        newValue.length < 0 ||
+        this.noteTitle === "" ||
+        this.currentNoteID === null
+      )
+        return;
       this.handleUpdate();
-    },
-    "$store.state.newNote": function (newValue) {
-      if (newValue === true) {
-        this.addNewNote();
-      }
     },
   },
 };
 </script>
 
 <style lang="css">
-/* we cange the border color if the user focuses the input */
 .vue-tags-input.ti-focus .ti-input {
   border: 1px solid #ebde6e;
 }
 .vue-tags-input {
   max-width: 100% !important;
 }
-/* style the placeholders color across all browser */
 .vue-tags-input ::-webkit-input-placeholder {
   color: #a4b1b6;
 }

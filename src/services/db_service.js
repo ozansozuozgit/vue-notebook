@@ -18,13 +18,13 @@ export default {
     return newData;
   },
 
-  updateNote(noteTags, uuid, textContent, noteTitle,tagList) {
+  updateNote({tags, uuid, text, title,tagList}) {
     let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
     let newState =jsonNotes.find((note) => note.uuid === uuid);
-    newState.text = textContent;
-    newState.title = noteTitle;
+    newState.text = text;
+    newState.title = title;
     newState.tagList = tagList;
-    newState.tags = noteTags;
+    newState.tags = tags;
     
     localStorage.setItem(`notes`, JSON.stringify(jsonNotes));
     return jsonNotes;

@@ -22,17 +22,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { EventBus } from "../event-bus";
 import dbService from "../services/db_service";
+
 export default {
   props: {
     note: Object,
   },
   methods: {
-    ...mapActions(["setCurrentNote", "addDbText", "deleteNote"]),
     handleClick() {
-      this.setCurrentNote(this.note);
-      this.addDbText(this.note.text);
+      EventBus.$emit("addNoteToTextField", this.note);
     },
     handleDelete() {
       if (
@@ -42,8 +41,9 @@ export default {
       ) {
         return;
       }
-      this.setCurrentNote(null);
-      this.deleteNote(this.note.uuid);
+      EventBus.$emit("resetTextField");
+      EventBus.$emit("removeNoteFromNoteList", this.note.uuid);
+
       dbService.removeNote(this.note.uuid);
     },
   },

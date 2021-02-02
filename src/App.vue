@@ -11,8 +11,6 @@
 <script>
 import TextField from "./components/TextField";
 import Notes from "./components/Notes";
-import dbService from "./services/db_service";
-import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -20,20 +18,6 @@ export default {
   components: {
     Notes,
     TextField,
-  },
-  mounted() {
-    const allNotes = dbService.getNotes();
-    if (allNotes === null) {
-      localStorage.setItem("notes", JSON.stringify([]));
-      return;
-    }
-    this.addDbNotes(allNotes);
-  },
-  computed: {
-    ...mapGetters(["getCurrentNote"]),
-  },
-  methods: {
-    ...mapActions(["addDbNotes"]),
   },
 };
 </script>

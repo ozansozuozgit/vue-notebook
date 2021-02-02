@@ -27,8 +27,8 @@
         </v-btn>
       </v-toolbar>
       <v-list two-line class="py-0 overflow-y-auto" style="max-height: 70vh">
-        <v-list-item-group v-model="selected" active-class="pink--text">
-          <template v-for="note in getNotes">
+        <v-list-item-group v-model="selectedListItem" active-class="pink--text">
+          <template v-for="note in notes">
             <Note :note="note" :key="note.uuid" />
           </template>
         </v-list-item-group>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 import dbService from "../services/db_service";
 import { EventBus } from "../event-bus";
 
@@ -49,17 +48,40 @@ export default {
 
   data: () => {
     return {
-      selected: 0,
+      selectedListItem: 0,
       searchText: "",
       items: ["Newest", "Oldest"],
       selectedFilter: "",
+      notes: [],
     };
   },
   components: {
     Note,
   },
+  mounted() {
+    const allNotes = dbService.getNotes();
+    if (allNotes === null) {
+      localStorage.setItem("notes", JSON.stringify([]));
+      return;
+    }
+    this.notes = allNotes;
+
+    EventBus.$on("removeNoteFromNoteList", (uuid) => {
+      return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
+    });
+    EventBus.$on("addNewNote", (note) => {
+      return this.notes.push(note);
+    });
+    EventBus.$on("updateNote", (note) => {
+      const { tags, uuid, text, title, tagList } = note;
+      let updatedNote = this.notes.find((note) => note.uuid === uuid);
+      updatedNote.text = text;
+      updatedNote.title = title;
+      updatedNote.tagList = tagList;
+      updatedNote.tags = tags;
+    });
+  },
   methods: {
-    ...mapActions(["addDbNotes"]),
     sortBy() {
       if (this.selectedFilter === "Newest") {
         this.orderByNewest();
@@ -70,41 +92,34 @@ export default {
       }
     },
     orderByNewest() {
-      return this.getNotes.sort(function (a, b) {
+      return this.notes.sort(function (a, b) {
         return new Date(b.date) - new Date(a.date);
       });
     },
     orderByOldest() {
-      return this.getNotes.sort(function (a, b) {
+      return this.notes.sort(function (a, b) {
         return new Date(a.date) - new Date(b.date);
       });
     },
     newNote() {
-      //this.$emit('myEvent')
-      this.$store.dispatch("setNewNote", true);
-      EventBus.$emit("EVENT_NAME", "test");
-
+      EventBus.$emit("resetTextField");
       // this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
 
-  computed: {
-    ...mapGetters(["getNotes"]),
-  },
   watch: {
     searchText: function (newVal) {
       if (newVal === "") {
-        this.addDbNotes(dbService.getNotes());
+        this.notes = dbService.getNotes();
         return;
       }
-      let results = dbService.getNotes().filter((note) => {
+      this.notes = dbService.getNotes().filter((note) => {
         return (
           note.text.includes(newVal) ||
           note.title.includes(newVal) ||
           note.tagList.includes(newVal)
         );
       });
-      this.addDbNotes(results);
     },
   },
 };
