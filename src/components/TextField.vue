@@ -85,7 +85,6 @@ export default {
 
   mounted() {
     EventBus.$on("addNoteToTextField", (note) => {
-      console.log("note added to textfield");
       const { tags, text, title, uuid } = note;
       this.tags = tags;
       this.text = text;

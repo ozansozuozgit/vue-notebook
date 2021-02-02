@@ -59,13 +59,6 @@ export default {
     Note,
   },
   mounted() {
-    const allNotes = dbService.getNotes();
-    if (allNotes === null) {
-      localStorage.setItem("notes", JSON.stringify([]));
-      return;
-    }
-    this.notes = allNotes;
-
     EventBus.$on("removeNoteFromNoteList", (uuid) => {
       return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
     });
@@ -80,6 +73,14 @@ export default {
       updatedNote.tagList = tagList;
       updatedNote.tags = tags;
     });
+
+    const allNotes = dbService.getNotes();
+    if (allNotes === null) {
+      localStorage.setItem("notes", JSON.stringify(this.notes));
+      return;
+    }
+    this.notes = allNotes;
+    localStorage.setItem("notes", JSON.stringify(this.notes));
   },
   methods: {
     sortBy() {
