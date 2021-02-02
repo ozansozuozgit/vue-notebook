@@ -33,6 +33,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { mapActions, mapGetters } from "vuex";
 import VueTagsInput from "@johmun/vue-tags-input";
+import { EventBus } from "../event-bus";
 
 import dbService from "../services/db_service";
 export default {
@@ -92,6 +93,11 @@ export default {
   },
   computed: {
     ...mapGetters(["getCurrentNote", "getText"]),
+  },
+  mounted() {
+    EventBus.$on("EVENT_NAME", (payload) => {
+      console.log(payload);
+    });
   },
   watch: {
     "$store.state.currentNote": function (newValue) {

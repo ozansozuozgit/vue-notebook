@@ -40,6 +40,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import dbService from "../services/db_service";
+import { EventBus } from "../event-bus";
 
 import Note from "./Note";
 
@@ -79,8 +80,11 @@ export default {
       });
     },
     newNote() {
+      //this.$emit('myEvent')
       this.$store.dispatch("setNewNote", true);
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      EventBus.$emit("EVENT_NAME", "test");
+
+      // this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
 

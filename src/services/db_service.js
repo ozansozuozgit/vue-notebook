@@ -2,9 +2,6 @@ export default {
   addNote({ tags, title, text, uuid, date,tagList }) {
     let notesString = localStorage.getItem(`notes`);
     let notes = JSON.parse(notesString);
-    if (notes === null) {
-      notes = [];
-    }
     notes.push({ title, text, uuid, tags, date,tagList });
     localStorage.setItem(`notes`, JSON.stringify(notes));
     return notes;

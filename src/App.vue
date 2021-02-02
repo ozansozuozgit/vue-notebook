@@ -24,6 +24,7 @@ export default {
   mounted() {
     const allNotes = dbService.getNotes();
     if (allNotes === null) {
+      localStorage.setItem("notes", JSON.stringify([]));
       return;
     }
     this.addDbNotes(allNotes);
@@ -38,12 +39,4 @@ export default {
 </script>
 
 <style scoped>
-/* .app_container {
-  display: flex;
-  justify-content: space-evenly;
-  height: 100vh;
-  width: 88%;
-  margin: auto;
-  padding-top: 10px;
-} */
 </style>
