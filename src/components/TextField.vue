@@ -81,21 +81,26 @@ export default {
         this.currentNoteID = uuid;
       }
     },
-  },
-
-  mounted() {
-    EventBus.$on("addNoteToTextField", (note) => {
-      const { tags, text, title, uuid } = note;
+    addNoteToTextField({ tags, text, title, uuid }) {
       this.tags = tags;
       this.text = text;
       this.noteTitle = title;
       this.currentNoteID = uuid;
-    });
-    EventBus.$on("resetTextField", () => {
+    },
+    resetTextField() {
       this.tags = [];
       this.text = "";
       this.noteTitle = "";
       this.currentNoteID = null;
+    },
+  },
+
+  mounted() {
+    EventBus.$on("addNoteToTextField", (note) => {
+      this.addNoteToTextField(note);
+    });
+    EventBus.$on("resetTextField", () => {
+      this.resetTextField();
     });
   },
   watch: {
@@ -108,6 +113,10 @@ export default {
         return;
       this.handleUpdate();
     },
+  },
+  beforeDestroy() {
+    EventBus.$off("addNoteToTextField", this.addNoteToTextField);
+    EventBus.$off("resetTextField", this.resetTextField);
   },
 };
 </script>

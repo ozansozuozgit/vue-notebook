@@ -60,20 +60,13 @@ export default {
   },
   mounted() {
     EventBus.$on("removeNoteFromNoteList", (uuid) => {
-      return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
+      this.removeNoteFromNoteList(uuid);
     });
     EventBus.$on("addNewNote", (note) => {
-      return this.notes.push(note);
+      this.addNewNote(note);
     });
-    EventBus.$on("updateNote", ({ tags, uuid, text, title, tagList }) => {
-      let noteToUpdate = this.notes.find((note) => note.uuid === uuid);
-      let updatedValues = {
-        text,
-        title,
-        tagList,
-        tags,
-      };
-      Object.assign(noteToUpdate, updatedValues);
+    EventBus.$on("updateNote", (updatedValues) => {
+      this.updateNote(updatedValues);
     });
 
     const allNotes = dbService.getNotes();
@@ -85,6 +78,16 @@ export default {
     localStorage.setItem("notes", JSON.stringify(this.notes));
   },
   methods: {
+    removeNoteFromNoteList(uuid) {
+      return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
+    },
+    updateNote({ tags, uuid, text, title, tagList }) {
+      let noteToUpdate = this.notes.find((note) => note.uuid === uuid);
+      Object.assign(noteToUpdate, { text, title, tagList, tags });
+    },
+    addNewNote(note) {
+      return this.notes.push(note);
+    },
     sortBy() {
       if (this.selectedFilter === "Newest") {
         this.orderByNewest();
@@ -124,6 +127,11 @@ export default {
         );
       });
     },
+  },
+  beforeDestroy() {
+    EventBus.$off("removeNoteFromNoteList", this.removeNoteFromNoteList);
+    EventBus.$off("updateNote", this.updateNote);
+    EventBus.$off("addNewNote", this.addNewNote);
   },
 };
 </script>
