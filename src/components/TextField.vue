@@ -53,40 +53,51 @@ export default {
         alert("Please enter note title!");
         return;
       }
+      if (this.currentNoteID !== null) {
+        this.updateNote();
+      } else {
+        this.createNote();
+      }
+    },
+    updateNote() {
       const tagList = this.tags.map((tag) => {
         return tag.text;
       });
-      if (this.currentNoteID !== null) {
-        let updatedNote = {
-          tags: this.tags,
-          uuid: this.currentNoteID,
-          text: this.text,
-          title: this.noteTitle,
-          tagList: tagList,
-        };
-        dbService.updateNote(updatedNote);
-        EventBus.$emit("updateNote", updatedNote);
-      } else {
-        const uuid = uuidv4();
-        const newNote = {
-          title: this.noteTitle,
-          tags: this.tags,
-          text: this.text,
-          uuid,
-          date: new Date().toLocaleString(),
-          tagList,
-        };
-        dbService.addNote(newNote);
-        EventBus.$emit("addNewNote", newNote);
-        this.currentNoteID = uuid;
-      }
+      let updatedNote = {
+        tags: this.tags,
+        uuid: this.currentNoteID,
+        text: this.text,
+        title: this.noteTitle,
+        tagList: tagList,
+      };
+      dbService.updateNote(updatedNote);
+      EventBus.$emit("updateNote", updatedNote);
     },
+    createNote() {
+      const tagList = this.tags.map((tag) => {
+        return tag.text;
+      });
+      const uuid = uuidv4();
+      const newNote = {
+        title: this.noteTitle,
+        tags: this.tags,
+        text: this.text,
+        uuid,
+        date: new Date().toLocaleString(),
+        tagList,
+      };
+      dbService.addNote(newNote);
+      EventBus.$emit("addNewNote", newNote);
+      this.currentNoteID = uuid;
+    },
+
     addNoteToTextField({ tags, text, title, uuid }) {
       this.tags = tags;
       this.text = text;
       this.noteTitle = title;
       this.currentNoteID = uuid;
     },
+    
     resetTextField() {
       this.tags = [];
       this.text = "";
