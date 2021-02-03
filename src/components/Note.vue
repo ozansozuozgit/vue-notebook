@@ -1,6 +1,6 @@
  <template>
   <div>
-    <v-list-item @click="handleClick">
+    <v-list-item @click="selectNote">
       <template v-slot:default="{ active }">
         <v-list-item-content>
           <v-list-item-title v-text="note.title"></v-list-item-title>
@@ -8,7 +8,7 @@
           <v-list-item-subtitle v-text="note.text"></v-list-item-subtitle>
         </v-list-item-content>
 
-        <v-list-item-action @click="handleDelete">
+        <v-list-item-action @click="deleteNote">
           <v-icon v-if="!active" color="grey lighten-1">
             mdi-delete-outline
           </v-icon>
@@ -30,10 +30,10 @@ export default {
     note: Object,
   },
   methods: {
-    handleClick() {
+    selectNote() {
       EventBus.$emit("addNoteToTextField", this.note);
     },
-    handleDelete() {
+    deleteNote() {
       if (
         !confirm(
           `Are you sure you want to delete the note '${this.note.title}'?`
@@ -51,40 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.note {
-  display: flex;
-  position: relative;
-}
-h4 {
-  cursor: pointer;
-}
 :hover {
   color: red;
-}
-.close {
-  position: absolute;
-  right: 32px;
-  top: 5px;
-  width: 16px;
-  height: 16px;
-  opacity: 0.3;
-}
-.close:hover {
-  opacity: 1;
-}
-.close:before,
-.close:after {
-  position: absolute;
-  left: 15px;
-  content: " ";
-  height: 10px;
-  width: 2px;
-  background-color: #333;
-}
-.close:before {
-  transform: rotate(45deg);
-}
-.close:after {
-  transform: rotate(-45deg);
 }
 </style>

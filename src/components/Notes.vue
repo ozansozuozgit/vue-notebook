@@ -22,7 +22,7 @@
       <v-toolbar color="pink" dark>
         <v-toolbar-title>Notes</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn color="#faa307" fab @click="newNote" shaped small ripple>
+        <v-btn color="#faa307" fab @click="createNewNote" shaped small ripple>
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-toolbar>
@@ -107,7 +107,7 @@ export default {
         return new Date(a.date) - new Date(b.date);
       });
     },
-    newNote() {
+    createNewNote() {
       EventBus.$emit("resetTextField");
       // this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
