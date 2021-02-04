@@ -1,31 +1,35 @@
 <template>
-  <v-col cols="6">
-    <v-text-field
-      v-model="noteTitle"
-      placeholder="Note Title"
-      @change="handleUpdate"
-      label="Note Title"
-      hide-details
-      outlined
-      class="mt-2"
-    >
-    </v-text-field>
+  <v-col cols="6" class="textfield__outer mt-4">
+    <div class="textfield__container">
+      <v-text-field
+        v-model="noteTitle"
+        placeholder="Note Title"
+        @change="handleUpdate"
+        label="Note Title"
+        hide-details
+        class="pa-2"
+        flat
+        solo
+      >
+      </v-text-field>
 
-    <vue-tags-input
-      v-model="tag"
-      :tags="tags"
-      @tags-changed="(newTags) => (tags = newTags)"
-    />
-    <v-textarea
-      v-model="text"
-      @change="handleUpdate"
-      clearable
-      clear-icon="mdi-close-circle"
-      no-resize
-      outlined
-      hide-details
-      height="500px"
-    />
+      <vue-tags-input
+        v-model="tag"
+        :tags="tags"
+        @tags-changed="(newTags) => (tags = newTags)"
+      />
+      <v-textarea
+        v-model="text"
+        @change="handleUpdate"
+        clearable
+        clear-icon="mdi-close-circle"
+        no-resize
+        hide-details
+        solo
+        flat
+        class="pa-2"
+      />
+    </div>
   </v-col>
 </template>
 
@@ -97,7 +101,7 @@ export default {
       this.noteTitle = title;
       this.currentNoteID = uuid;
     },
-    
+
     resetTextField() {
       this.tags = [];
       this.text = "";
@@ -132,12 +136,38 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+.textfield__outer {
+  background-color: #1c1c1c;
+  box-shadow: 0 0 0px 2px #1c1c1c;
+  border-radius: 10px;
+  padding: 2px !important;
+}
+.textfield__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.v-textarea,
+.v-input__control,
+.v-input__slot,
+.v-text-field__slot {
+  height: 100% !important;
+}
+
 .vue-tags-input.ti-focus .ti-input {
   border: 1px solid #ebde6e;
 }
 .vue-tags-input {
   max-width: 100% !important;
+}
+.vue-tags-input .ti-input {
+  border: none;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
 }
 .vue-tags-input ::-webkit-input-placeholder {
   color: #a4b1b6;

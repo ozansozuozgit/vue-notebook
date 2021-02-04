@@ -1,6 +1,6 @@
 <template>
   <v-col cols="4">
-    <v-toolbar color="primary" class="mb-2 pa-2 filter__toolbar">
+    <v-toolbar color="primary" class="mb-2 pa-2 filter__toolbar" shaped>
       <v-select
         :items="items"
         label="Filter By"
@@ -16,6 +16,7 @@
         append-icon="mdi-magnify"
         single-line
         v-model="searchText"
+        placeholder="Search Notes"
       ></v-text-field>
     </v-toolbar>
     <v-card class="mx-auto">
@@ -60,7 +61,7 @@ export default {
   },
   mounted() {
     EventBus.$on("removeNoteFromNoteList", (uuid) => {
-      this.removeNoteFromNoteList(uuid);
+      this.removeNoteFromList(uuid);
     });
     EventBus.$on("addNewNote", (note) => {
       this.addNewNote(note);
@@ -78,7 +79,7 @@ export default {
     localStorage.setItem("notes", JSON.stringify(this.notes));
   },
   methods: {
-    removeNoteFromNoteList(uuid) {
+    removeNoteFromList(uuid) {
       return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
     },
     updateNote({ tags, uuid, text, title, tagList }) {
@@ -129,7 +130,7 @@ export default {
     },
   },
   beforeDestroy() {
-    EventBus.$off("removeNoteFromNoteList", this.removeNoteFromNoteList);
+    EventBus.$off("removeNoteFromList", this.removeNoteFromList);
     EventBus.$off("updateNote", this.updateNote);
     EventBus.$off("addNewNote", this.addNewNote);
   },
