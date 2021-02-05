@@ -1,6 +1,12 @@
 <template>
   <v-col cols="4">
-    <v-toolbar color="primary" class="mb-2 pa-2 filter__toolbar" shaped>
+    <v-toolbar
+      class="mb-2 pa-2 filter__toolbar"
+      rounded
+      height="50px"
+      color="orange darken-3"
+      light
+    >
       <v-select
         :items="items"
         label="Filter By"
@@ -8,8 +14,9 @@
         v-model="selectedFilter"
         single-line
         hide-details
-        outlined
+        flat
         rounded
+        class="select_container"
       ></v-select>
       <v-text-field
         hide-details
@@ -17,10 +24,12 @@
         single-line
         v-model="searchText"
         placeholder="Search Notes"
+        light
+        class="search_container"
       ></v-text-field>
     </v-toolbar>
     <v-card class="mx-auto">
-      <v-toolbar color="pink" dark>
+      <v-toolbar color="orange " light>
         <v-toolbar-title>Notes</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn color="#faa307" fab @click="createNewNote" shaped small ripple>
@@ -28,7 +37,10 @@
         </v-btn>
       </v-toolbar>
       <v-list two-line class="py-0 overflow-y-auto" style="max-height: 70vh">
-        <v-list-item-group v-model="selectedListItem" active-class="pink--text">
+        <v-list-item-group
+          v-model="selectedListItem"
+          active-class="orange--text"
+        >
           <template v-for="note in notes">
             <Note :note="note" :key="note.uuid" />
           </template>
@@ -110,7 +122,6 @@ export default {
     },
     createNewNote() {
       EventBus.$emit("resetTextField");
-      // this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
 
@@ -139,16 +150,16 @@ export default {
 
 <style lang="scss" >
 .filter__toolbar {
-  height: 100px !important;
-
-  .theme--dark {
-    color: black;
-  }
-  .theme--light {
-    color: white;
-  }
+  display: flex;
+}
+.select_container {
+  flex: 0.4;
+}
+.search_container {
+  flex: 0.6;
 }
 .filter__toolbar > .v-toolbar__content {
   height: 100% !important;
+  padding: 0px !important;
 }
 </style>

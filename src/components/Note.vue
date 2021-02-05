@@ -55,6 +55,6 @@ export default {
 
 <style lang="scss" scoped>
 :hover {
-  color: red;
+  color: rgb(255, 0, 157);
 }
 </style>

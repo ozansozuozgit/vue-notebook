@@ -7,9 +7,10 @@
         @change="handleUpdate"
         label="Note Title"
         hide-details
-        class="pa-2"
+        class="font-weight-bold text-h5"
         flat
         solo
+        color="yellow"
       >
       </v-text-field>
 
@@ -27,7 +28,6 @@
         hide-details
         solo
         flat
-        class="pa-2"
       />
     </div>
   </v-col>
@@ -136,10 +136,9 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="css" >
 .textfield__outer {
-  background-color: #1c1c1c;
-  box-shadow: 0 0 0px 2px #1c1c1c;
+  /* background-color: #e91e63; */
   border-radius: 10px;
   padding: 2px !important;
 }
@@ -148,7 +147,7 @@ export default {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 .v-textarea,
@@ -158,16 +157,14 @@ export default {
   height: 100% !important;
 }
 
-.vue-tags-input.ti-focus .ti-input {
-  border: 1px solid #ebde6e;
-}
 .vue-tags-input {
   max-width: 100% !important;
 }
 .vue-tags-input .ti-input {
   border: none;
-  border-bottom: 2px solid black;
-  border-top: 2px solid black;
+  border-bottom: 1px solid rgb(82, 82, 82);
+  border-top: 1px solid rgb(82, 82, 82);
+  background: #1e1e1e;
 }
 .vue-tags-input ::-webkit-input-placeholder {
   color: #a4b1b6;
@@ -188,11 +185,14 @@ export default {
 /* default styles for all the tags */
 .vue-tags-input .ti-tag {
   position: relative;
-  background: #e91e63;
+  background: #ff9800;
   color: #fff;
 }
 .vue-tags-input .ti-tags {
   max-height: 100px;
   overflow: auto;
+}
+.ti-new-tag-input {
+  color: white;
 }
 </style>

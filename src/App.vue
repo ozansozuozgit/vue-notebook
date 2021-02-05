@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <v-main>
       <v-container>
         <v-row justify="space-around"
@@ -19,5 +19,14 @@ export default {
     Notes,
     TextField,
   },
+  created() {
+    this.$vuetify.theme.dark = true;
+  },
 };
 </script>
+
+<style >
+.app {
+  font-family: "Noto Sans", sans-serif;
+}
+</style>
