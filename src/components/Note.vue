@@ -1,34 +1,21 @@
  <template>
-  <div>
-    <v-list-item @click="selectNote">
-      <template v-slot:default="{ active }">
-        <v-list-item-content>
-          <v-list-item-title v-text="note.title"></v-list-item-title>
+  <v-card @click="selectNote" outlined>
+    <v-card-title class="text-subtitle-1 orange--text text--lighten-2"
+      >{{ note.title }}
+    </v-card-title>
 
-          <v-list-item-subtitle v-text="note.text"></v-list-item-subtitle>
-        </v-list-item-content>
-
-        <v-list-item-action @click="expand = !expand" v-if="!expand">
-          <v-icon v-if="!active" color="grey lighten-1">
-            mdi-delete-outline
-          </v-icon>
-
-          <v-icon v-else color="yellow darken-3"> mdi-delete </v-icon>
-        </v-list-item-action>
-        <v-list-item-action @click="expand = !expand" v-if="expand">
-          <v-icon @click="deleteNote"> mdi-checkbox-marked-circle </v-icon>
-
-          <v-icon color="yellow darken-3"> mdi-close-box </v-icon>
-        </v-list-item-action>
-      </template>
-    </v-list-item>
-    <v-divider :key="note.uuid"></v-divider>
-  </div>
+    <v-card-subtitle v-if="note.text.length < 150" class="text-caption">
+      {{ note.text }}
+    </v-card-subtitle>
+    <v-card-subtitle v-else class="text-caption">
+      {{ note.text.substring(0, 150) + ".." }}
+    </v-card-subtitle>
+  </v-card>
 </template>
 
 <script>
-import { EventBus } from "../event-bus";
-import dbService from "../services/db_service";
+// import { EventBus } from "../event-bus";
+// import dbService from "../services/db_service";
 
 export default {
   props: {
@@ -41,20 +28,18 @@ export default {
   },
   methods: {
     selectNote() {
-      EventBus.$emit("addNoteToTextField", this.note);
+      // EventBus.$emit("addNoteToTextField", this.note);
     },
     deleteNote() {
-      EventBus.$emit("resetTextField");
-      EventBus.$emit("removeNoteFromNoteList", this.note.uuid);
+      // EventBus.$emit("resetTextField");
+      // EventBus.$emit("removeNoteFromNoteList", this.note.uuid);
 
-      dbService.removeNote(this.note.uuid);
+      // dbService.removeNote(this.note.uuid);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-:hover {
-  color: rgb(255, 0, 157);
-}
+
 </style>
