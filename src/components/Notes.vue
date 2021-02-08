@@ -64,9 +64,11 @@ export default {
     createNewNote() {
       const uuid = uuidv4();
       const newNote = {
-        title: '',
-        text: '',
+        title: "",
+        text: "",
         uuid,
+        tags: "",
+        tagList: "",
         date: new Date().toLocaleString(),
       };
       this.notes.push(newNote);
@@ -74,7 +76,6 @@ export default {
     },
   },
 
- 
   beforeDestroy() {
     EventBus.$off("removeNoteFromList", this.removeNoteFromList);
     EventBus.$off("updateNote", this.updateNote);
