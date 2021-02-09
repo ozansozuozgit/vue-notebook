@@ -16,10 +16,12 @@
     </template>
     <template v-slot:default="dialog">
       <v-card @click="dialog.value = false" outlined>
-        <v-card-title class="text-subtitle-1 orange--text text--lighten-2"
+        <v-card-subtitle class="text-subtitle-1 orange--text text--lighten-2"
           >{{ note.title }}
-        </v-card-title>
-
+        </v-card-subtitle>
+        <v-card-subtitle v-if="note.text.length < 150" class="text-caption">
+          {{ note.tagList }}
+        </v-card-subtitle>
         <v-card-subtitle v-if="note.text.length < 150" class="text-caption">
           {{ note.text }}
         </v-card-subtitle>
@@ -34,11 +36,12 @@
 <script>
 // import { EventBus } from "../event-bus";
 // import dbService from "../services/db_service";
-
+// @click="dialog.value = false"
 export default {
   props: {
     note: Object,
   },
+
   data: () => {
     return {
       expand: false,
