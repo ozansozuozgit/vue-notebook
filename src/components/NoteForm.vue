@@ -26,7 +26,7 @@
       solo
       flat
     />
-    <v-card-actions >
+    <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="blue darken-1" text @click="closeForm"> Close </v-btn>
       <v-btn color="blue darken-1" text @click="createNote"> Save </v-btn>
@@ -43,7 +43,7 @@ import dbService from "../services/db_service";
 export default {
   name: "NoteForm",
   components: { VueTagsInput },
- 
+
   data: () => {
     return {
       text: "",
@@ -55,6 +55,10 @@ export default {
   },
   methods: {
     createNote() {
+      if (this.noteTitle.trim() === "") {
+        alert("Please enter note title!");
+        return;
+      }
       const tagList = this.tags.map((tag) => {
         return tag.text;
       });
@@ -67,11 +71,20 @@ export default {
         date: new Date().toLocaleString(),
         tagList,
       };
+
+      this.resetForm();
       dbService.addNote(newNote);
       EventBus.$emit("addNewNote", newNote);
       EventBus.$emit("closeDialog");
     },
+    resetForm() {
+      this.tags = [];
+      this.text = "";
+      this.noteTitle = "";
+      this.currentNoteID = null;
+    },
     closeForm() {
+      this.resetForm();
       EventBus.$emit("closeDialog");
     },
   },
