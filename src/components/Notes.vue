@@ -21,7 +21,7 @@
       </v-dialog>
     </v-toolbar>
     <v-row>
-      <v-col sm="6" md="4" v-for="note in notes" :key="note.uuid">
+      <v-col cols="12" sm="6" md="4" v-for="note in notes" :key="note.uuid">
         <Note :note="note" />
       </v-col>
     </v-row>

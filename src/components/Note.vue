@@ -1,7 +1,7 @@
  <template>
   <v-dialog max-width="600" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
-      <v-card v-bind="attrs" v-on="on" outlined>
+      <v-card v-bind="attrs" v-on="on" outlined height="200px">
         <v-card-title class="text-subtitle-1 orange--text text--lighten-2"
           >{{ note.title }}
         </v-card-title>
