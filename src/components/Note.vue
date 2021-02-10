@@ -27,6 +27,9 @@
         </v-card-subtitle>
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn color="red darken-1" text @click="deleteNote()">
+            Delete
+          </v-btn>
           <v-btn color="blue darken-1" text @click="closeNoteView()">
             Close
           </v-btn>
@@ -58,7 +61,7 @@ export default {
   },
   methods: {
     deleteNote() {
-      // EventBus.$emit("resetTextField");
+      EventBus.$emit("deleteNote", this.note.uuid);
       // EventBus.$emit("removeNoteFromNoteList", this.note.uuid);
       // dbService.removeNote(this.note.uuid);
     },

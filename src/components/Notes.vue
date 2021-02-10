@@ -53,6 +53,9 @@ export default {
   },
 
   mounted() {
+    EventBus.$on("deleteNote", (uuid) => {
+      this.deleteNote(uuid);
+    });
     EventBus.$on("removeNoteFromNoteList", (uuid) => {
       this.removeNoteFromList(uuid);
     });
@@ -69,6 +72,16 @@ export default {
     EventBus.$on("openNoteForm", () => {
       this.openNoteForm();
     });
+    EventBus.$on("orderByNewest", () => {
+      this.orderByNewest();
+    });
+    EventBus.$on("orderByOldest", () => {
+      this.orderByOldest();
+    });
+    EventBus.$on("filterSearch", (searchInput) => {
+      this.filterSearch(searchInput);
+    });
+
     const allNotes = dbService.getNotes();
     if (allNotes === null) {
       localStorage.setItem("notes", JSON.stringify(this.notes));
@@ -77,7 +90,39 @@ export default {
     this.notes = allNotes;
     localStorage.setItem("notes", JSON.stringify(this.notes));
   },
+
   methods: {
+    deleteNote(uuid) {
+      console.log(uuid);
+      dbService.removeNote(uuid);
+      return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
+    },
+    orderByNewest() {
+      return this.notes.sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date);
+      });
+    },
+    orderByOldest() {
+      return this.notes.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+    },
+    filterSearch(searchInput) {
+      if (searchInput === "") {
+        this.notes = dbService.getNotes();
+        return;
+      }
+      this.notes = dbService.getNotes().filter((note) => {
+        searchInput = searchInput.toLowerCase();
+        return (
+          note.text.toLowerCase().includes(searchInput) ||
+          note.title.toLowerCase().includes(searchInput) ||
+          note.tagList.some((tag) => {
+            return tag.toLowerCase().includes(searchInput);
+          })
+        );
+      });
+    },
     updateNote({ tags, uuid, text, title, tagList }) {
       let noteToUpdate = this.notes.find((note) => note.uuid === uuid);
       Object.assign(noteToUpdate, { text, title, tagList, tags });
@@ -99,6 +144,10 @@ export default {
     EventBus.$off("addNewNote", this.addNewNote);
     EventBus.$off("closeNoteForm", this.closeNoteForm);
     EventBus.$off("openNoteForm", this.openNoteForm);
+    EventBus.$off("orderByNewest", this.orderByNewest);
+    EventBus.$off("orderByOldest", this.orderByOldest);
+    EventBus.$off("filterSearch", this.filterSearch);
+    EventBus.$off("deleteNote", this.deleteNote);
   },
 };
 </script>

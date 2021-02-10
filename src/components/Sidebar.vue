@@ -30,7 +30,7 @@
 </template>
 
 <script>
-// import dbService from "../services/db_service";
+import { EventBus } from "../event-bus";
 
 export default {
   data: () => {
@@ -41,46 +41,19 @@ export default {
     };
   },
   methods: {
-    removeNoteFromList(uuid) {
-      return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
-    },
-
-    addNewNote(note) {
-      return this.notes.push(note);
-    },
     sortBy() {
       if (this.selectedFilter === "Newest") {
-        this.orderByNewest();
+        EventBus.$emit("orderByNewest");
       } else if (this.selectedFilter === "Oldest") {
-        this.orderByOldest();
+        EventBus.$emit("orderByOldest");
       } else {
         return;
       }
     },
-    orderByNewest() {
-      return this.notes.sort(function (a, b) {
-        return new Date(b.date) - new Date(a.date);
-      });
-    },
-    orderByOldest() {
-      return this.notes.sort(function (a, b) {
-        return new Date(a.date) - new Date(b.date);
-      });
-    },
   },
   watch: {
     searchText: function (newVal) {
-      if (newVal === "") {
-        // this.notes = dbService.getNotes();
-        return;
-      }
-      //   this.notes = dbService.getNotes().filter((note) => {
-      //     return (
-      //       note.text.includes(newVal) ||
-      //       note.title.includes(newVal) ||
-      //       note.tagList.includes(newVal)
-      //     );
-      //   });
+      EventBus.$emit("filterSearch", newVal);
     },
   },
 };
