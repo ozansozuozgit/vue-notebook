@@ -63,8 +63,12 @@ export default {
       // dbService.removeNote(this.note.uuid);
     },
     editNote() {
-      EventBus.$emit("editNote", this.note);
+      EventBus.$emit("openNoteForm");
       this.closeNoteView();
+      // To load data after note form is mounted
+      setTimeout(() => {
+        EventBus.$emit("editNote", this.note);
+      }, 100);
     },
     openNoteView() {
       this.dialog = true;

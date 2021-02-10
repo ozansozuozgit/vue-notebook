@@ -53,6 +53,7 @@ export default {
       currentNoteID: null,
     };
   },
+
   mounted() {
     EventBus.$on("editNote", (noteToEdit) => {
       this.fillNoteForm(noteToEdit);

@@ -66,7 +66,7 @@ export default {
     EventBus.$on("closeNoteForm", () => {
       this.closeNoteForm();
     });
-    EventBus.$on("editNote", () => {
+    EventBus.$on("openNoteForm", () => {
       this.openNoteForm();
     });
     const allNotes = dbService.getNotes();
