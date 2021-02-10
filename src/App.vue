@@ -2,9 +2,9 @@
   <v-app class="app">
     <v-main>
       <v-container
-        ><v-row
-          ><v-col md="3"><Sidebar /> </v-col>
-          <v-col md="9" lg="7"><Notes /></v-col
+        ><v-row justify="center"
+          ><v-col cols="9" md="10" lg="9"><Sidebar /> </v-col>
+          <v-col cols="9" md="10" lg="9"><Notes /></v-col
         ></v-row>
       </v-container>
     </v-main>
