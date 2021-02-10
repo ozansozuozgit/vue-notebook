@@ -62,9 +62,13 @@ export default {
     });
     EventBus.$on("updateNote", (updatedValues) => {
       this.updateNote(updatedValues);
+      this.closeNoteForm();
     });
-    EventBus.$on("closeDialog", () => {
-      this.closeDialog();
+    EventBus.$on("closeNoteForm", () => {
+      this.closeNoteForm();
+    });
+    EventBus.$on("editNote", () => {
+      this.openNoteForm();
     });
     const allNotes = dbService.getNotes();
     if (allNotes === null) {
@@ -82,8 +86,11 @@ export default {
     addNewNote(note) {
       return this.notes.push(note);
     },
-    closeDialog() {
+    closeNoteForm() {
       return (this.dialog = false);
+    },
+    openNoteForm() {
+      return (this.dialog = true);
     },
   },
 
@@ -91,7 +98,8 @@ export default {
     EventBus.$off("removeNoteFromList", this.removeNoteFromList);
     EventBus.$off("updateNote", this.updateNote);
     EventBus.$off("addNewNote", this.addNewNote);
-    EventBus.$off("closeDialog", this.closeDialog);
+    EventBus.$off("closeNoteForm", this.closeNoteForm);
+    EventBus.$off("openNoteForm", this.openNoteForm);
   },
 };
 </script>
