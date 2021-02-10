@@ -16,13 +16,13 @@
     </template>
     <template>
       <v-card outlined>
-        <v-card-subtitle class="text-subtitle-1 orange--text text--lighten-2"
+        <v-card-subtitle class="text-h4 orange--text text--lighten-2 pa-5"
           >{{ note.title }}
         </v-card-subtitle>
         <v-card-subtitle>
           {{ note.tagList }}
         </v-card-subtitle>
-        <v-card-subtitle>
+        <v-card-subtitle class="text__container">
           <span v-html="convertedText"></span>
         </v-card-subtitle>
         <v-card-actions>
@@ -93,4 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.text__container {
+  height: 60vh;
+}
 </style>
