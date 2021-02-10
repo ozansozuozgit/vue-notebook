@@ -57,7 +57,6 @@ export default {
       this.removeNoteFromList(uuid);
     });
     EventBus.$on("addNewNote", (note) => {
-      console.log(note);
       this.addNewNote(note);
     });
     EventBus.$on("updateNote", (updatedValues) => {

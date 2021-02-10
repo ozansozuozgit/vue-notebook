@@ -110,6 +110,9 @@ export default {
       this.currentNoteID = null;
     },
     closeForm() {
+      if (this.currentNoteID !== null) {
+        EventBus.$emit("openNoteView", this.currentNoteID);
+      }
       this.resetForm();
       EventBus.$emit("closeNoteForm");
     },

@@ -27,7 +27,9 @@
         </v-card-subtitle>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeNote()"> Close </v-btn>
+          <v-btn color="blue darken-1" text @click="closeNoteView()">
+            Close
+          </v-btn>
           <v-btn color="blue darken-1" text @click="editNote"> Edit </v-btn>
         </v-card-actions>
       </v-card>
@@ -37,7 +39,6 @@
 
 <script>
 import { EventBus } from "../event-bus";
-// import dbService from "../services/db_service";
 export default {
   props: {
     note: Object,
@@ -48,6 +49,13 @@ export default {
       dialog: false,
     };
   },
+  mounted() {
+    EventBus.$on("openNoteView", (noteID) => {
+      if (this.note.uuid === noteID) {
+        return this.openNoteView();
+      }
+    });
+  },
   methods: {
     deleteNote() {
       // EventBus.$emit("resetTextField");
@@ -56,9 +64,12 @@ export default {
     },
     editNote() {
       EventBus.$emit("editNote", this.note);
-      this.closeNote();
+      this.closeNoteView();
     },
-    closeNote() {
+    openNoteView() {
+      this.dialog = true;
+    },
+    closeNoteView() {
       this.dialog = false;
     },
   },
@@ -70,6 +81,9 @@ export default {
         return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
       });
     },
+  },
+  beforeDestroy() {
+    EventBus.$off("openNoteView", this.openNoteView);
   },
 };
 </script>
