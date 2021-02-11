@@ -17,6 +17,30 @@
       :tags="tags"
       @tags-changed="(newTags) => (tags = newTags)"
     />
+    <label
+      >Files
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        v-on:change="handleFileUploads"
+      />
+    </label>
+    <v-container>
+      <v-row justify="space-around"
+        ><div v-for="(image, index) in allImages" :key="index">
+          <v-img
+            :src="image"
+            height="70px"
+            width="70px"
+            contain
+            class="mx-2"
+          ></v-img>
+        </div>
+        <v-spacer></v-spacer>
+      </v-row>
+    </v-container>
+
     <v-textarea
       v-model="text"
       clearable
@@ -26,6 +50,7 @@
       solo
       flat
     ></v-textarea>
+
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="blue darken-1" text @click="closeForm"> Close </v-btn>
@@ -51,6 +76,8 @@ export default {
       tag: "",
       tags: [],
       currentNoteID: null,
+      files: "",
+      allImages: [],
     };
   },
 
@@ -60,6 +87,19 @@ export default {
     });
   },
   methods: {
+    handleFileUploads(e) {
+      const images = e.target.files;
+      for (let i = 0; i < images.length; i++) {
+        const reader = new FileReader();
+        const image = images[i];
+        reader.onload = () => {
+          this.imageData = reader.result;
+          this.allImages.push(reader.result);
+        };
+        reader.readAsDataURL(image);
+      }
+      console.log(this.allImages);
+    },
     saveNote() {
       if (this.title.trim() === "") {
         alert("Please enter note title!");
