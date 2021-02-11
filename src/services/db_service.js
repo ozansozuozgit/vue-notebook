@@ -1,8 +1,8 @@
 export default {
-  addNote({ tags, title, text, uuid, date,tagList }) {
+  addNote({ tags, title, text, uuid, date,tagList,allImages }) {
     const notesString = localStorage.getItem(`notes`);
     let notes = JSON.parse(notesString);
-    notes.push({ title, text, uuid, tags, date,tagList });
+    notes.push({ title, text, uuid, tags, date,tagList,allImages });
     localStorage.setItem(`notes`, JSON.stringify(notes));
     return notes;
   },
@@ -18,7 +18,7 @@ export default {
     return newData;
   },
 
-  updateNote({tags, uuid, text, title,tagList}) {
+  updateNote({tags, uuid, text, title,tagList,allImages}) {
     let jsonNotes = JSON.parse(localStorage.getItem(`notes`));
     let noteToUpdate = jsonNotes.find((note) => note.uuid === uuid);
     const updatedValues = {
@@ -26,6 +26,7 @@ export default {
       title,
       tagList,
       tags,
+      allImages
     };
     Object.assign(
       noteToUpdate,

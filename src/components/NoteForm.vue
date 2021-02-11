@@ -123,6 +123,7 @@ export default {
         uuid,
         date: new Date().toLocaleString(),
         tagList,
+        allImages: this.allImages,
       };
 
       this.resetForm();
@@ -140,6 +141,7 @@ export default {
         text: this.text,
         title: this.title,
         tagList: tagList,
+        allImages: this.allImages,
       };
       dbService.updateNote(updatedNote);
       EventBus.$emit("updateNote", updatedNote);
@@ -149,6 +151,7 @@ export default {
       this.text = "";
       this.title = "";
       this.currentNoteID = null;
+      this.allImages = [];
     },
     closeForm() {
       if (this.currentNoteID !== null) {
@@ -162,6 +165,7 @@ export default {
       this.title = noteToEdit.title;
       this.tags = noteToEdit.tags;
       this.currentNoteID = noteToEdit.uuid;
+      this.allImages = noteToEdit.allImages;
     },
   },
   beforeDestroy() {
