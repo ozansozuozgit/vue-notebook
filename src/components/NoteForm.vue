@@ -58,7 +58,7 @@
       <v-btn color="blue darken-1" text @click="saveNote"> Save </v-btn>
     </v-card-actions>
     <v-dialog v-model="dialog" width="500">
-      <v-img :src="selectedImage"></v-img>
+      <v-img :src="selectedImage" @click="dialog = false"></v-img>
     </v-dialog>
   </v-card>
 </template>
@@ -194,7 +194,7 @@ export default {
   height: 100% !important;
 }
 .v-textarea {
-  height: 450px !important;
+  height: 350px !important;
 }
 .vue-tags-input {
   max-width: 100% !important;

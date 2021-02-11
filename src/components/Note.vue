@@ -1,5 +1,5 @@
  <template>
-  <v-dialog max-width="600" v-model="dialog">
+  <v-dialog width="500px" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-card v-bind="attrs" v-on="on" outlined height="200px">
         <v-card-title class="text-subtitle-1 orange--text text--lighten-2"
@@ -22,6 +22,21 @@
         <v-card-subtitle>
           {{ note.tagList }}
         </v-card-subtitle>
+        <v-container>
+          <v-row justify="space-around"
+            ><div v-for="(image, index) in note.allImages" :key="index">
+              <v-img
+                :src="image"
+                height="70px"
+                width="70px"
+                contain
+                class="mx-2"
+                @click="openImage(image)"
+              ></v-img>
+            </div>
+            <v-spacer></v-spacer>
+          </v-row>
+        </v-container>
         <v-card-subtitle class="text__container">
           <span v-html="convertedText"></span>
         </v-card-subtitle>
@@ -37,6 +52,9 @@
         </v-card-actions>
       </v-card>
     </template>
+    <v-dialog v-model="imageDialog" width="500">
+      <v-img :src="selectedImage" @click="imageDialog = false"></v-img>
+    </v-dialog>
   </v-dialog>
 </template>
 
@@ -50,6 +68,8 @@ export default {
   data: () => {
     return {
       dialog: false,
+      imageDialog: false,
+      selectedImage: "",
     };
   },
   mounted() {
@@ -60,10 +80,12 @@ export default {
     });
   },
   methods: {
+    openImage(image) {
+      this.selectedImage = image;
+      this.imageDialog = true;
+    },
     deleteNote() {
       EventBus.$emit("deleteNote", this.note.uuid);
-      // EventBus.$emit("removeNoteFromNoteList", this.note.uuid);
-      // dbService.removeNote(this.note.uuid);
     },
     editNote() {
       EventBus.$emit("openNoteForm");
@@ -97,6 +119,6 @@ export default {
 
 <style lang="scss" scoped>
 .text__container {
-  height: 60vh;
+  height: 50vh;
 }
 </style>
