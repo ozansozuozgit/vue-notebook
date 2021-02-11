@@ -35,6 +35,7 @@
             width="70px"
             contain
             class="mx-2"
+            @click="openImage(image)"
           ></v-img>
         </div>
         <v-spacer></v-spacer>
@@ -56,6 +57,9 @@
       <v-btn color="blue darken-1" text @click="closeForm"> Close </v-btn>
       <v-btn color="blue darken-1" text @click="saveNote"> Save </v-btn>
     </v-card-actions>
+    <v-dialog v-model="dialog" width="500">
+      <v-img :src="selectedImage"></v-img>
+    </v-dialog>
   </v-card>
 </template>
   
@@ -76,8 +80,9 @@ export default {
       tag: "",
       tags: [],
       currentNoteID: null,
-      files: "",
       allImages: [],
+      dialog: false,
+      selectedImage: "",
     };
   },
 
@@ -87,6 +92,10 @@ export default {
     });
   },
   methods: {
+    openImage(image) {
+      this.selectedImage = image;
+      this.dialog = true;
+    },
     handleFileUploads(e) {
       const images = e.target.files;
       for (let i = 0; i < images.length; i++) {
@@ -105,6 +114,7 @@ export default {
         alert("Please enter note title!");
         return;
       }
+      if (this.text === null) this.text = "";
       if (this.currentNoteID === null) {
         this.createNewNote();
       } else {
