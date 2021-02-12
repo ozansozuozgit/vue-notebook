@@ -47,7 +47,7 @@
               icon
               color="pink"
               class="close__button"
-              @click="deleteImage(image)"
+              @click="handleDeleteButton(image)"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
@@ -75,6 +75,15 @@
     <v-dialog v-model="dialog" width="500">
       <v-img :src="selectedImage" @click="dialog = false"></v-img>
     </v-dialog>
+    <v-dialog v-model="imageDeletionDialog" width="500">
+      <v-img :src="selectedImage"></v-img>
+      <v-btn color="red darken-1" text @click="deleteImage">
+        Delete Image
+      </v-btn>
+      <v-btn color="blue darken-1" text @click="imageDeletionDialog = false">
+        Close
+      </v-btn>
+    </v-dialog>
   </v-card>
 </template>
   
@@ -98,6 +107,7 @@ export default {
       allImages: [],
       dialog: false,
       selectedImage: "",
+      imageDeletionDialog: false,
     };
   },
 
@@ -111,8 +121,16 @@ export default {
       this.selectedImage = image;
       this.dialog = true;
     },
-    deleteImage(image) {
-      this.allImages = this.allImages.filter((img) => img !== image);
+    handleDeleteButton(image) {
+      this.imageDeletionDialog = true;
+      this.selectedImage = image;
+    },
+    deleteImage() {
+      this.allImages = this.allImages.filter(
+        (img) => img !== this.selectedImage
+      );
+      this.imageDeletionDialog = false;
+      this.selectedImage = "";
     },
     handleFileUploads(e) {
       const images = e.target.files;
