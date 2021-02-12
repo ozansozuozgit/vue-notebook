@@ -115,7 +115,6 @@ export default {
     EventBus.$on("editNote", (noteToEdit) => {
       this.fillNoteForm(noteToEdit);
     });
-    EventBus.$on("resetNoteForm", this.resetForm);
   },
   methods: {
     openImage(image) {
@@ -160,6 +159,7 @@ export default {
       } else {
         this.updateNote();
       }
+      this.resetForm();
     },
     createNewNote() {
       const tagList = this.tags.map((tag) => {
@@ -176,7 +176,6 @@ export default {
         allImages: this.allImages,
       };
 
-      this.resetForm();
       dbService.addNote(newNote);
       EventBus.$emit("addNewNote", newNote);
       EventBus.$emit("closeNoteForm");
@@ -221,7 +220,6 @@ export default {
   },
   beforeDestroy() {
     EventBus.$off("fillNoteForm", this.fillNoteForm);
-    EventBus.$off("resetNoteForm", this.resetForm);
   },
 };
 </script>

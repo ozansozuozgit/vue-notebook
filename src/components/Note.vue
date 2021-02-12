@@ -97,7 +97,6 @@ export default {
     },
     deleteNote() {
       EventBus.$emit("deleteNote", this.note.uuid);
-      EventBus.$emit("resetNoteForm");
     },
     editNote() {
       EventBus.$emit("openNoteForm");
