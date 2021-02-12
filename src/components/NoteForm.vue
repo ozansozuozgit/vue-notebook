@@ -17,15 +17,20 @@
       :tags="tags"
       @tags-changed="(newTags) => (tags = newTags)"
     />
-    <label
-      >Files
+
+    <div>
       <input
         type="file"
+        id="uploadImg"
+        style="display: none"
         multiple
         accept="image/*"
         v-on:change="handleFileUploads"
       />
-    </label>
+      <label class="text-button pa-2 upload-image" for="uploadImg"
+        >Upload Image</label
+      >
+    </div>
     <v-container>
       <v-row justify="space-around"
         ><div v-for="(image, index) in allImages" :key="index">
@@ -102,13 +107,13 @@ export default {
         const reader = new FileReader();
         const image = images[i];
         reader.onload = () => {
-          this.imageData = reader.result;
           this.allImages.push(reader.result);
         };
         reader.readAsDataURL(image);
       }
-      console.log(this.allImages);
+      e.target.value = "";
     },
+
     saveNote() {
       if (this.title.trim() === "") {
         alert("Please enter note title!");
@@ -162,6 +167,7 @@ export default {
       this.title = "";
       this.currentNoteID = null;
       this.allImages = [];
+      this.selectedImage = "";
     },
     closeForm() {
       if (this.currentNoteID !== null) {
@@ -184,7 +190,14 @@ export default {
 };
 </script>
 
-<style lang="css" >
+<style lang="scss" >
+.upload-image {
+  background-color: gray;
+  cursor: pointer;
+  &:hover {
+    background-color: lightgrey;
+  }
+}
 .note-form-container {
   scrollbar-width: none;
 }
