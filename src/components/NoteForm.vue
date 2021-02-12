@@ -27,21 +27,31 @@
         accept="image/*"
         v-on:change="handleFileUploads"
       />
-      <label class="text-button pa-2 upload-image" for="uploadImg"
+      <label class="text-button pa-2 upload__label" for="uploadImg"
         >Upload Image</label
       >
     </div>
     <v-container>
       <v-row justify="space-around"
         ><div v-for="(image, index) in allImages" :key="index">
-          <v-img
-            :src="image"
-            height="70px"
-            width="70px"
-            contain
-            class="mx-2"
-            @click="openImage(image)"
-          ></v-img>
+          <div style="position: relative">
+            <v-img
+              :src="image"
+              height="70px"
+              width="70px"
+              contain
+              class="mx-2 uploaded__image"
+              @click="openImage(image)"
+            ></v-img>
+            <v-btn
+              icon
+              color="pink"
+              class="close__button"
+              @click="deleteImage(image)"
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
         </div>
         <v-spacer></v-spacer>
       </v-row>
@@ -101,16 +111,22 @@ export default {
       this.selectedImage = image;
       this.dialog = true;
     },
+    deleteImage(image) {
+      this.allImages = this.allImages.filter((img) => img !== image);
+    },
     handleFileUploads(e) {
       const images = e.target.files;
+      let imageArray = [];
       for (let i = 0; i < images.length; i++) {
         const reader = new FileReader();
         const image = images[i];
         reader.onload = () => {
-          this.allImages.push(reader.result);
+          imageArray.push(reader.result);
         };
         reader.readAsDataURL(image);
       }
+      this.allImages = imageArray;
+
       e.target.value = "";
     },
 
@@ -147,6 +163,7 @@ export default {
       EventBus.$emit("closeNoteForm");
     },
     updateNote() {
+      console.log("update note");
       const tagList = this.tags.map((tag) => {
         return tag.text;
       });
@@ -191,7 +208,17 @@ export default {
 </script>
 
 <style lang="scss" >
-.upload-image {
+.uploaded__image {
+  position: relative;
+  cursor: pointer;
+}
+.close__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.upload__label {
   background-color: gray;
   cursor: pointer;
   &:hover {

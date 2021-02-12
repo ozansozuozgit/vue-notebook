@@ -116,9 +116,10 @@ export default {
         );
       });
     },
-    updateNote({ tags, uuid, text, title, tagList }) {
+    updateNote({ tags, uuid, text, title, tagList, allImages }) {
+      console.log("update");
       let noteToUpdate = this.notes.find((note) => note.uuid === uuid);
-      Object.assign(noteToUpdate, { text, title, tagList, tags });
+      Object.assign(noteToUpdate, { text, title, tagList, tags, allImages });
     },
     addNewNote(note) {
       return this.notes.push(note);
