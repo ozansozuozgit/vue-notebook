@@ -115,6 +115,7 @@ export default {
     EventBus.$on("editNote", (noteToEdit) => {
       this.fillNoteForm(noteToEdit);
     });
+    EventBus.$on("resetNoteForm", this.resetForm);
   },
   methods: {
     openImage(image) {
@@ -220,6 +221,7 @@ export default {
   },
   beforeDestroy() {
     EventBus.$off("fillNoteForm", this.fillNoteForm);
+    EventBus.$off("resetNoteForm", this.resetForm);
   },
 };
 </script>
