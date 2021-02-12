@@ -66,18 +66,11 @@ export default {
       this.updateNote(updatedValues);
       this.closeNoteForm();
     });
-    EventBus.$on("closeNoteForm", () => {
-      this.closeNoteForm();
-    });
-    EventBus.$on("openNoteForm", () => {
-      this.openNoteForm();
-    });
-    EventBus.$on("orderByNewest", () => {
-      this.orderByNewest();
-    });
-    EventBus.$on("orderByOldest", () => {
-      this.orderByOldest();
-    });
+    EventBus.$on("closeNoteForm", this.closeNoteForm);
+    EventBus.$on("openNoteForm", this.openNoteForm);
+    EventBus.$on("orderByNewest", this.orderByNewest);
+    EventBus.$on("orderByOldest", this.orderByOldest);
+
     EventBus.$on("filterSearch", (searchInput) => {
       this.filterSearch(searchInput);
     });
