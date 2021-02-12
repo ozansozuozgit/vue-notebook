@@ -25,6 +25,15 @@
         <Note :note="note" />
       </v-col>
     </v-row>
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      Note Deleted
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -49,6 +58,8 @@ export default {
       selectedFilter: "",
       notes: [],
       dialog: false,
+      snackbar: false,
+      timeout: 2000,
     };
   },
 
@@ -86,7 +97,7 @@ export default {
 
   methods: {
     deleteNote(uuid) {
-      console.log(uuid);
+      this.snackbar = true;
       dbService.removeNote(uuid);
       return (this.notes = this.notes.filter((note) => note.uuid !== uuid));
     },
@@ -117,7 +128,6 @@ export default {
       });
     },
     updateNote({ tags, uuid, text, title, tagList, allImages }) {
-      console.log("update");
       let noteToUpdate = this.notes.find((note) => note.uuid === uuid);
       Object.assign(noteToUpdate, { text, title, tagList, tags, allImages });
     },

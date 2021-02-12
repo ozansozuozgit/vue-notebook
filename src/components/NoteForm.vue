@@ -163,7 +163,6 @@ export default {
       EventBus.$emit("closeNoteForm");
     },
     updateNote() {
-      console.log("update note");
       const tagList = this.tags.map((tag) => {
         return tag.text;
       });

@@ -42,7 +42,7 @@
         </v-card-subtitle>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="deleteNote()">
+          <v-btn color="red darken-1" text @click="deleteDialog = true">
             Delete
           </v-btn>
           <v-btn color="blue darken-1" text @click="closeNoteView()">
@@ -52,8 +52,18 @@
         </v-card-actions>
       </v-card>
     </template>
+
     <v-dialog v-model="imageDialog" width="500">
       <v-img :src="selectedImage" @click="imageDialog = false"></v-img>
+    </v-dialog>
+    <v-dialog v-model="deleteDialog" width="500">
+      <h4 style="text-align: center" class="pa-5">
+        Are you sure you want to delete {{ note.title }}?
+      </h4>
+      <v-btn color="red darken-1" text @click="deleteNote()"> Delete </v-btn>
+      <v-btn color="blue darken-1" text @click="deleteDialog = false">
+        Close
+      </v-btn>
     </v-dialog>
   </v-dialog>
 </template>
@@ -69,6 +79,7 @@ export default {
     return {
       dialog: false,
       imageDialog: false,
+      deleteDialog: false,
       selectedImage: "",
     };
   },
@@ -93,7 +104,7 @@ export default {
       // To load data after note form is mounted
       setTimeout(() => {
         EventBus.$emit("editNote", this.note);
-      }, 100);
+      }, 200);
     },
     openNoteView() {
       this.dialog = true;
