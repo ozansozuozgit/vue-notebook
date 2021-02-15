@@ -69,20 +69,22 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="closeForm"> Close </v-btn>
-      <v-btn color="blue darken-1" text @click="saveNote"> Save </v-btn>
+      <v-btn text @click="closeForm"> Close </v-btn>
+      <v-btn color="secondary darken-2" text @click="saveNote"> Save </v-btn>
     </v-card-actions>
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" width="500" dark>
       <v-img :src="selectedImage" @click="dialog = false"></v-img>
     </v-dialog>
-    <v-dialog v-model="imageDeletionDialog" width="500">
+    <v-dialog
+      v-model="imageDeletionDialog"
+      width="500"
+      class="image_delete_dialog"
+    >
       <v-img :src="selectedImage"></v-img>
       <v-btn color="red darken-1" text @click="deleteImage">
         Delete Image
       </v-btn>
-      <v-btn color="blue darken-1" text @click="imageDeletionDialog = false">
-        Close
-      </v-btn>
+      <v-btn text @click="imageDeletionDialog = false"> Close </v-btn>
     </v-dialog>
   </v-card>
 </template>
@@ -255,5 +257,23 @@ export default {
 }
 .vue-tags-input {
   max-width: 100% !important;
+}
+.v-dialog {
+  background-color: rgb(230, 230, 230);
+}
+
+.vue-tags-input .ti-tag {
+  position: relative;
+  background: #00c6cf;
+  color: white;
+}
+
+.vue-tags-input .ti-new-tag-input {
+  color: #00c6cf;
+}
+
+.vue-tags-input .ti-input {
+  padding: 4px 10px;
+  transition: border-bottom 200ms ease;
 }
 </style>

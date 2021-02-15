@@ -8,7 +8,7 @@
         color="#00C6CF"
         class="note_card"
       >
-        <v-card-title class="text-header black--text text--darken-2"
+        <v-card-title class="text-header font-weight-bold"
           >{{ note.title }}
         </v-card-title>
 
@@ -22,7 +22,7 @@
     </template>
     <template>
       <v-card>
-        <v-card-subtitle class="text-h4 orange--text text--lighten-2 pa-5"
+        <v-card-subtitle class="text-h4 black--text font-weight-bold pa-5"
           >{{ note.title }}
         </v-card-subtitle>
         <v-card-subtitle>
@@ -51,10 +51,12 @@
           <v-btn color="red darken-1" text @click="deleteDialog = true">
             Delete
           </v-btn>
-          <v-btn color="blue darken-1" text @click="closeNoteView()">
+          <v-btn color="secondary darken-2" text @click="closeNoteView()">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="editNote"> Edit </v-btn>
+          <v-btn color="secondary darken-2" text @click="editNote">
+            Edit
+          </v-btn>
         </v-card-actions>
       </v-card>
     </template>
