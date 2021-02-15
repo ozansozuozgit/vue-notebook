@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-toolbar color="orange " light class="mb-5">
+    <v-toolbar color="primary" dark light class="mb-5">
       <v-toolbar-title>Notes</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="#faa307"
+            color="secondary"
             fab
             shaped
             small
@@ -29,7 +29,13 @@
       Note Deleted
 
       <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+        <v-btn
+          light
+          color="primary"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
           Close
         </v-btn>
       </template>
@@ -157,19 +163,6 @@ export default {
 </script>
 
 <style lang="scss" >
-.filter__toolbar {
-  display: flex;
-}
-.select_container {
-  flex: 0.4;
-}
-.search_container {
-  flex: 0.6;
-}
-.filter__toolbar > .v-toolbar__content {
-  height: 100% !important;
-  padding: 0px !important;
-}
 .v-dialog--active {
   scrollbar-width: none;
 }

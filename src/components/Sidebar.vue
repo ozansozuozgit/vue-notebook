@@ -1,10 +1,9 @@
 <template>
   <v-toolbar
-    class="mb-2 pa-2 filter__toolbar"
+    class=" px-2 filter__toolbar mt-2"
     rounded
     height="50px"
-    color="orange darken-3"
-    light
+    color="primary"
   >
     <v-select
       :items="items"
@@ -16,6 +15,7 @@
       flat
       rounded
       class="select_container"
+      dark
     ></v-select>
     <v-text-field
       hide-details
@@ -23,9 +23,29 @@
       single-line
       v-model="searchText"
       placeholder="Search Notes"
-      light
       class="search_container"
+      dark
     ></v-text-field>
+
+    <div class="mx-3">
+      <v-tooltip v-if="!$vuetify.theme.dark" bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" color="secondary" small fab @click="darkMode">
+            <v-icon class="mr-1">mdi-moon-waxing-crescent</v-icon>
+          </v-btn>
+        </template>
+        <span>Dark Mode On</span>
+      </v-tooltip>
+
+      <v-tooltip v-else bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" color="secondary" small fab @click="darkMode">
+            <v-icon color="orange">mdi-white-balance-sunny</v-icon>
+          </v-btn>
+        </template>
+        <span>Dark Mode Off</span>
+      </v-tooltip>
+    </div>
   </v-toolbar>
 </template>
 
@@ -50,6 +70,9 @@ export default {
         return;
       }
     },
+    darkMode() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
   },
   watch: {
     searchText: function (newVal) {
@@ -59,5 +82,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+.filter__toolbar {
+  display: flex;
+}
+.select_container {
+  flex: 0.4;
+}
+.v-input.search_container {
+  flex: 0.6;
+}
+.filter__toolbar > .v-toolbar__content {
+  height: 100% !important;
+  padding: 0px !important;
+}
 </style>

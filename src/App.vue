@@ -21,14 +21,17 @@ export default {
     Sidebar,
     Notes,
   },
-  created() {
-    this.$vuetify.theme.dark = true;
-  },
 };
 </script>
 
-<style >
+<style lang='scss' >
 .app {
   font-family: "Noto Sans", sans-serif;
+}
+.theme--dark.v-application {
+  background: #212121 !important;
+}
+.theme--light.v-application {
+  // background: #232323 !important;
 }
 </style>

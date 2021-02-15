@@ -1,8 +1,14 @@
  <template>
   <v-dialog width="500px" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
-      <v-card v-bind="attrs" v-on="on" outlined height="200px">
-        <v-card-title class="text-subtitle-1 orange--text text--lighten-2"
+      <v-card
+        v-bind="attrs"
+        v-on="on"
+        height="200px"
+        color="#00C6CF"
+        class="note_card"
+      >
+        <v-card-title class="text-header black--text text--darken-2"
           >{{ note.title }}
         </v-card-title>
 
@@ -15,7 +21,7 @@
       </v-card>
     </template>
     <template>
-      <v-card outlined>
+      <v-card>
         <v-card-subtitle class="text-h4 orange--text text--lighten-2 pa-5"
           >{{ note.title }}
         </v-card-subtitle>
@@ -131,5 +137,8 @@ export default {
 <style lang="scss" scoped>
 .text__container {
   height: 50vh;
+}
+.note_card {
+  border: 1px solid black !important;
 }
 </style>
