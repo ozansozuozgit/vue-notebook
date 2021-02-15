@@ -1,26 +1,16 @@
 <template>
   <div>
-    <v-toolbar color="primary" dark light class="mb-5">
-      <v-toolbar-title>Notes</v-toolbar-title>
-      <v-spacer></v-spacer>
+    <v-toolbar flat class="mb-5 justify-center d-flex" color="background">
       <v-dialog v-model="dialog" max-width="500">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="secondary"
-            fab
-            shaped
-            small
-            ripple
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon>mdi-plus</v-icon>
+          <v-btn color="secondary darken-3" ripple v-bind="attrs" v-on="on">
+            Create Note
           </v-btn>
         </template>
         <NoteForm />
       </v-dialog>
     </v-toolbar>
-    <v-row>
+    <v-row class="notes_container">
       <v-col cols="12" sm="6" md="4" v-for="note in notes" :key="note.uuid">
         <Note :note="note" />
       </v-col>
@@ -165,5 +155,8 @@ export default {
 <style lang="scss" >
 .v-dialog--active {
   scrollbar-width: none;
+}
+.notes_container {
+  border-left: 3px solid;
 }
 </style>

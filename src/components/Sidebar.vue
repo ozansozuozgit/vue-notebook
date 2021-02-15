@@ -1,9 +1,9 @@
 <template>
   <v-toolbar
-    class=" px-2 filter__toolbar mt-2"
+    class="px-2 filter__toolbar mt-2"
     rounded
     height="50px"
-    color="primary"
+    color="primary darken-1"
   >
     <v-select
       :items="items"
@@ -15,7 +15,6 @@
       flat
       rounded
       class="select_container"
-      dark
     ></v-select>
     <v-text-field
       hide-details
@@ -24,7 +23,8 @@
       v-model="searchText"
       placeholder="Search Notes"
       class="search_container"
-      dark
+      rounded
+      light
     ></v-text-field>
 
     <div class="mx-3">
@@ -40,7 +40,7 @@
       <v-tooltip v-else bottom>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" color="secondary" small fab @click="darkMode">
-            <v-icon color="orange">mdi-white-balance-sunny</v-icon>
+            <v-icon color="white">mdi-white-balance-sunny</v-icon>
           </v-btn>
         </template>
         <span>Dark Mode Off</span>
@@ -88,9 +88,21 @@ export default {
 }
 .select_container {
   flex: 0.4;
+
+  .theme--dark.v-label {
+    color: black !important;
+  }
+  .theme--light.v-label {
+    color: white !important;
+  }
+}
+.mdi-menu-down {
+  color: #00c6cf !important;
 }
 .v-input.search_container {
   flex: 0.6;
+  background: white !important;
+  border: 1px solid black;
 }
 .filter__toolbar > .v-toolbar__content {
   height: 100% !important;

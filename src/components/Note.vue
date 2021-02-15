@@ -5,14 +5,17 @@
         v-bind="attrs"
         v-on="on"
         height="200px"
-        color="#00C6CF"
+        color="primary"
         class="note_card"
       >
-        <v-card-title class="text-header font-weight-bold"
+        <v-card-title class="text-header font-weight-bold white--text"
           >{{ note.title }}
         </v-card-title>
 
-        <v-card-subtitle v-if="note.text.length < 150" class="text-caption">
+        <v-card-subtitle
+          v-if="note.text.length < 150"
+          class="text-caption white--text"
+        >
           {{ note.text }}
         </v-card-subtitle>
         <v-card-subtitle v-else class="text-caption">
@@ -142,5 +145,11 @@ export default {
 }
 .note_card {
   border: 1px solid black !important;
+}
+.theme--dark.v-card .v-card__title {
+  color: black !important;
+}
+.theme--dark.v-card .v-card__subtitle {
+  color: black !important;
 }
 </style>
