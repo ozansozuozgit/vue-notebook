@@ -53,7 +53,7 @@
           </v-row>
         </v-container>
         <v-card-subtitle class="text__container">
-          <span v-html="convertedText"></span>
+          <p v-html="convertedText"></p>
         </v-card-subtitle>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -148,6 +148,9 @@ export default {
 <style lang="scss" scoped>
 .text__container {
   height: 50vh;
+  p {
+    width: 100%;
+  }
 }
 .note_card {
   border: 1px solid black !important;
