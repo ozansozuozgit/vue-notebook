@@ -257,6 +257,8 @@ export default {
 }
 .vue-tags-input {
   max-width: 100% !important;
+  border: none;
+  background: transparent !important;
 }
 .v-dialog {
   background-color: rgb(230, 230, 230);
@@ -264,16 +266,32 @@ export default {
 
 .vue-tags-input .ti-tag {
   position: relative;
-  background: #00c6cf;
-  color: white;
-}
-
-.vue-tags-input .ti-new-tag-input {
-  color: #00c6cf;
 }
 
 .vue-tags-input .ti-input {
   padding: 4px 10px;
   transition: border-bottom 200ms ease;
+  border: none;
+}
+
+.note-form-container.theme--dark {
+  .vue-tags-input .ti-tag {
+    position: relative;
+    background: white;
+    color: black !important;
+  }
+  .vue-tags-input .ti-new-tag-input {
+    color: #07c9d2;
+  }
+}
+.note-form-container.theme--light {
+  .vue-tags-input .ti-tag {
+    position: relative;
+    background: black;
+    color: white !important;
+  }
+  .vue-tags-input .ti-new-tag-input {
+    color: #085e62;
+  }
 }
 </style>

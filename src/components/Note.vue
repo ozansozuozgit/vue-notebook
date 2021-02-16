@@ -24,12 +24,18 @@
       </v-card>
     </template>
     <template>
-      <v-card>
+      <v-card class="read_only_note">
         <v-card-subtitle class="text-h4 black--text font-weight-bold pa-5"
           >{{ note.title }}
         </v-card-subtitle>
         <v-card-subtitle>
-          {{ note.tagList }}
+          <span
+            v-for="(note, index) in this.note.tagList"
+            :key="index"
+            class="tag_span"
+          >
+            {{ note }}
+          </span>
         </v-card-subtitle>
         <v-container>
           <v-row justify="space-around"
@@ -151,5 +157,32 @@ export default {
 }
 .theme--dark.v-card .v-card__subtitle {
   color: black !important;
+}
+.read_only_note.theme--dark {
+  .v-card__subtitle {
+    color: white !important;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .tag_span {
+    background-color: white;
+    color: black !important;
+    padding: 2px;
+    border-radius: 3px;
+    margin: 5px;
+  }
+}
+.read_only_note.theme--light {
+  .v-card__subtitle {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .tag_span {
+    color: white !important;
+    background-color: #212121;
+    padding: 2px;
+    border-radius: 3px;
+    margin: 5px;
+  }
 }
 </style>

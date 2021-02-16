@@ -4,6 +4,7 @@
     rounded
     height="50px"
     color="primary darken-1"
+    width="100%"
   >
     <v-select
       :items="items"
@@ -26,7 +27,6 @@
       rounded
       light
     ></v-text-field>
-
     <div class="mx-3">
       <v-tooltip v-if="!$vuetify.theme.dark" bottom>
         <template v-slot:activator="{ on }">
@@ -85,7 +85,11 @@ export default {
 <style lang="scss" >
 .filter__toolbar {
   display: flex;
+  .v-toolbar__content {
+    width: 100%;
+  }
 }
+
 .select_container {
   flex: 0.4;
 
