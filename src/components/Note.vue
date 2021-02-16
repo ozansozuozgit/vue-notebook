@@ -144,7 +144,8 @@ export default {
     detectYoutubeClick(e) {
       if (e.target.innerText.includes("youtube")) {
         const url = e.target.innerText.replace("watch?v=", "embed/");
-        this.youtubeSrc = "http://" + url;
+        if (!url.includes("http")) return;
+        this.youtubeSrc = url;
         this.youtubeDialog = true;
       }
     },
