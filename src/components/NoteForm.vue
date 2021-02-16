@@ -27,7 +27,7 @@
         accept="image/*"
         v-on:change="handleFileUploads"
       />
-      <label class="text-button pa-2 upload__label" for="uploadImg"
+      <label class="text-button pa-2 upload__label ml-3 mt-2" for="uploadImg"
         >Upload Image</label
       >
     </div>

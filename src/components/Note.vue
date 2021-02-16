@@ -53,7 +53,7 @@
           </v-row>
         </v-container>
         <v-card-subtitle class="text__container">
-          <p v-html="convertedText"></p>
+          <p v-html="convertedText" @click="detectYoutubeClick"></p>
         </v-card-subtitle>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -82,6 +82,16 @@
         Close
       </v-btn>
     </v-dialog>
+    <v-dialog v-model="youtubeDialog" width="500">
+      <iframe
+        id="ytplayer"
+        type="text/html"
+        width="500"
+        height="400"
+        :src="youtubeSrc"
+        frameborder="0"
+      ></iframe>
+    </v-dialog>
   </v-dialog>
 </template>
 
@@ -98,6 +108,8 @@ export default {
       imageDialog: false,
       deleteDialog: false,
       selectedImage: "",
+      youtubeDialog: false,
+      youtubeSrc: "",
     };
   },
   mounted() {
@@ -129,14 +141,30 @@ export default {
     closeNoteView() {
       this.dialog = false;
     },
+    detectYoutubeClick(e) {
+      if (e.target.innerText.includes("youtube")) {
+        const url = e.target.innerText.replace("watch?v=", "embed/");
+        this.youtubeSrc = "http://" + url;
+        this.youtubeDialog = true;
+      }
+    },
   },
   computed: {
     convertedText: function () {
-      var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+      const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
       return this.note.text.replace(urlRegex, function (url, b, c) {
-        var url2 = c == "www." ? "http://" + url : url;
-        return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
+        const url2 = c == "www." ? "http://" + url : url;
+        if (url2.includes("youtube")) {
+          return `<span class="youtube_url">${url}</span>`;
+        } else {
+          return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
+        }
       });
+    },
+  },
+  watch: {
+    youtubeDialog: function (newVal) {
+      if (newVal === false) this.youtubeSrc = "";
     },
   },
   beforeDestroy() {
@@ -145,7 +173,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .text__container {
   height: 50vh;
   p {
@@ -186,6 +214,12 @@ export default {
     padding: 2px;
     border-radius: 3px;
     margin: 5px;
+  }
+}
+.youtube_url {
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>
