@@ -3,7 +3,6 @@
     <v-text-field
       v-model="title"
       placeholder="Note Title"
-      label="Note Title"
       hide-details
       class="font-weight-bold text-h5"
       flat

@@ -14,11 +14,11 @@
 
         <v-card-subtitle
           v-if="note.text.length < 150"
-          class="text-caption white--text"
+          class="text-caption white--text note__subtitle"
         >
           {{ note.text }}
         </v-card-subtitle>
-        <v-card-subtitle v-else class="text-caption">
+        <v-card-subtitle v-else class="text-caption note__subtitle">
           {{ note.text.substring(0, 150) + ".." }}
         </v-card-subtitle>
       </v-card>
@@ -144,8 +144,7 @@ export default {
     detectYoutubeClick(e) {
       if (e.target.innerText.includes("youtube")) {
         const url = e.target.innerText.replace("watch?v=", "embed/");
-        if (!url.includes("http")) return;
-        this.youtubeSrc = url;
+        this.youtubeSrc = !url.includes("http") ? "https://" + url : url;
         this.youtubeDialog = true;
       }
     },
@@ -187,8 +186,11 @@ export default {
 .theme--dark.v-card .v-card__title {
   color: black !important;
 }
-.theme--dark.v-card .v-card__subtitle {
+.theme--dark.v-card .v-card__subtitle.note__subtitle {
   color: black !important;
+}
+.theme--light.v-card .v-card__subtitle.note__subtitle {
+  color: white !important;
 }
 .read_only_note.theme--dark {
   .v-card__subtitle {

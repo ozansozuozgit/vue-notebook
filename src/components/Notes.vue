@@ -17,7 +17,6 @@
     </v-row>
     <v-snackbar v-model="snackbar" :timeout="timeout">
       Note Deleted
-
       <template v-slot:action="{ attrs }">
         <v-btn
           light
