@@ -2,7 +2,7 @@
   <div>
     <v-toolbar flat class="mb-5 justify-center d-flex" color="background">
       <v-dialog v-model="dialog" max-width="500">
-        <template v-slot:activator="{ on, attrs }">
+        <template v-slot:activator="{ on, attrs }" >
           <v-btn color="secondary darken-3" ripple v-bind="attrs" v-on="on">
             Create Note
           </v-btn>

@@ -68,7 +68,7 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn text @click="closeForm"> Close </v-btn>
+      <v-btn text @click="closeForm()" class="close__btn"> Close </v-btn>
       <v-btn color="secondary darken-2" text @click="saveNote"> Save </v-btn>
     </v-card-actions>
     <v-dialog v-model="dialog" width="500" dark>

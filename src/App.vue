@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app class="app" >
     <v-main>
       <v-container
         ><v-row justify="center"
@@ -30,8 +30,5 @@ export default {
 }
 .theme--dark.v-application {
   background: #212121 !important;
-}
-.theme--light.v-application {
-  // background: #232323 !important;
 }
 </style>
