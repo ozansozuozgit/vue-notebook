@@ -12,7 +12,6 @@ import NoteForm from '@/components/NoteForm';
 import { createLocalVue, mount } from '@vue/test-utils';
 
 describe('NoteForm.vue', () => {
-  // const localVue = createLocalVue()
   const localVue = createLocalVue();
   localVue.use(Vuetify);
   document.body.setAttribute('data-app', true);
@@ -27,28 +26,13 @@ describe('NoteForm.vue', () => {
       localVue,
       vuetify,
     });
+    const event = jest.fn();
 
-    // const event = jest.fn();
-    // const button = wrapper.find('.close__btn');
-    // Here we bind a listener to the wrapper
-    // instance to catch our custom event
-    // https://vuejs.org/v2/api/#Instance-Methods-Events
-    // button.trigger('click');
-    // expect(button.text()).toBe('Close');
-    // button.trigger('click');
-
-    // button.vm.$on('closeNoteForm', event);
-    // expect(event).toHaveBeenCalledTimes(0);
-    // const closeNoteForm = jest.fn();
-
-    // Simulate a click on the button
-    // button.trigger('click');
-    expect(wrapper.find('.close__btn').text()).toContain('Close');
-    // const resetFilterStub = jest.fn();
-    // wrapper.setMethods({ resetFilter: resetFilterStub });
-    // wrapper.find('.close__btn').trigger('click');
-    // expect(closeNoteForm).toHaveBeenCalled();
-    // Ensure that our mock event was called
-    // expect(event).toHaveBeenCalledTimes(1);
+    wrapper.find('.close__btn').trigger('click');
+    wrapper.vm.$nextTick(() => {
+      wrapper.vm.closeNoteForm(); //closeModal is my method
+      // expect(wrapper.emitted().input[0]).toEqual([false]); //test if it changes
+      expect(event).toHaveBeenCalledTimes(0);
+    });
   });
 });
