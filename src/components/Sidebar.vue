@@ -89,7 +89,12 @@ export default {
     width: 100%;
   }
 }
-
+.theme--light.v-select .v-select__selection--comma {
+  color: white !important;
+}
+.theme--dark.v-select .v-select__selection--comma {
+  color: black !important;
+}
 .select_container {
   flex: 0.4;
 

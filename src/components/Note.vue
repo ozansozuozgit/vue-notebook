@@ -38,7 +38,7 @@
           </span>
         </v-card-subtitle>
         <v-container>
-          <v-row justify="space-around"
+          <v-row justify="space-around" class="note__images"
             ><div v-for="(image, index) in note.allImages" :key="index">
               <v-img
                 :src="image"
@@ -179,6 +179,9 @@ export default {
   p {
     width: 100%;
   }
+}
+.note__images {
+  margin-left: 5px !important;
 }
 .note_card {
   border: 1px solid black !important;

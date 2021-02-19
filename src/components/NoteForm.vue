@@ -4,7 +4,7 @@
       v-model="title"
       placeholder="Note Title"
       hide-details
-      class="font-weight-bold text-h5"
+      class="font-weight-bold text-h5 pa-2"
       flat
       solo
       color="yellow"
@@ -17,7 +17,7 @@
       @tags-changed="(newTags) => (tags = newTags)"
     />
 
-    <div>
+    <div class="mt-2">
       <input
         type="file"
         id="uploadImg"
@@ -271,6 +271,8 @@ export default {
   padding: 4px 10px;
   transition: border-bottom 200ms ease;
   border: none;
+  height: 50px;
+  overflow: auto;
 }
 
 .note-form-container.theme--dark {
