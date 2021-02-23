@@ -1,6 +1,6 @@
  <template>
-  <v-dialog width="500px" v-model="dialog">
-    <template v-slot:activator="{ on, attrs }">
+  <v-dialog width="500px" v-model="dialog" content-class="note_dialog">
+    <template v-slot:activator="{ on, attrs }" >
       <v-card
         v-bind="attrs"
         v-on="on"
